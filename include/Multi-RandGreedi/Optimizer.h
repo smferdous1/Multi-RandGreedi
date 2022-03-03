@@ -8,13 +8,14 @@
 
 #include "CSR.h"
 #include "Selector.h"
+#include "Types.h"
 using namespace std;
 
 class Optimizer
 {
     public:
     
-    bool select(const CSR* g, Selector* s,int k) = 0; // virtual optimizer
+    bool select(const CSR* g, Selector* s,Size k) = 0; // virtual optimizer
     
 };
 
@@ -27,7 +28,7 @@ class Optimizer
 {
     public:
     
-    bool select(const CSR* g, Selector* s,int k) = 0; // virtual optimizer
+    bool select(const CSR* g, Selector* s,Size k) = 0; // virtual optimizer
     
 };
 

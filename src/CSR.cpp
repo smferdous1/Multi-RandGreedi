@@ -1,14 +1,15 @@
 #include "CSR.h"
 #include "Utility.h"
+#include "Types.h"
 #include <cstring>
 using namespace std;
 
 bool CSR::readMtx(char* filename)
 {
-    int count=0,i,j;
-    int inp, m1, sym, edgecnt_;
-    int numRow, numCol, nonZeros, numEdges;
-    double f;
+    Size count=0,i,j;
+    Size inp, m1, sym, edgecnt_;
+    Size numRow, numCol, nonZeros, numEdges;
+    Val f;
     string s;
     ifstream inf;
 
@@ -40,8 +41,8 @@ bool CSR::readMtx(char* filename)
 
         count=inp;
         
-        vector<vector<int> > graphCRSIdx(nRow);
-        vector<vector<double> > graphCRSVal(nRow);
+        vector<vector<Size> > graphCRSIdx(nRow);
+        vector<vector<Val> > graphCRSVal(nRow);
         
         while(count>0) 
         {     
@@ -64,19 +65,19 @@ bool CSR::readMtx(char* filename)
      
         nNz=nonZeros;
         
-        ResizeVector<int>(&verPtr, nRow+1);
+        ResizeVector<Size>(&verPtr, nRow+1);
         ResizeVector<Edge>(&verInd, nNz);
         
         verPtr[0]=0;
-        int max=0,offset; 
-        for(int i=1;i<=nRow;i++)
+        Size max=0,offset; 
+        for(Size i=1;i<=nRow;i++)
         {
             
             offset=graphCRSIdx[i-1].size();
             verPtr[i]=verPtr[i-1]+offset;
             count=verPtr[i-1];
             //cout<<i-1<<" "<<verPtr[i-1]<<" "<<verPtr[i]<<": ";
-            for(int j=0;j<offset;j++)
+            for(Size j=0;j<offset;j++)
             {
                 verInd[count].id=graphCRSIdx[i-1][j];
                 verInd[count].weight=graphCRSVal[i-1][j];

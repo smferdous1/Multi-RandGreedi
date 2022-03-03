@@ -1,5 +1,5 @@
-#ifndef MTXREADER_H
-#define MTXREADER_H
+#ifndef CSR_H
+#define CSR_H
 
 #include <iostream>
 #include <fstream>
@@ -10,22 +10,22 @@
 using namespace std;
 
 struct EdgeE {
-    int head;
-    int id;         // Edge tail
+    Size head;
+    Size id;         // Edge tail
     float weight;  // Edge weight
 };
 struct Edge {
-    int id;         // Edge tail
-    double weight;  // Edge weight
+    Size id;         // Edge tail
+    Val weight;  // Edge weight
 };
 
 class CSR {
     public:
-    int nRow;       // number of rows
-    int nCol;       // number of columns
-    int nNz;      // number of nonzeros
-    int maxDeg;
-    vector<int> verPtr;    // vertex pointer array of size nVer+1
+    Size nRow;       // number of rows
+    Size nCol;       // number of columns
+    Size nNz;      // number of nonzeros
+    Size maxDeg;
+    vector<Size> verPtr;    // vertex poSizeer array of size nVer+1
     vector<Edge> verInd;   // Edge array
     
     bool readMtx(char * filename); // reading as a general graph
@@ -35,4 +35,4 @@ class CSR {
 
 };
 
-#endif //MTXREADER_H
+#endif //CSR_H

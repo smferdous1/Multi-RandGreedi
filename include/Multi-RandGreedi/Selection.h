@@ -9,19 +9,20 @@
 #include <cassert>
 
 #include "CSR.h"
+#include "Types.h"
 using namespace std;
 
 class Selection
 {
     public:
-        double total_gain;
-        vector<int> selectedRows;
+        Val total_gain;
+        vector<Size> selectedRows;
     
-    bool calc_gain(const CSR* g, double* m_gain, int row); // calculates the marginal gain of adding row into the selection
+    bool calc_gain(const CSR* g, Val& m_gain, Size row)= 0; // calculates the marginal gain of adding row into the selection
     
-    bool update_selector(const CSR* g, int row); //adds row to selecton and updates state.
-
+    bool update_selector(const CSR* g, Size row)= 0; //adds row to selecton and updates state.
     
+  
 };
 
 #endif //SELECTION_H
