@@ -18,7 +18,7 @@ message(STATUS "Run: ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} 
 add_subdirectory(apps)
 
 # The compiled library code is here
-#add_subdirectory(src)
+add_subdirectory(src)
 
 # Testing only available if this is the main app
 # Emergency override MODERN_CMAKE_BUILD_TESTING provided as well

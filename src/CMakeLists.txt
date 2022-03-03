@@ -1,16 +1,16 @@
 
 set(HEADER_LIST
-    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/mtxReader.h"
+    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/CSR.h"
 
     )
 
 add_library(mrg
-    mtxReader.cpp
+    CSR.cpp
     ${HEADER_LIST}
     )
 
 
-target_include_dirmrgtories(mrg PUBLIC
+target_include_directories(mrg PUBLIC
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi"
     )
 

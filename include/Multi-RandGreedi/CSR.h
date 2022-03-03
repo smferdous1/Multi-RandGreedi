@@ -9,39 +9,29 @@
 #include <cassert>
 using namespace std;
 
-struct EdgeE
-{
+struct EdgeE {
     int head;
     int id;         // Edge tail
     float weight;  // Edge weight
 };
-struct Edge
-{
+struct Edge {
     int id;         // Edge tail
-    float weight;  // Edge weight
+    double weight;  // Edge weight
 };
 
-class CSR
-{
+class CSR {
     public:
     int nRow;       // number of rows
     int nCol;       // number of columns
     int nNz;      // number of nonzeros
     int maxDeg;
-    int* verPtr;    // vertex pointer array of size nVer+1
-    Edge* verInd;   // Edge array
+    vector<int> verPtr;    // vertex pointer array of size nVer+1
+    vector<Edge> verInd;   // Edge array
     
     bool readMtx(char * filename); // reading as a general graph
     
-    CSR():nRow(0),nCol(0),nNz(0),verPtr(NULL),verInd(NULL){}
-    ~CSR()
-    {
-        if(verPtr!=NULL)
-            delete verPtr;
-
-        if(verInd!=NULL)
-            delete verInd;
-    }
+    CSR():nRow(0),nCol(0),nNz(0){}
+    ~CSR(){}
 
 };
 

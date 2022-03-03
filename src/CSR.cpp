@@ -1,4 +1,5 @@
-#include "mtxReader.h"
+#include "CSR.h"
+#include "Utility.h"
 #include <cstring>
 using namespace std;
 
@@ -63,9 +64,9 @@ bool CSR::readMtx(char* filename)
      
         nNz=nonZeros;
         
-        verPtr=new int[nRow+1];
-        verInd=new Edge[nNz];
-
+        ResizeVector<int>(&verPtr, nRow+1);
+        ResizeVector<Edge>(&verInd, nNz);
+        
         verPtr[0]=0;
         int max=0,offset; 
         for(int i=1;i<=nRow;i++)
