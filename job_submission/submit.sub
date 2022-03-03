@@ -1,7 +1,7 @@
 #!/bin/bash
 # FILENAME:  mpi_hello.sub
 #SBATCH  --nodes=2
-#SBATCH  --ntasks-per-node=64
+#SBATCH  --ntasks-per-node=1
 #SBATCH  --time=00:01:00
 #SBATCH  -A standby
 module load openmpi
@@ -9,4 +9,4 @@ module load openmpi
 cd $SLURM_SUBMIT_DIR
 
 #mpirun  -n 128 ./mpi_hello
-mpirun  -n 128  
+mpirun  -n 2 ../build/apps/mpi_hello 
