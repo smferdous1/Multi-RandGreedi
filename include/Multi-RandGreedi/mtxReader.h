@@ -24,23 +24,16 @@ struct Edge
 class CSR
 {
     public:
-    int nVer;       // number of vertices 
-    int nEdge;      // number of edges
+    int nRow;       // number of rows
+    int nCol;       // number of columns
+    int nNz;      // number of nonzeros
     int maxDeg;
     int* verPtr;    // vertex pointer array of size nVer+1
     Edge* verInd;   // Edge array
-    bool bipartite; // general graph or bipartite graph
-    int rVer;       // The number of vertices on Right for bipartite graph;
-    int lVer;       // The number of vertices on left for bipartite graph;
     
-    bool readMtxG(char * filename); // reading as a general graph
-    bool readMtxB(char * filename); // reading as a bipartite graph
-    bool mtxG2csrbin(char* filename, char* outfile); //converting mtx to binary file
-    bool mtxB2csrbin(char* filename, char* outfile); //converting mtx to binary file
-    bool readCSRbin(char* filename, int opt); // reading binary file of csr format
-    bool readCSRbinBipartite(char* filename, int opt); // reading binary file of csr format
+    bool readMtx(char * filename); // reading as a general graph
     
-    CSR():nVer(0),nEdge(0),verPtr(NULL),verInd(NULL),bipartite(false){}
+    CSR():nRow(0),nCol(0),nNz(0),verPtr(NULL),verInd(NULL){}
     ~CSR()
     {
         if(verPtr!=NULL)

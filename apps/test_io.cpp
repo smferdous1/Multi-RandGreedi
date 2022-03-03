@@ -14,18 +14,20 @@ int main(int argc, char** argv) {
     return 1;
   }
   
-  CSR g
+  CSR g;
   
   cout << "reading graph file ..." << endl;
-  if (!g.readMtxG(argv[1])) {
+  if (!g.readMtx(argv[1])) {
     cout << "graph file reading error" << endl;
     return 1;
   }
   
   cout << "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{" << endl;
-  cout << "Graph (begin)" << endl;
-  cout << "number of vertices: " << g->nVer << endl;
-  cout << "number of edges: " << g->nEdge << endl;
+  cout << "Data (begin)" << endl;
+  cout << "number of entries: " << g.nRow << endl;
+  cout << "number of features: " << g.nCol << endl;
+  cout << "number of Non-Zeros: " << g.nNz << endl;
   cout << "Graph (end)" << endl;
   cout << "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}" << endl;
 
+}
