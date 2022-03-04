@@ -93,7 +93,7 @@ bool CSR::readMtx(char* filename)
         assert(count==nNz);
         maxDeg=max;
 
-        cout<<nRow<<" "<<nCol<<" "<<nNz<<endl;
+        //cout<<nRow<<" "<<nCol<<" "<<nNz<<endl;
 
     }
     else return false;

@@ -12,3 +12,10 @@ target_compile_features(testio PRIVATE cxx_std_11)
 target_compile_options(testio PRIVATE -O3 )
 target_link_libraries(testio PRIVATE mrg)
 target_include_directories(testio PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi")
+
+#executable test_lazygreedy
+add_executable(testlg test_lazygreedy.cpp)
+target_compile_features(testlg PRIVATE cxx_std_11)
+target_compile_options(testlg PRIVATE -O3 )
+target_link_libraries(testlg PRIVATE mrg)
+target_include_directories(testlg PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi")

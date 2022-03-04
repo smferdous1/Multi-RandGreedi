@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <string>
 #include <cassert>
+
+#include "Types.h"
+
 using namespace std;
 
 struct EdgeE {
@@ -25,7 +28,7 @@ class CSR {
     Size nCol;       // number of columns
     Size nNz;      // number of nonzeros
     Size maxDeg;
-    vector<Size> verPtr;    // vertex poSizeer array of size nVer+1
+    vector<Size> verPtr;    // vertex pointer array of size nVer+1
     vector<Edge> verInd;   // Edge array
     
     bool readMtx(char * filename); // reading as a general graph

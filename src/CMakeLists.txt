@@ -1,11 +1,17 @@
 
 set(HEADER_LIST
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/CSR.h"
-
+    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Optimizer.h"
+    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Selection.h"
+    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Types.h"
+    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Utility.h"
+    
     )
 
 add_library(mrg
     CSR.cpp
+    LazyGreedy.cpp
+    MaxSetCoverSelection.cpp
     ${HEADER_LIST}
     )
 

@@ -15,14 +15,33 @@ using namespace std;
 class Selection
 {
     public:
-        Val total_gain;
+        Val totalGain;
         vector<Size> selectedRows;
     
-    bool calc_gain(const CSR* g, Val& m_gain, Size row)= 0; // calculates the marginal gain of adding row into the selection
+    virtual bool calc_gain(const CSR& g, Val& m_gain, Size row)= 0; // calculates the marginal gain of adding row into the selection
     
-    bool update_selector(const CSR* g, Size row)= 0; //adds row to selecton and updates state.
-    
+    virtual bool update_selector(const CSR& g, Size row)= 0; //adds row to selecton and updates state.
+    Selection():totalGain(0){}
+    ~Selection(){}
   
 };
+
+
+class MaxSetCoverSelection: public Selection{
+    
+    vector<bool> coveredCols;
+    bool initialized;
+    
+    bool init(const CSR& g);
+        
+    public:
+        bool calc_gain(const CSR& g, Val& m_gain, Size row);
+        bool update_selector(const CSR& g, Size row);
+        
+        MaxSetCoverSelection():initialized(false){}
+        ~MaxSetCoverSelection(){}
+    
+};
+
 
 #endif //SELECTION_H

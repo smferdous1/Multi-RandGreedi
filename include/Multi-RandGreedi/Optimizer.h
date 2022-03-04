@@ -1,35 +1,21 @@
 #ifndef OPTIMIZER_H
 #define OPTIMIZER_H
 
-#ifndef OPTIMIZER_H
-#define OPTIMIZER_H
-
-#include <iostream>
-
 #include "CSR.h"
-#include "Selector.h"
+#include "Selection.h"
 #include "Types.h"
-using namespace std;
 
 class Optimizer
 {
     public:
     
-    bool select(const CSR* g, Selector* s,Size k) = 0; // virtual optimizer
+    virtual bool select(const CSR& g, Selection& s,Size k) = 0; // virtual optimizer
     
 };
 
-#endif //OPTIMIZER_H
-#include "CSR.h"
-#include "Selector.h"
-using namespace std;
-
-class Optimizer
-{
+class LazyGreedy: public Optimizer{
     public:
-    
-    bool select(const CSR* g, Selector* s,Size k) = 0; // virtual optimizer
-    
+    bool select(const CSR& g, Selection& s,Size k);
 };
 
 #endif //OPTIMIZER_H
