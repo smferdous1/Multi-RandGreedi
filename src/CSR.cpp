@@ -101,3 +101,51 @@ bool CSR::readMtx(char* filename)
    
    return true;
 }
+
+bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs){
+    
+    
+    Size nrow = 0;
+    Size nnz, count = 0;
+    Size max = 0;
+    Size offset = 0, currRow=0;
+    vector<Size> sVerPtr;
+    ResizeVector<Size>(&sVerPtr,rowIdxs.size()+1);
+    sVerPtr[nrow] = 0;
+    //cout << "Caculating number of Non-zeros "<<endl;
+    
+    for(Size i:rowIdxs){
+        offset = verPtr[i+1]-verPtr[i];
+        count+=offset;
+        if(offset>max) max=offset;
+    }
+    
+    nnz = count;
+    count =0;
+    vector<Edge> sVerInd;
+    ResizeVector<Edge>(&sVerInd,nnz);
+    
+    
+    for(Size i:rowIdxs){
+        //cout << "Adding row " << i << endl;
+        for(Size j=verPtr[i];j<verPtr[i+1];j++)
+        {
+            sVerInd[count].id= verInd[j].id;
+            sVerInd[count].weight=verInd[j].weight;
+            count++;
+        }
+        sVerPtr[nrow+1]=count;
+        nrow++;
+    }
+    assert(count==nnz);
+    assert(nrow==rowIdxs.size());
+    
+    subMtx.nRow=nrow;
+    subMtx.nCol=nCol;
+    subMtx.nNz=nnz;
+    subMtx.maxDeg=max;
+    subMtx.verPtr.swap(sVerPtr);
+    subMtx.verInd.swap(sVerInd);
+    
+    return true;
+}
