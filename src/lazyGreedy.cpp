@@ -19,14 +19,14 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
         
         priQ[i] = make_pair(gain,i);
     }
-    cout << "PriQ initialized" << endl;
+    //cout << "PriQ initialized" << endl;
     make_heap(priQ.begin(),priQ.end());
-    cout << "heap Made" << endl;
+    //cout << "heap Made" << endl;
     
     
     
     for(Size i=0; i<k; i++){
-        cout << "Selecting object"<< i << endl;
+        //cout << "Selecting object"<< i << endl;
     
         bool success= false;
         while(!success){
@@ -34,13 +34,13 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
             pop_heap(priQ.begin(),priQ.end()); 
             row = priQ.back().second;
             priQ.pop_back();
-            cout << "Recalculating Gain" << endl;
+            //cout << "Recalculating Gain" << endl;
     
             chk = s.calc_gain(g, gain, row);
             if(!chk) return false;
             
             if( gain >= priQ.front().first){
-                cout << "Found object" << i << endl;
+                //cout << "Found object" << i << endl;
                 chk = s.update_selector(g,row);
                 success = true;
             }
