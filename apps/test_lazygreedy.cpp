@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
   }
   int k = stoi(argv[2]);
   CSR g;
-  MaxSetCoverSelection sCover;
+  MaxSetCoverSelection sCover(k);
   LazyGreedy lz;
   
   cout << "reading file ..." << endl;

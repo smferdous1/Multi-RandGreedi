@@ -10,6 +10,7 @@
 
 #include "CSR.h"
 #include "Types.h"
+#include "Utility.h"
 using namespace std;
 
 class Selection
@@ -17,11 +18,14 @@ class Selection
     public:
         Val totalGain;
         vector<Size> selectedRows;
+        Size nSelection;
     
     virtual bool calc_gain(const CSR& g, Val& m_gain, Size row)= 0; // calculates the marginal gain of adding row into the selection
     
     virtual bool update_selector(const CSR& g, Size row)= 0; //adds row to selecton and updates state.
-    Selection():totalGain(0){}
+    Selection(Size k):totalGain(0),nSelection(k){
+        ReserveVector<Size>(&selectedRows,nSelection);
+    }
     ~Selection(){}
   
 };
@@ -38,7 +42,7 @@ class MaxSetCoverSelection: public Selection{
         bool calc_gain(const CSR& g, Val& m_gain, Size row);
         bool update_selector(const CSR& g, Size row);
         
-        MaxSetCoverSelection():initialized(false){}
+        MaxSetCoverSelection(Size k):initialized(false),Selection(k){}
         ~MaxSetCoverSelection(){}
     
 };

@@ -27,7 +27,14 @@ int main(int argc, char** argv) {
   cout << "number of entries: " << g.nRow << endl;
   cout << "number of features: " << g.nCol << endl;
   cout << "number of Non-Zeros: " << g.nNz << endl;
-  cout << "Graph (end)" << endl;
+  for(Size i:g.verPtr)
+    cout<< i << " ";
+  cout << endl;
+  for(Edge i:g.verInd)
+    cout<< i.id <<" " << i.weight << " " << endl;
+  cout << endl;
+  
+  cout << "Data (end)" << endl;
   cout << "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}" << endl;
 
 }
