@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <cassert>
+#include <stdlib.h>
+#include <time.h>
 
 #include "CSR.h"
 #include "Utility.h"

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h>     
+#include <time.h>
 #include <mpi.h>
 
 #include "CSR.h"
@@ -42,21 +44,19 @@ int main(int argc, char** argv) {
     vector<Size> rowIdxs;
     ResizeVector<Size>(&rowIdxs,g.nRow/size);
     
-    srand(time(NULL));
+    srand(time(NULL)+rank);
     for(Size i=0; i< g.nRow/size; i++){
         rowIdxs[i] = rand() % g.nRow ;
-        cout << rowIdxs[i];
     }
-    cout << endl;
     
     CSR s;
     g.getSubmatrix(s,rowIdxs);
     
-    lz.select(g, sCover, k);
+    lz.select(s, sCover, k);
       
     cout << "Selected Entries:";
     for(Size i:sCover.selectedRows)
-        cout<< i << " ";
+        cout<< rowIdxs[i] << " ";
     cout << "Total Coverage:"<< sCover.totalGain << endl;
 
     MPI_Finalize();                         // terminate MPI
