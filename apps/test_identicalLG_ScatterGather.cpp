@@ -9,7 +9,7 @@
 #include "Selection.h"
 #include "Optimizer.h"
 
-MPI_Datatype mpiSize = MPI_INT;
+MPI_Datatype mpiSize = MPI_UNSIGNED_LONG;
 MPI_Datatype mpiVal = MPI_DOUBLE;
 
 int main(int argc, char** argv) {
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
         cout << "Partitioning data:" << endl;
         
         cout << "All rows: ";
-        for (int i = 1; i < g.nRow; i++){
+        for (int i = 0; i < g.nRow; i++){
             rowIdxSend[i] = rand() % g.nRow ;
             cout << rowIdxSend[i] << " ";
         }
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
     if(rank == 0)
         ResizeVector<Size>(&combinedSoln,k*size);
     
-    MPI_Gather(&combinedSoln[0], g.nRow/size, mpiSize, &sCover.selectedRows[0],g.nRow/size, mpiSize, 0,  MPI_COMM_WORLD);
+    MPI_Gather(&sCover.selectedRows[0], g.nRow/size, mpiSize, &combinedSoln[0],g.nRow/size, mpiSize, 0,  MPI_COMM_WORLD);
     
     MPI_Barrier(MPI_COMM_WORLD);
     
