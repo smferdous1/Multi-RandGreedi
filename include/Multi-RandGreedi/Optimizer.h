@@ -21,7 +21,15 @@ class LazyGreedy: public Optimizer{
 
 class GreeDiL: public Optimizer{
     public:
+        Optimizer o;
+        Size machCapacity;
     bool select(const CSR& g, Selection& s,Size k);
+    
+    GreeDiL(Optimizer opti, Size mSize):machCapacity(mSize){ 
+        o = opti; 
+    }
+    ~GreeDiL(){}
+    
 };
 
 #endif //OPTIMIZER_H

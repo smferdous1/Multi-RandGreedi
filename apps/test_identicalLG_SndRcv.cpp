@@ -8,10 +8,7 @@
 #include "CSR.h"
 #include "Selection.h"
 #include "Optimizer.h"
-
-// Move to types.h
-MPI_Datatype mpiSize = MPI_UNSIGNED_LONG;
-MPI_Datatype mpiVal = MPI_DOUBLE;
+#include "MPI_Types.h"
 
 int main(int argc, char** argv) {
     if (argc != 3) {
