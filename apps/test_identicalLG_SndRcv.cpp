@@ -55,10 +55,12 @@ int main(int argc, char** argv) {
             }
             MPI_Send(&rowIdxs[0], g.nRow/size, mpiSize, i, 0, MPI_COMM_WORLD);
         }
+        for(Size j=0; j< g.nRow/size; j++){
+            rowIdxs[j] = rand() % g.nRow;
+        }
     } 
     else {
-    // If we are a receiver process, receive the data from the root
-    MPI_Recv(&rowIdxs[0], g.nRow/size, mpiSize, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Recv(&rowIdxs[0], g.nRow/size, mpiSize, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
     
     
@@ -73,48 +75,55 @@ int main(int argc, char** argv) {
         cout<< rowIdxs[i] << " ";
     cout << "Total Coverage:"<< sCover.totalGain << endl;
     
-    MPI_Barrier(MPI_COMM_WORLD);
+    // MPI_Barrier(MPI_COMM_WORLD);
     
-    vector<Size> combinedSoln;
-    if (rank != 0) {
-        cout << "Sending back to 0: ";
-        for(Size i = 0; i<k; i++){
-            sCover.selectedRows[i] = rowIdxs[sCover.selectedRows[i]];
-            cout << sCover.selectedRows[i] << " ";
-        }
-        cout << endl;
-        MPI_Send(&sCover.selectedRows[0], k, mpiSize, 0, 0, MPI_COMM_WORLD);
-    } 
-    else {
-        ResizeVector<Size>(&combinedSoln,k*size);
-        for (int i = 0; i < k; i++)
-            combinedSoln[i]=rowIdxs[sCover.selectedRows[i]];
+    // vector<Size> combinedSoln;
+    // if (rank != 0) {
+        // cout << "Sending back to 0: ";
+        // for(Size i = 0; i<k; i++){
+            // sCover.selectedRows[i] = rowIdxs[sCover.selectedRows[i]];
+            // cout << sCover.selectedRows[i] << " ";
+        // }
+        // cout << endl;
+        // MPI_Send(&sCover.selectedRows[0], k, mpiSize, 0, 0, MPI_COMM_WORLD);
+    // } 
+    // else {
+        // ResizeVector<Size>(&combinedSoln,k*size);
+        // for (int i = 0; i < k; i++)
+            // combinedSoln[i]=rowIdxs[sCover.selectedRows[i]];
          
-        for (int i = 1; i < size; i++){
-            MPI_Recv(&combinedSoln[i*k], k, mpiSize, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        }
-    }
+        // for (int i = 1; i < size; i++){
+            // MPI_Recv(&combinedSoln[i*k], k, mpiSize, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            
+            // cout << "Message from "<< i <<": ";
+            // for( int j= i*k ; j < (i+1)*k; k++)
+                // cout << combinedSoln[j] << " ";
+            // cout << endl;
+            
+        // }
+    // }
 
-    MPI_Barrier(MPI_COMM_WORLD); 
+    // MPI_Barrier(MPI_COMM_WORLD);
+    // cout << "Received all sends" << endl; 
 
-    if(rank == 0){
-        cout << "Finally selecting from";
-        for (int i = 0; i < k*size; i++){
-            cout << combinedSoln[i] << " ";
-        }
-        cout << endl;
+    // if(rank == 0){
+        // cout << "Finally selecting from";
+        // for (int i = 0; i < k*size; i++){
+            // cout << combinedSoln[i] << " ";
+        // }
+        // cout << endl;
         
-        MaxSetCoverSelection sCoverCombined(k);
-        g.getSubmatrix(s,combinedSoln);
+        // MaxSetCoverSelection sCoverCombined(k);
+        // g.getSubmatrix(s,combinedSoln);
         
-        lz.select(s, sCoverCombined, k);
+        // lz.select(s, sCoverCombined, k);
       
-        cout << "Final Selected Entries:";
-        for(Size i:sCoverCombined.selectedRows)
-            cout<< combinedSoln[i] << " ";
-        cout << "Total Coverage:"<< sCover.totalGain << endl;
+        // cout << "Final Selected Entries:";
+        // for(Size i:sCoverCombined.selectedRows)
+            // cout<< combinedSoln[i] << " ";
+        // cout << "Total Coverage:"<< sCover.totalGain << endl;
         
-    }
+    // }
     
 
     MPI_Finalize();                         // terminate MPI
