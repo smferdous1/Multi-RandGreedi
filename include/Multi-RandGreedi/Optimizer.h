@@ -18,4 +18,10 @@ class LazyGreedy: public Optimizer{
     bool select(const CSR& g, Selection& s,Size k);
 };
 
+
+class GreeDiL: public Optimizer{
+    public:
+    bool select(const CSR& g, Selection& s,Size k);
+};
+
 #endif //OPTIMIZER_H

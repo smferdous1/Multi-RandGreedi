@@ -9,6 +9,9 @@
 #include "Selection.h"
 #include "Optimizer.h"
 
+MPI_Datatype mpiSize = MPI_INT;
+MPI_Datatype mpiVal = MPI_DOUBLE;
+
 int main(int argc, char** argv) {
     if (argc != 3) {
         cout << "usage: "
@@ -41,13 +44,27 @@ int main(int argc, char** argv) {
         return 1;
     }
     
-    vector<Size> rowIdxs;
-    ResizeVector<Size>(&rowIdxs,g.nRow/size);
+    vector<Size> rowIdxs, rowIdxSend;
     
-    srand(time(NULL)+rank);
-    for(Size i=0; i< g.nRow/size; i++){
-        rowIdxs[i] = rand() % g.nRow ;
+    if (rank == 0) {
+        srand(time(NULL));
+        cout << "Partitioning data:" << endl;
+        vector<Size> rowIdxSend;
+        ResizeVector<Size>(&rowIdxSend,g.nRow);
+        cout << "All rows: ";
+        for (int i = 1; i < g.nRow; i++){
+            rowIdxSend[i] = rand() % g.nRow ;
+            cout << rowIdxSend[i] << " ";
+        }
+        cout << endl;
     }
+    
+    ResizeVector<Size>(&rowIdxs,g.nRow/size);
+    cout << "Reached Barrier " << endl;
+    MPI_Barrier(MPI_COMM_WORLD);
+    
+    cout << "Sending Row indx" << endl;
+    MPI_Scatter(&rowIdxSend[0], g.nRow/size, mpiSize, &rowIdxs[0], g.nRow/size, mpiSize, 0, MPI_COMM_WORLD);
     
     CSR s;
     g.getSubmatrix(s,rowIdxs);
@@ -58,6 +75,41 @@ int main(int argc, char** argv) {
     for(Size i:sCover.selectedRows)
         cout<< rowIdxs[i] << " ";
     cout << "Total Coverage:"<< sCover.totalGain << endl;
+    
+    
+    for(Size i = 0; i<k; i++){
+        sCover.selectedRows[i] = rowIdxs[sCover.selectedRows[i]];
+        cout << sCover.selectedRows[i] << " ";
+    }
+    cout << endl;
+    
+    vector<Size> combinedSoln;
+    if(rank == 0)
+        ResizeVector<Size>(&combinedSoln,k*size);
+    
+    MPI_Gather(&combinedSoln[0], g.nRow/size, mpiSize, &sCover.selectedRows[0],g.nRow/size, mpiSize, 0,  MPI_COMM_WORLD);
+    
+    MPI_Barrier(MPI_COMM_WORLD);
+    
+    if( rank == 0){
+        cout << "Finally selecting from";
+        for (int i = 0; i < k*size; i++){
+            cout << combinedSoln[i] << " ";
+        }
+        cout << endl;
+        
+        MaxSetCoverSelection sCoverCombined(k);
+        g.getSubmatrix(s,combinedSoln);
+        
+        lz.select(s, sCoverCombined, k);
+      
+        cout << "Final Selected Entries:";
+        for(Size i:sCoverCombined.selectedRows)
+            cout<< combinedSoln[i] << " ";
+        cout << "Total Coverage:"<< sCover.totalGain << endl;
+        
+    }
+    
 
     MPI_Finalize();                         // terminate MPI
     return 0;
