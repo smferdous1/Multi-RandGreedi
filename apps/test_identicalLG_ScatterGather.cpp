@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
              << endl;
         return 1;
     }
-    int k = stoi(argv[2]);
-    //int m = stoi(argv[3]);
+    Size k = stoi(argv[2]);
+    //Size m = stoi(argv[3]);
       
   
 
@@ -51,19 +51,18 @@ int main(int argc, char** argv) {
         ResizeVector<Size>(&rowIdxSend,g.nRow);
         cout << "Partitioning data:" << endl;
         
-        cout << "All rows: ";
-        for (int i = 0; i < g.nRow; i++){
+        //cout << "All rows: ";
+        for (Size i = 0; i < g.nRow; i++){
             rowIdxSend[i] = rand() % g.nRow ;
-            cout << rowIdxSend[i] << " ";
+            //cout << rowIdxSend[i] << " ";
         }
-        cout << endl;
+        //cout << endl;
     }
     
     ResizeVector<Size>(&rowIdxs,g.nRow/size);
-    cout << "Reached Barrier " << endl;
+    cout << "Reached Barrier " << rank << endl;
     MPI_Barrier(MPI_COMM_WORLD);
     
-    cout << "Sending Row indx" << endl;
     MPI_Scatter(&rowIdxSend[0], g.nRow/size, mpiSize, &rowIdxs[0], g.nRow/size, mpiSize, 0, MPI_COMM_WORLD);
     
     CSR s;
@@ -71,10 +70,10 @@ int main(int argc, char** argv) {
     
     lz.select(s, sCover, k);
       
-    cout << "Selected Entries:";
-    for(Size i:sCover.selectedRows)
-        cout<< rowIdxs[i] << " ";
-    cout << "Total Coverage:"<< sCover.totalGain << endl;
+    // cout << "Selected Entries:";
+    // for(Size i:sCover.selectedRows)
+        // cout<< rowIdxs[i] << " ";
+    cout << "Total Coverage of "<< rank << ": " << sCover.totalGain << endl;
     
     
     for(Size i = 0; i<k; i++){
@@ -87,13 +86,14 @@ int main(int argc, char** argv) {
     if(rank == 0)
         ResizeVector<Size>(&combinedSoln,k*size);
     
-    MPI_Gather(&sCover.selectedRows[0], g.nRow/size, mpiSize, &combinedSoln[0],g.nRow/size, mpiSize, 0,  MPI_COMM_WORLD);
+    MPI_Gather(&sCover.selectedRows[0], k, mpiSize, &combinedSoln[0],k, mpiSize, 0,  MPI_COMM_WORLD);
     
+    cout << "Reached barrier 2" << endl;
     MPI_Barrier(MPI_COMM_WORLD);
     
     if( rank == 0){
         cout << "Finally selecting from";
-        for (int i = 0; i < k*size; i++){
+        for (Size i = 0; i < k*size; i++){
             cout << combinedSoln[i] << " ";
         }
         cout << endl;
