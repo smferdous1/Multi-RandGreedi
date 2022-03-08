@@ -44,54 +44,60 @@ int main(int argc, char** argv) {
         return 1;
     }
     
-    vector<Size> rowIdxs, rowIdxSend;
+    vector<Size> rowIdxs;
+    ResizeVector<Size>(&rowIdxs,g.nRow/size);
     
     if (rank == 0) {
         srand(time(NULL));
-        cout << "Partitioning data:" << endl;
-        vector<Size> rowIdxSend;
-        ResizeVector<Size>(&rowIdxSend,g.nRow);
-        cout << "All rows: ";
-        for (int i = 1; i < g.nRow; i++){
-            rowIdxSend[i] = rand() % g.nRow ;
-            cout << rowIdxSend[i] << " ";
+        for (int i = 1; i < size; i++){
+            for(Size j=0; j< g.nRow/size; j++){
+                rowIdxs[j] = rand() % g.nRow ;
+            }
+            MPI_Send(&rowIdxs[0], g.nRow/size, mpiSize, i, 0, MPI_COMM_WORLD);
         }
-        cout << endl;
+    } 
+    else {
+    // If we are a receiver process, receive the data from the root
+    MPI_Recv(&rowIdxs[0], g.nRow/size, mpiSize, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
     
-    ResizeVector<Size>(&rowIdxs,g.nRow/size);
-    cout << "Reached Barrier " << endl;
-    MPI_Barrier(MPI_COMM_WORLD);
-    
-    cout << "Sending Row indx" << endl;
-    MPI_Scatter(&rowIdxSend[0], g.nRow/size, mpiSize, &rowIdxs[0], g.nRow/size, mpiSize, 0, MPI_COMM_WORLD);
     
     CSR s;
     g.getSubmatrix(s,rowIdxs);
     
     lz.select(s, sCover, k);
-      
+    
+    
     cout << "Selected Entries:";
     for(Size i:sCover.selectedRows)
         cout<< rowIdxs[i] << " ";
     cout << "Total Coverage:"<< sCover.totalGain << endl;
     
-    
-    for(Size i = 0; i<k; i++){
-        sCover.selectedRows[i] = rowIdxs[sCover.selectedRows[i]];
-        cout << sCover.selectedRows[i] << " ";
-    }
-    cout << endl;
-    
-    vector<Size> combinedSoln;
-    if(rank == 0)
-        ResizeVector<Size>(&combinedSoln,k*size);
-    
-    MPI_Gather(&combinedSoln[0], g.nRow/size, mpiSize, &sCover.selectedRows[0],g.nRow/size, mpiSize, 0,  MPI_COMM_WORLD);
-    
     MPI_Barrier(MPI_COMM_WORLD);
     
-    if( rank == 0){
+    if (rank != 0) {
+        cout << "Sending back to 0: ";
+        for(Size i = 0; i<k; i++){
+            sCover.selectedRows[i] = rowIdxs[sCover.selectedRows[i]];
+            cout << sCover.selectedRows[i] << " ";
+        }
+        cout << endl;
+        MPI_Send(&sCover.selectedRows[0], k, mpiSize, 0, 0, MPI_COMM_WORLD);
+    } 
+    else {
+        vector<Size> combinedSoln;
+        ResizeVector<Size>(&combinedSoln,k*size);
+        for (int i = 0; i < k; i++)
+            combinedSoln[i]=rowIdxs[sCover.selectedRows[i]];
+         
+        for (int i = 1; i < size; i++){
+            MPI_Recv(&combinedSoln[i*k], k, mpiSize, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+    }
+
+    MPI_Barrier(MPI_COMM_WORLD); 
+
+    if(rank == 0);
         cout << "Finally selecting from";
         for (int i = 0; i < k*size; i++){
             cout << combinedSoln[i] << " ";

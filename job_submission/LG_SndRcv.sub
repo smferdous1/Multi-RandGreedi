@@ -1,0 +1,15 @@
+#!/bin/bash
+# FILENAME:  mpi_hello.sub
+#SBATCH  --nodes=4
+#SBATCH  --ntasks-per-node=1
+#SBATCH  --time=00:01:00
+#SBATCH  -A standby
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+srun  --mpi=pmi2 -n 4 ../build/apps/testlgsndrcv ../data/lhr01.mtx 20
