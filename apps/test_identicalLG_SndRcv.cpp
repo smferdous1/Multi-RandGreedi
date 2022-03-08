@@ -75,6 +75,7 @@ int main(int argc, char** argv) {
     
     MPI_Barrier(MPI_COMM_WORLD);
     
+    vector<Size> combinedSoln;
     if (rank != 0) {
         cout << "Sending back to 0: ";
         for(Size i = 0; i<k; i++){
@@ -85,7 +86,6 @@ int main(int argc, char** argv) {
         MPI_Send(&sCover.selectedRows[0], k, mpiSize, 0, 0, MPI_COMM_WORLD);
     } 
     else {
-        vector<Size> combinedSoln;
         ResizeVector<Size>(&combinedSoln,k*size);
         for (int i = 0; i < k; i++)
             combinedSoln[i]=rowIdxs[sCover.selectedRows[i]];
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
 
     MPI_Barrier(MPI_COMM_WORLD); 
 
-    if(rank == 0);
+    if(rank == 0){
         cout << "Finally selecting from";
         for (int i = 0; i < k*size; i++){
             cout << combinedSoln[i] << " ";
