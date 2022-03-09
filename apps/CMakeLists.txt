@@ -40,3 +40,10 @@ target_compile_features(testlgsndrcv PRIVATE cxx_std_11)
 target_compile_options(testlgsndrcv PRIVATE -O3 )
 target_link_libraries(testlgsndrcv PRIVATE mrg MPI::MPI_CXX)
 target_include_directories(testlgsndrcv PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi")
+
+#executable test_greeDiL
+add_executable(testgreeDiL test_greeDiL.cpp)
+target_compile_features(testgreeDiL PRIVATE cxx_std_11)
+target_compile_options(testgreeDiL PRIVATE -O3 )
+target_link_libraries(testgreeDiL PRIVATE mrg MPI::MPI_CXX)
+target_include_directories(testgreeDiL PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi")
