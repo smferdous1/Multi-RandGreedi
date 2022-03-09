@@ -102,7 +102,7 @@ bool CSR::readMtx(char* filename)
    return true;
 }
 
-bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs){
+bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
     
     
     Size nrow = 0;

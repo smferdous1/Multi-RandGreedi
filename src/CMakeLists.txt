@@ -5,13 +5,14 @@ set(HEADER_LIST
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Selection.h"
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Types.h"
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Utility.h"
-    
+    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/MPI_Types.h"
     )
 
 add_library(mrg
     CSR.cpp
     LazyGreedy.cpp
     MaxSetCoverSelection.cpp
+    GreeDiL.cpp
     ${HEADER_LIST}
     )
 

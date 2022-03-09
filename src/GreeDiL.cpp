@@ -4,6 +4,7 @@
 #include "Optimizer.h"
 #include "Utility.h"
 #include "MPI_Types.h"
+
 using namespace std;
 
 
@@ -11,15 +12,16 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
     
     int mpi_rank, mpi_size;
     
-    MPI_Init(&argc, &argv);  
     MPI_Comm_size(MPI_COMM_WORLD, &mpi_size); 
     MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
     
     MPI_Group world_group;
     MPI_Comm_group(MPI_COMM_WORLD, &world_group);
     
+    Size b = branchingFactor;
     
-    assert(g.nRow <= machCapacity* mpi_size);
+    // b = machCapacity/k;
+    // assert(g.nRow <= machCapacity* mpi_size);
     
     vector<Size> rowIdxs, rowIdxSend;
     
@@ -37,7 +39,7 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
     
     MPI_Scatter(&rowIdxSend[0], g.nRow/mpi_size, mpiSize, &rowIdxs[0], g.nRow/mpi_size, mpiSize, 0, MPI_COMM_WORLD);
     
-    Size b = machCapacity/k;
+    
     Size count = mpi_size-1;
     Size level = 1;
 
@@ -57,32 +59,32 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
     
     for( int i =0; i<level; i++){
         if(mpi_rank % firstSib[i] == 0) {
-            CSR s;
-            g.getSubmatrix(s,rowIdxs);
+            CSR subMtx;
+            g.getSubmatrix(subMtx,rowIdxs);
             
-            lz.select(s, sCover, k);
+            localOptimizer->select(subMtx, s, k);
             
-            cout << "Total Coverage of "<< mpi_rank << ": " << sCover.totalGain << endl;
+            cout << "Total Coverage of "<< mpi_rank << ": " << s.totalGain << endl;
     
     
             for(Size j = 0; j<k; j++){
-                sCover.selectedRows[j] = rowIdxs[sCover.selectedRows[j]];
-                //cout << sCover.selectedRows[j] << " ";
+                s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
+                //cout << s.selectedRows[j] << " ";
             }
             //cout << endl;
             
             
             // Creating communicator for MPI_Gather
             
-            vector<Size> myGrp;
-            Size nSiblings;
-            ResizeVector<Size>(&myGrp, b);
+            vector<int> myGrp;
+            int nSiblings;
+            ResizeVector<int>(&myGrp, b);
             
             
             myGrp[0] = (mpi_rank/ firstSib[i+1])* firstSib[i+1]; 
-            for(int nSiblings = 0; nSiblings < b-1 ; j++){
-                if(myGrp[j]+firstSib[i]<mpi_size)
-                    myGrp[j+1] = myGrp[j]+firstSib[i];
+            for(nSiblings = 0; nSiblings < b-1 ; nSiblings++){
+                if(myGrp[nSiblings]+firstSib[i]<mpi_size)
+                    myGrp[nSiblings+1] = myGrp[nSiblings]+firstSib[i];
                 else
                     break;
             }
@@ -99,26 +101,25 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
             if(mpi_rank== myGrp[0])
                 ResizeVector<Size>(&rowIdxs,k*nSiblings);
             
-            MPI_Gather(&sCover.selectedRows[0], k, mpiSize, &rowIdxs[0],k, mpiSize, 0, sibl_comm);
+            MPI_Gather(&(s.selectedRows[0]), k, mpiSize, &rowIdxs[0],k, mpiSize, 0, sibl_comm);
         }
     }
     
     if(mpi_rank == 0){
         cout << "Finally selecting from";
-        for (Size i = 0; i < k*size; i++){
+        for (Size i = 0; i < k*mpi_size; i++){
             cout << rowIdxs[i] << " ";
         }
         cout << endl;
         
-        MaxSetCoverSelection sCoverCombined(k);
-        g.getSubmatrix(s,rowIdxs);
-        
-        lz.select(s, sCoverCombined, k);
+        CSR subMtx;
+        g.getSubmatrix(subMtx,rowIdxs);
+        localOptimizer->select(subMtx, s, k);
       
         cout << "Final Selected Entries:";
-        for(Size i:sCoverCombined.selectedRows)
+        for(Size i:s.selectedRows)
             cout<< rowIdxs[i] << " ";
-        cout << "Total Coverage:"<< sCover.totalGain << endl;
+        cout << "Total Coverage:"<< s.totalGain << endl;
     }
     
     return true;

@@ -32,7 +32,7 @@ class CSR {
     vector<Edge> verInd;   // Edge array
     
     bool readMtx(char * filename); // reading as a general graph
-    bool getSubmatrix( CSR& subMtx, vector<Size>& rowIdxs);
+    bool getSubmatrix( CSR& subMtx, vector<Size>& rowIdxs) const ;
     
     CSR():nRow(0),nCol(0),nNz(0){}
     ~CSR(){}

@@ -23,8 +23,11 @@ class Selection
     virtual bool calc_gain(const CSR& g, Val& m_gain, Size row)= 0; // calculates the marginal gain of adding row into the selection
     
     virtual bool update_selector(const CSR& g, Size row)= 0; //adds row to selecton and updates state.
+    
+    virtual void reset(Size k) = 0; 
+    
     Selection(Size k):totalGain(0),nSelection(k){
-        ReserveVector<Size>(&selectedRows,nSelection);
+        ResizeVector<Size>(&selectedRows,nSelection);
     }
     ~Selection(){}
   
@@ -41,6 +44,8 @@ class MaxSetCoverSelection: public Selection{
     public:
         bool calc_gain(const CSR& g, Val& m_gain, Size row);
         bool update_selector(const CSR& g, Size row);
+        void reset(Size k);
+        
         
         MaxSetCoverSelection(Size k):initialized(false),Selection(k){}
         ~MaxSetCoverSelection(){}

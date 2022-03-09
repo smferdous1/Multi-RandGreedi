@@ -2,7 +2,7 @@
 # FILENAME:  mpi_hello.sub
 #SBATCH  --nodes=4
 #SBATCH  --ntasks-per-node=1
-#SBATCH  --time=00:01:00
+#SBATCH  --time=00:00:30
 #SBATCH  -A standby
 
 module load gcc

@@ -21,14 +21,16 @@ class LazyGreedy: public Optimizer{
 
 class GreeDiL: public Optimizer{
     public:
-        Optimizer o;
-        Size machCapacity;
+        Optimizer* localOptimizer;
+        Size branchingFactor;
     bool select(const CSR& g, Selection& s,Size k);
     
-    GreeDiL(Optimizer opti, Size mSize):machCapacity(mSize){ 
-        o = opti; 
+    // If p_branch is tru then the parameter is the branching factor else it is the size of the machine.
+    
+    GreeDiL(Optimizer* opti, Size brnchFctr):branchingFactor(brnchFctr){ 
+        localOptimizer = opti; 
     }
-    ~GreeDiL(){}
+    ~GreeDiL(){ }
     
 };
 

@@ -51,4 +51,12 @@ bool MaxSetCoverSelection::update_selector(const CSR& g, Size row){
     //cout << "Pushed into selected rows" << endl;
     
     return true;
-    } //adds row to selecton and updates state
+} //adds row to selecton and updates state
+
+
+void MaxSetCoverSelection::reset(Size k){
+    totalGain = 0;
+    nSelection = k;
+    ResizeVector<Size>(&selectedRows,nSelection);
+    initialized = false;
+}
