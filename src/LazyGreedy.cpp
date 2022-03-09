@@ -6,7 +6,7 @@ using namespace std;
 bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
     
     if(g.nRow<k) return false;
-    
+    s.reset(k);
     vector<pair<Val,Size>> priQ;
     ResizeVector<pair<Val,Size>>(&priQ, g.nRow);
     Val gain;

@@ -8,7 +8,7 @@
 #include "Optimizer.h"
 
 int main(int argc, char** argv) {
-  if (argc != 3) {
+  if (argc != 4) {
     cout << "usage: "
          << argv[0]
          << " graphFile"
@@ -35,10 +35,12 @@ int main(int argc, char** argv) {
   
   gDl.select(g, sCover, k);
   
-  // cout << "Selected Entries:";
-  // for(Size i:sCover.selectedRows)
-    // cout<< i << " ";
-  // cout << "Total Coverage:"<< sCover.totalGain << endl;
+  int mpi_rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
+  cout << "Selected Entries by " << mpi_rank << "is:";
+  for(Size i:sCover.selectedRows)
+    cout<< i << " ";
+  cout << "Total Coverage:"<< sCover.totalGain << endl;
   
 
 }
