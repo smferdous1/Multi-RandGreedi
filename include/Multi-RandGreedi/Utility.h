@@ -1,6 +1,4 @@
-#ifndef UTILITY_H
-#define UTILITY_H
-
+#pragma once
 #include <vector>
 
 #include "Types.h"
@@ -21,4 +19,3 @@ inline void ResizeVector(std::vector<T>* vec, Size size) {
 }
 
 
-#endif // UTILITY_H

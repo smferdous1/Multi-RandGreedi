@@ -1,5 +1,4 @@
-#ifndef OPTIMIZER_H
-#define OPTIMIZER_H
+#pragma once
 
 #include "CSR.h"
 #include "Selection.h"
@@ -34,4 +33,4 @@ class GreeDiL: public Optimizer{
     
 };
 
-#endif //OPTIMIZER_H
+#pragma once

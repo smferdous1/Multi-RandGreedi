@@ -4,8 +4,33 @@
 #include <cstring>
 using namespace std;
 
-bool CSR::readMtx(char* filename)
-{
+bool CSR::getRow(Size& row, Size edgId) const{
+    // performing binary search in verPtr
+    Size begin =0;
+    Size end = nRow-1;
+    Size mid = (end + begin)/2;
+    if(edgId >= nNz) return false;
+    
+    while(true){
+        if(verPtr[mid]<= edgId && verPtr[mid+1] >edgId){
+            row = mid
+            return true;
+        }
+            
+        if(verPtr[mid] < edgId){
+            begin = mid+1;
+            mid = (end + begin)/2;
+        }
+        else{
+            end = mid-1;
+            mid = (end + begin)/2;
+        }
+    }
+    
+    
+}
+
+bool CSR::readMtx(char* filename){
     Size count=0,i,j;
     Size inp, m1, sym, edgecnt_;
     Size numRow, numCol, nonZeros, numEdges;

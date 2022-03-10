@@ -1,5 +1,4 @@
-#ifndef CSR_H
-#define CSR_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -28,15 +27,16 @@ class CSR {
     Size nCol;       // number of columns
     Size nNz;      // number of nonzeros
     Size maxDeg;
-    vector<Size> verPtr;    // vertex pointer array of size nVer+1
+    vector<Size> verPtr;    // vertex pointer array of size nRow+1
     vector<Edge> verInd;   // Edge array
     
     bool readMtx(char * filename); // reading as a general graph
+    bool getRow(Size& row, Size edgId) const;
     bool getSubmatrix( CSR& subMtx, vector<Size>& rowIdxs) const ;
+    
     
     CSR():nRow(0),nCol(0),nNz(0){}
     ~CSR(){}
 
 };
 
-#endif //CSR_H
