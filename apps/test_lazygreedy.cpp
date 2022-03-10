@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
   }
   int k = stoi(argv[2]);
   CSR g;
-  MaxSetCoverSelection sCover(k);
+  KMedoidSelection kMedoid(k);
   LazyGreedy lz;
   
   cout << "reading file ..." << endl;
@@ -26,12 +26,12 @@ int main(int argc, char** argv) {
     return 1;
   }
   
-  lz.select(g, sCover, k);
+  lz.select(g, kMedoid, k);
   
   cout << "Selected Entries:";
-  for(Size i:sCover.selectedRows)
+  for(Size i:kMedoid.selectedRows)
     cout<< i << " ";
-  cout << "Total Coverage:"<< sCover.totalGain << endl;
+  cout << "Total Coverage:"<< kMedoid.totalGain << endl;
   
 
 }

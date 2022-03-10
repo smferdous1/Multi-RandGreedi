@@ -3,12 +3,13 @@
 #include "Utility.h"
 using namespace std;
 bool MaxSetCoverSelection::init(const CSR& g){
-    ResizeVector<bool>(&coveredCols, g.nCol);
+    Size col = g.nCol;
+    ResizeVector<bool>(&coveredCols, col);
     initialized = true;
     return true;
 }
 
-bool MaxSetCoverSelection::calc_gain(const CSR& g, Val& m_gain, Size row) const{
+bool MaxSetCoverSelection::calc_gain(const CSR& g, Val& m_gain, Size row){
     if(!initialized){ 
         init(g);
         //cout << "initialized Selection obj" << endl;

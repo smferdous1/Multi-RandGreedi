@@ -19,7 +19,7 @@ class Selection
         vector<Size> selectedRows;
         Size nSelection;
     
-    virtual bool calc_gain(const CSR& g, Val& m_gain, Size row) const = 0; // calculates the marginal gain of adding row into the selection
+    virtual bool calc_gain(const CSR& g, Val& m_gain, Size row) = 0; // calculates the marginal gain of adding row into the selection
     
     virtual bool update_selector(const CSR& g, Size row)= 0; //adds row to selecton and updates state.
     
@@ -41,25 +41,7 @@ class MaxSetCoverSelection: public Selection{
     bool init(const CSR& g);
         
     public:
-        bool calc_gain(const CSR& g, Val& m_gain, Size row) const;
-        bool update_selector(const CSR& g, Size row);
-        void reset(Size k);
-        
-        
-        MaxSetCoverSelection(Size k):initialized(false),Selection(k){}
-        ~MaxSetCoverSelection(){}
-    
-};
-
-class MaxSetCoverSelection: public Selection{
-    
-    vector<bool> coveredCols;
-    bool initialized;
-    
-    bool init(const CSR& g);
-        
-    public:
-        bool calc_gain(const CSR& g, Val& m_gain, Size row) const;
+        bool calc_gain(const CSR& g, Val& m_gain, Size row);
         bool update_selector(const CSR& g, Size row);
         void reset(Size k);
         
@@ -77,7 +59,7 @@ class KMedoidSelection: public Selection{
     bool init(const CSR& g);
         
     public:
-        bool calc_gain(const CSR& g, Val& m_gain, Size row) const;
+        bool calc_gain(const CSR& g, Val& m_gain, Size row);
         bool update_selector(const CSR& g, Size row);
         void reset(Size k);
         
@@ -96,8 +78,9 @@ class BMatchingSelection: public Selection{
     
     
     bool init(const CSR& g);
+    bool isBSaturated(Size row);
     public:
-        bool calc_gain(const CSR& g, Val& m_gain, Size edgIdx) const;
+        bool calc_gain(const CSR& g, Val& m_gain, Size edgIdx);
         bool update_selector(const CSR& g, Size edgIdx);
         void reset(Size k);
         

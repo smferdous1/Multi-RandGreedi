@@ -13,7 +13,7 @@ bool CSR::getRow(Size& row, Size edgId) const{
     
     while(true){
         if(verPtr[mid]<= edgId && verPtr[mid+1] >edgId){
-            row = mid
+            row = mid;
             return true;
         }
             

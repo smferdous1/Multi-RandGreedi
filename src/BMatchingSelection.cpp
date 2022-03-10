@@ -11,11 +11,11 @@ bool BMatchingSelection::init(const CSR& g){
     return true;
 }
 
-bool isBSaturated(Size row) const{
-    return bCurrentCol[row] >= bMaxCol;
+bool BMatchingSelection::isBSaturated(Size row){
+    return bCurrentCol[row] >= bMaxCol[row];
 }
 
-bool BMatchingSelection::calc_gain(const CSR& g, Val& m_gain, Size edgeIdx) const{
+bool BMatchingSelection::calc_gain(const CSR& g, Val& m_gain, Size edgeIdx){
     if(!initialized){ 
         init(g);
         //cout << "initialized Selection obj" << endl;
@@ -26,9 +26,9 @@ bool BMatchingSelection::calc_gain(const CSR& g, Val& m_gain, Size edgeIdx) cons
     Size row;
     g.getRow(row,edgeIdx);
     
-    if( !isBSaturated(row) && !isBSaturated(e.id) && row >= e.id){
+    if( !isBSaturated(row) && !isBSaturated(e.id) && (row >= e.id)){
         
-        m_gain = pow(pow(totalGainBase+e.weight, exponent) - totalGain;
+        m_gain = pow(totalGainBase+e.weight, exponent) - totalGain;
         return true;
     }
     m_gain = 0;
@@ -46,7 +46,7 @@ bool BMatchingSelection::update_selector(const CSR& g, Size edgeIdx){
     Size row;
     g.getRow(row,edgeIdx);
     
-    if( !isBSaturated(row) && !isBSaturated(e.id) && && row >= e.id){
+    if( !isBSaturated(row) && !isBSaturated(e.id) && (row >= e.id) ){
         bCurrentCol[row]++;
         bCurrentCol[e.id]++;
         totalGainBase+= e.weight;
@@ -59,7 +59,7 @@ bool BMatchingSelection::update_selector(const CSR& g, Size edgeIdx){
 } //adds row to selecton and updates state
 
 
-void MaxSetCoverSelection::reset(Size k){
+void BMatchingSelection::reset(Size k){
     totalGain = 0;
     totalGainBase = 0;
     nSelection = k;
