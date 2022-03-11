@@ -70,7 +70,7 @@ class KMedoidSelection: public Selection{
 };
 
 class BMatchingSelection: public Selection{
-    // working only upper triangular matrix;
+    // expecting edge adj matrix;
     vector<Size> bMaxCol, bCurrentCol;
     Val exponent;
     bool initialized;
@@ -85,7 +85,7 @@ class BMatchingSelection: public Selection{
         void reset(Size k);
         
         
-        BMatchingSelection(vector<Size>& bMaxColumn, Size k):initialized(false),totalGainBase(0),Selection(k){
+        BMatchingSelection(vector<Size>& bMaxColumn, Val exp, Size k):initialized(false),exponent(exp),totalGainBase(0),Selection(k){
             ResizeVector<Size>(&bMaxCol, bMaxColumn.size());
             ResizeVector<Size>(&bCurrentCol, bMaxColumn.size());
             

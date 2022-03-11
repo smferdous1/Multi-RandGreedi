@@ -1,7 +1,14 @@
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <string>
+#include <cassert>
+#include <cstring>
+
+
 #include "CSR.h"
 #include "Utility.h"
 #include "Types.h"
-#include <cstring>
 using namespace std;
 
 bool CSR::getRow(Size& row, Size edgId) const{

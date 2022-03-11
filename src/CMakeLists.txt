@@ -11,8 +11,12 @@ set(HEADER_LIST
 add_library(mrg
     CSR.cpp
     LazyGreedy.cpp
-    MaxSetCoverSelection.cpp
     GreeDiL.cpp
+
+    MaxSetCoverSelection.cpp
+    KMedoidSelection.cpp
+    BMatchingSelection.cpp 
+    
     ${HEADER_LIST}
     )
 
