@@ -22,7 +22,7 @@ bool BMatchingSelection::calc_gain(const CSR& g, Val& m_gain, Size edgeIdx){
     }
     if(edgeIdx>=g.nRow) return false;
     if(g.verPtr[edgeIdx+1] == g.verPtr[edgeIdx] + 1) {
-        cout << "Self loop" << endl;
+        // cout << "Self loop" << endl;
         m_gain = 0;
         return true;
     }
@@ -43,7 +43,7 @@ bool BMatchingSelection::calc_gain(const CSR& g, Val& m_gain, Size edgeIdx){
     else 
         m_gain = 0;
     
-    cout << "Marginal gain " << edgeIdx << ", (" << u << ", " << v << ", " << w << "): " << m_gain << "current total gain:" << totalGain << endl ;
+    // cout << "Marginal gain " << edgeIdx << ", (" << u << ", " << v << ", " << w << "): " << m_gain << "current total gain:" << totalGain << endl ;
     
     return true;
 }
