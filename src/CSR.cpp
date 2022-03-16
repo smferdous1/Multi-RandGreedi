@@ -4,6 +4,7 @@
 #include <string>
 #include <cassert>
 #include <cstring>
+#include <cmath>
 
 
 #include "CSR.h"
@@ -12,7 +13,7 @@
 using namespace std;
 
 bool CSR::getRow(Size& row, Size edgId) const{
-    // performing binary search in verPtr
+    // performing binary search in verPtr untested
     Size begin =0;
     Size end = nRow-1;
     Size mid = (end + begin)/2;
@@ -109,7 +110,7 @@ bool CSR::readMtx(char* filename){
             verPtr[i]=verPtr[i-1]+offset;
             count=verPtr[i-1];
             //cout<<i-1<<" "<<verPtr[i-1]<<" "<<verPtr[i]<<": ";
-            for(Size j=0;j<offset;j++)
+            for(Size j: SortIndexes(graphCRSIdx[i-1]))
             {
                 verInd[count].id=graphCRSIdx[i-1][j];
                 verInd[count].weight=graphCRSVal[i-1][j];
@@ -135,7 +136,6 @@ bool CSR::readMtx(char* filename){
 }
 
 bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
-    
     
     Size nrow = 0;
     Size nnz, count = 0;
@@ -180,4 +180,105 @@ bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
     subMtx.verInd.swap(sVerInd);
     
     return true;
+}
+
+bool getEdgeIncdMtx(CSR& eMtx) const{
+    
+    vector<Size> eVerPtr;
+    ResizeVector<Size>(&eVerPtr,nNz+1);
+    vector<Edge> eVerInd;
+    ResizeVector<Edge>(&eVerInd,nNz*2);
+    
+    Size edjCount=0;
+    eMtx.verPtr[0]=0;
+    for(Size i=0; i <= nRow; i++){
+        //cout << "Adding row " << i << endl;
+        for(Size j=verPtr[i];j<verPtr[i+1];j++)
+        {
+            Size indIdx = eVerPtr[edjCount];
+            if (i < erInd[j].id){
+                eVerInd[indIdx].id= i;
+                eVerInd[indIdx+1].id=verInd[j].id;
+            }
+            else {
+                eVerInd[indIdx+1].id= i;
+                eVerInd[indIdx].id=verInd[j].id;
+            }
+            
+            eVerInd[indIdx].weight=verInd[j].weight;
+            eVerInd[indIdx+1].weight=verInd[j].weight;
+            eVerPtr[edjCount+1]= indIdx+2;
+            edjCount++;
+        }
+        sVerPtr[nrow+1]=count;
+        nrow++;
+    }
+    
+    eMtx.nRow=nNz;
+    eMtx.nCol=(nRow >nCol)?nRow:nCol;
+    eMtx.nNz=2*nNz;
+    eMtx.maxDeg=2;
+    eMtx.verPtr.swap(eVerPtr);
+    eMtx.verInd.swap(eVerInd);
+    
+}
+
+bool getSimilarityMtx(CSR& sMtx) const{
+    
+    vector<vector<Size> > graphCRSIdx(nRow);
+    vector<vector<Val> > graphCRSVal(nRow);
+    
+    for( i=0; i<nRow; i++){
+        for(j=i; j < nRow; j++){
+            Size jIdx = verPtr[j];
+            Size jEnd = verPtr[j+1];
+            Val sum = 0;
+            for(Size iIdx=verPtr[i];iIdx<verPtr[i+1] && jIdx<jEnd;iIdx++){
+                while(verInd[jIdx].id< verInd[iIdx].id && jIdx<jEnd){
+                    jIdx++;
+                }
+                if(verInd[jIdx].id==verInd[iIdx].id){
+                    sum+= (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight);
+                }
+            }
+            sum = -pow(sum, 0.5);
+            graphCRSIdx[i].push_back(j);
+            graphCRSVal[i].push_back(sum);
+            graphCRSIdx[j].push_back(i);
+            graphCRSVal[j].push_back(sum);
+        }
+    }
+    
+    vector<Size> sVerPtr;
+    ResizeVector<Size>(&sVerPtr,nRow+1);
+    vector<Edge> sVerInd;
+    ResizeVector<Edge>(&sVerInd,nRow*(nRow-1));
+    
+    Size count=0;
+    sVerPtr[0]=0;
+    Size max=0,offset; 
+    for(Size i=1;i<=nRow;i++){
+        
+        offset=graphCRSIdx[i-1].size();
+        sVerPtr[i]=sVerPtr[i-1]+offset;
+        count=sVerPtr[i-1];
+        //cout<<i-1<<" "<<verPtr[i-1]<<" "<<verPtr[i]<<": ";
+        for(Size j: SortIndexes(graphCRSIdx[i-1])){
+            sVerInd[count].id=graphCRSIdx[i-1][j];
+            sVerInd[count].weight=graphCRSVal[i-1][j];
+            count++;
+        }
+        
+        if(offset>max)
+            max=offset;
+    }
+    
+    assert(count==nRow*(nRow-1));
+    subMtx.nRow=nRow;
+    subMtx.nCol=nRow;
+    subMtx.nNz=nRow*nRow;
+    subMtx.maxDeg=max;
+    subMtx.verPtr.swap(sVerPtr);
+    subMtx.verInd.swap(sVerInd);
+    
 }

@@ -27,8 +27,8 @@ class CSR {
     bool readMtx(char * filename); // reading as a general graph
     bool getRow(Size& row, Size edgId) const;
     bool getSubmatrix( CSR& subMtx, vector<Size>& rowIdxs) const ;
-    
-    
+    bool getEdgeIncdMtx(CSR& eMtx) const;
+    bool getSimilarityMtx(CSR& sMtx) const;
     CSR():nRow(0),nCol(0),nNz(0){}
     ~CSR(){}
 
