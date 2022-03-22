@@ -3,6 +3,7 @@
 #include <vector>
 #include <mpi.h>
 
+#include "Utility.h"
 #include "CSR.h"
 #include "Selection.h"
 #include "Optimizer.h"
@@ -32,15 +33,18 @@ int main(int argc, char** argv) {
     cout << "file reading error" << endl;
     return 1;
   }
-  
+  Val sTime, eTime;
+  CurrentTime(sTime);
   gDl.select(g, sCover, k);
+  CurrentTime(eTime);
   
   int mpi_rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
-  cout << "Selected Entries by " << mpi_rank << "is:";
-  for(Size i:sCover.selectedRows)
-    cout<< i << " ";
-  cout << "Total Coverage:"<< sCover.totalGain << endl;
+  // cout << "Selected Entries by " << mpi_rank << "is:";
+  // for(Size i:sCover.selectedRows)
+    // cout<< i << " ";
+  cout << "Total Coverage by" << mpi_rank << ": " << sCover.totalGain << endl;
+  cout << "Total Time by" << mpi_rank << ": " << eTime-sTime << endl;
   
 
 }
