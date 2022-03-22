@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
     cout << endl;
     
     CSR s;
-    g.getSubmatrix(s,rowIdxs);
+    g.getEdgeIncdMtx(s,rowIdxs);
     
     cout << "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{" << endl;
     cout << "Data (begin)" << endl;

@@ -7,6 +7,7 @@ using namespace std;
 bool BMatchingSelection::init(const CSR& g){
     assert(g.nCol <= bMaxCol.size());
     initialized = true;
+    g.getEdgeIncdMtx(eIncMtx);
     return true;
 }
 
@@ -20,21 +21,21 @@ bool BMatchingSelection::calc_gain(const CSR& g, Val& m_gain, Size edgeIdx){
         init(g);
         //cout << "initialized Selection obj" << endl;
     }
-    if(edgeIdx>=g.nRow) return false;
-    if(g.verPtr[edgeIdx+1] == g.verPtr[edgeIdx] + 1) {
+    if(edgeIdx>=eIncMtx.nRow) return false;
+    if(eIncMtx.verPtr[edgeIdx+1] == eIncMtx.verPtr[edgeIdx] + 1) {
         // cout << "Self loop" << endl;
         m_gain = 0;
         return true;
     }
-    if(g.verPtr[edgeIdx+1] != g.verPtr[edgeIdx] + 2) {
+    if(eIncMtx.verPtr[edgeIdx+1] != eIncMtx.verPtr[edgeIdx] + 2) {
         cout << "Input not a edge Adj matrix for edj " << edgeIdx << endl;
         return false;
     }
     
     
-    Size u = g.verInd[g.verPtr[edgeIdx]].id;
-    Size v = g.verInd[g.verPtr[edgeIdx]+1].id;
-    Val w = g.verInd[g.verPtr[edgeIdx]].weight;
+    Size u = eIncMtx.verInd[eIncMtx.verPtr[edgeIdx]].id;
+    Size v = eIncMtx.verInd[eIncMtx.verPtr[edgeIdx]+1].id;
+    Val w = eIncMtx.verInd[eIncMtx.verPtr[edgeIdx]].weight;
     
     if( !isBSaturated(u) && !isBSaturated(v)){
         
@@ -53,11 +54,11 @@ bool BMatchingSelection::update_selector(const CSR& g, Size edgeIdx){
         init(g);
         //cout << "initialized Selection obj" << endl;
     }
-    if(edgeIdx>=g.nRow) return false;
+    if(edgeIdx>=eIncMtx.nRow) return false;
     
-    Size u = g.verInd[g.verPtr[edgeIdx]].id;
-    Size v = g.verInd[g.verPtr[edgeIdx]+1].id;
-    Val w = g.verInd[g.verPtr[edgeIdx]].weight;
+    Size u = eIncMtx.verInd[eIncMtx.verPtr[edgeIdx]].id;
+    Size v = eIncMtx.verInd[eIncMtx.verPtr[edgeIdx]+1].id;
+    Val w = eIncMtx.verInd[eIncMtx.verPtr[edgeIdx]].weight;
     
     if( !isBSaturated(u) && !isBSaturated(v) ){
         bCurrentCol[u]++;

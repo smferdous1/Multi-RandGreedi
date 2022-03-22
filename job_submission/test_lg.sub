@@ -1,0 +1,15 @@
+#!/bin/bash
+# FILENAME:  test_lg.sub
+#SBATCH  --time=00:50:00
+#SBATCH  -A highmem
+#SBATCH  --mem=80G
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+srun  ./apps/testlg /scratch/bell/gopals/com-Friendster/com-Friendster.mtx . 5000  
+

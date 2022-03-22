@@ -55,6 +55,7 @@ class KMedoidSelection: public Selection{
     
     vector<Val> bestSimiliarityCol;
     bool initialized;
+    CSR similarityMtx;
     
     bool init(const CSR& g);
         
@@ -75,6 +76,7 @@ class BMatchingSelection: public Selection{
     Val exponent;
     bool initialized;
     Val totalGainBase;
+    CSR eIncMtx;
     
     
     bool init(const CSR& g);
