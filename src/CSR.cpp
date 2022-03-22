@@ -282,3 +282,64 @@ bool getSimilarityMtx(CSR& sMtx) const{
     subMtx.verInd.swap(sVerInd);
     
 }
+
+bool writeBin(char* filename) const {
+    
+    vector<Size> verId;
+    ResizeVector<Size>(&verId, nNz);
+    vector<Val> verWt;
+    ResizeVector<Val>(&verWt, nNz);
+    
+    for( Size i=0; i<nNz ;i++){
+        verId[i]= verInd[i].id;
+        verWt[i] = verId[i].weight;
+    }
+    
+    ofstream of;
+    of.open(outfile,ios::out|ios::binary);
+    
+    if(inf.is_open()){
+        of.write((char*)&nRow, sizeof(Size));
+        of.write((char*)&nCol, sizeof(Size));
+        of.write((char*)&nNz, sizeof(Size));
+        of.write((char*)&maxDeg, sizeof(Size));
+        of.write((char*)&verPtr[0], sizeof(Size) * (nRow+1));
+        of.write((char*)&verId[0], sizeof(Size) * nNz);
+        of.write((char*)&verWt[0], sizeof(Val) * nNz);
+        of.close();
+        return true;
+    }
+    else return false;
+}
+
+bool readBin( char* filename){
+    
+    ifstream inf;
+    inf.open(filename,ios::in|ios::binary);
+    if(inf.is_open()){
+        of.read((char*)&nRow, sizeof(Size));
+        of.read((char*)&nCol, sizeof(Size));
+        of.read((char*)&nNz, sizeof(Size));
+        of.read((char*)&maxDeg, sizeof(Size));
+        of.read((char*)&verPtr[0], sizeof(Size) * (nRow+1));
+        
+        vector<Size> verId;
+        ResizeVector<Size>(&verId, nNz);
+        vector<Val> verWt;
+        ResizeVector<Val>(&verWt, nNz);
+        
+        ResizeVector<Edge>(&verInd, nNz);
+        
+        of.write((char*)&verId[0], sizeof(Size) * nNz);
+        of.write((char*)&verWt[0], sizeof(Val) * nNz);
+        of.close();
+        
+        for( Size i=0; i<nNz ;i++){
+            verInd[i].id = verId[i];
+            verId[i].weight = verWt[i];
+        }
+        
+        return true;
+    }
+}
+
