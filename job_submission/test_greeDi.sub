@@ -1,0 +1,16 @@
+#!/bin/bash
+# FILENAME:  test_greeDi.sub
+#SBATCH  --nodes=8                                                                   #SBATCH  --ntasks-per-node=1 
+#SBATCH  --time=00:50:00
+#SBATCH  -A standby
+#SBATCH  --mem=80G
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+srun --mpi=pmi2 -n 8 ./apps/testgreeDiL /scratch/bell/gopals/av41092_f.mtx 5000 2  
+
