@@ -45,7 +45,16 @@ bool CSR::readMtx(char* filename)
         vector<vector<Val> > graphCRSVal(nRow);
         
         while(count>0) 
-        {     
+        {   
+            //smf:this should be faster than reading one by one. But don't quote me on that!  
+            if (m1==2)
+            {
+                inf>>i>>j;
+                f =drand48()*1000000;
+            }
+            else 
+                inf>>i>>j>>f;
+            /*
             inf>>i; 
             inf>>j;
 
@@ -55,7 +64,7 @@ bool CSR::readMtx(char* filename)
                 inf>>f; 
             else
                 f=drand48()*1000000;
-
+            */
             graphCRSIdx[i-1].push_back(j-1); 
             graphCRSVal[i-1].push_back(f);
                
