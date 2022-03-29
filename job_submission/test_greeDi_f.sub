@@ -1,0 +1,17 @@
+#!/bin/bash -l
+#FILENAME:  test_greeDi.sub
+
+#SBATCH -A standby
+#SBATCH --nodes=16
+#SBATCH --time=00:50:00
+#SBATCH --mem=200G
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+srun --mpi=pmi2 -n 16 ./apps/testgreeDiL /scratch/bell/sferdou/com-Friendster/com-Friendster.mtx 20000 2  
+
