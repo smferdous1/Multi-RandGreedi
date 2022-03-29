@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
   double readTimeE = MPI_Wtime();
   cout<<"Reading time by " << mpi_rank << "is: "<<readTimeE-readTimeS << endl; 
 
-
+  //smf:MPI_Wtime() is recommended for timing in MPI.
   double startTime = MPI_Wtime(); 
   gDl.select(g, sCover, k);
   double endTime = MPI_Wtime();
