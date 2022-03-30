@@ -182,7 +182,7 @@ bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
     return true;
 }
 
-bool getEdgeIncdMtx(CSR& eMtx) const{
+bool CSR::getEdgeIncdMtx(CSR& eMtx) const{
     
     vector<Size> eVerPtr;
     ResizeVector<Size>(&eVerPtr,nNz+1);
@@ -190,13 +190,14 @@ bool getEdgeIncdMtx(CSR& eMtx) const{
     ResizeVector<Edge>(&eVerInd,nNz*2);
     
     Size edjCount=0;
+    Size nrow=0;
     eMtx.verPtr[0]=0;
     for(Size i=0; i <= nRow; i++){
         //cout << "Adding row " << i << endl;
         for(Size j=verPtr[i];j<verPtr[i+1];j++)
         {
             Size indIdx = eVerPtr[edjCount];
-            if (i < erInd[j].id){
+            if (i < verInd[j].id){
                 eVerInd[indIdx].id= i;
                 eVerInd[indIdx+1].id=verInd[j].id;
             }
@@ -210,8 +211,6 @@ bool getEdgeIncdMtx(CSR& eMtx) const{
             eVerPtr[edjCount+1]= indIdx+2;
             edjCount++;
         }
-        sVerPtr[nrow+1]=count;
-        nrow++;
     }
     
     eMtx.nRow=nNz;
@@ -220,16 +219,16 @@ bool getEdgeIncdMtx(CSR& eMtx) const{
     eMtx.maxDeg=2;
     eMtx.verPtr.swap(eVerPtr);
     eMtx.verInd.swap(eVerInd);
-    
+    return true;
 }
 
-bool getSimilarityMtx(CSR& sMtx) const{
+bool CSR::getSimilarityMtx(CSR& sMtx) const{
     
     vector<vector<Size> > graphCRSIdx(nRow);
     vector<vector<Val> > graphCRSVal(nRow);
     
-    for( i=0; i<nRow; i++){
-        for(j=i; j < nRow; j++){
+    for(Size i=0; i<nRow; i++){
+        for(Size j=i; j < nRow; j++){
             Size jIdx = verPtr[j];
             Size jEnd = verPtr[j+1];
             Val sum = 0;
@@ -274,16 +273,16 @@ bool getSimilarityMtx(CSR& sMtx) const{
     }
     
     assert(count==nRow*(nRow-1));
-    subMtx.nRow=nRow;
-    subMtx.nCol=nRow;
-    subMtx.nNz=nRow*nRow;
-    subMtx.maxDeg=max;
-    subMtx.verPtr.swap(sVerPtr);
-    subMtx.verInd.swap(sVerInd);
-    
+    sMtx.nRow=nRow;
+    sMtx.nCol=nRow;
+    sMtx.nNz=nRow*nRow;
+    sMtx.maxDeg=max;
+    sMtx.verPtr.swap(sVerPtr);
+    sMtx.verInd.swap(sVerInd);
+    return true;
 }
 
-bool writeBin(char* filename) const {
+bool CSR::writeBin(char* filename) const {
     
     vector<Size> verId;
     ResizeVector<Size>(&verId, nNz);
@@ -291,14 +290,14 @@ bool writeBin(char* filename) const {
     ResizeVector<Val>(&verWt, nNz);
     
     for( Size i=0; i<nNz ;i++){
-        verId[i]= verInd[i].id;
-        verWt[i] = verId[i].weight;
+        verId[i] = verInd[i].id;
+        verWt[i] = verInd[i].weight;
     }
     
     ofstream of;
-    of.open(outfile,ios::out|ios::binary);
+    of.open(filename,ios::out|ios::binary);
     
-    if(inf.is_open()){
+    if(of.is_open()){
         of.write((char*)&nRow, sizeof(Size));
         of.write((char*)&nCol, sizeof(Size));
         of.write((char*)&nNz, sizeof(Size));
@@ -312,16 +311,16 @@ bool writeBin(char* filename) const {
     else return false;
 }
 
-bool readBin( char* filename){
+bool CSR::readBin( char* filename){
     
     ifstream inf;
     inf.open(filename,ios::in|ios::binary);
     if(inf.is_open()){
-        of.read((char*)&nRow, sizeof(Size));
-        of.read((char*)&nCol, sizeof(Size));
-        of.read((char*)&nNz, sizeof(Size));
-        of.read((char*)&maxDeg, sizeof(Size));
-        of.read((char*)&verPtr[0], sizeof(Size) * (nRow+1));
+        inf.read((char*)&nRow, sizeof(Size));
+        inf.read((char*)&nCol, sizeof(Size));
+        inf.read((char*)&nNz, sizeof(Size));
+        inf.read((char*)&maxDeg, sizeof(Size));
+        inf.read((char*)&verPtr[0], sizeof(Size) * (nRow+1));
         
         vector<Size> verId;
         ResizeVector<Size>(&verId, nNz);
@@ -330,16 +329,17 @@ bool readBin( char* filename){
         
         ResizeVector<Edge>(&verInd, nNz);
         
-        of.write((char*)&verId[0], sizeof(Size) * nNz);
-        of.write((char*)&verWt[0], sizeof(Val) * nNz);
-        of.close();
+        inf.read((char*)&verId[0], sizeof(Size) * nNz);
+        inf.read((char*)&verWt[0], sizeof(Val) * nNz);
+        inf.close();
         
         for( Size i=0; i<nNz ;i++){
             verInd[i].id = verId[i];
-            verId[i].weight = verWt[i];
+            verInd[i].weight = verWt[i];
         }
         
         return true;
     }
+    return false;
 }
 
