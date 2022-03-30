@@ -79,7 +79,7 @@ bool CSR::readMtx(char* filename){
         
         while(count>0) 
         {     
-            inf>>i; 
+            /* inf>>i; 
             inf>>j;
 
             //j+=lVer; //adjusting for the right hand vertices
@@ -87,7 +87,9 @@ bool CSR::readMtx(char* filename){
             if(m1==3) 
                 inf>>f; 
             else
-                f=drand48()*1000000;
+                f=drand48()*1000000; */
+            
+            inf>>i>>j>>f;
 
             graphCRSIdx[i-1].push_back(j-1); 
             graphCRSVal[i-1].push_back(f);
