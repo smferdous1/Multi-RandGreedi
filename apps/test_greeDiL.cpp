@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
     return 1;
   }
   double readTimeE = MPI_Wtime();
-  cout<<"Reading time by " << mpi_rank << "is: "<<readTimeE-readTimeS << endl; 
+  // cout<<"Reading time by " << mpi_rank << "is: "<<readTimeE-readTimeS << endl; 
 
 
   double startTime = MPI_Wtime(); 
@@ -49,8 +49,8 @@ int main(int argc, char** argv) {
   // cout << "Selected Entries by " << mpi_rank << "is:";
   // for(Size i:sCover.selectedRows)
     // cout<< i << " ";
-  cout << "Total Coverage by" << mpi_rank << ": " << sCover.totalGain << endl;
-  cout << "Total Time by" << mpi_rank << ": " << endTime-startTime << endl;
+  // cout << "Total Coverage by" << mpi_rank << ": " << sCover.totalGain << endl;
+  // cout << "Total Time by" << mpi_rank << ": " << endTime-startTime << endl;
   
   //smf:need to call this function to get rid of the memories acquired by mpi_init()
   MPI_Finalize();

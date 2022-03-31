@@ -32,7 +32,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
         Size zeroCount;
         while(!success){
             
-            if(priQ.size()==0) break;
+            //if(priQ.size()==0) break;
             
             pop_heap(priQ.begin(),priQ.end()); 
             row = priQ.back().second;
@@ -42,7 +42,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
             chk = s.calc_gain(g, gain, row);
             if(!chk) return false;
             
-            if(gain==0) continue;
+            //if(gain==0) continue;
             
             if( gain >= priQ.front().first){
                 //cout << "Found object" << i << endl;

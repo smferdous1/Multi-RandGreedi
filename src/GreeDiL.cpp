@@ -47,7 +47,7 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
     
     Size count = mpi_size-1;
     Size level = 1;
-    cout << "Calculating number Levels" << endl;
+    // cout << "Calculating number Levels" << endl;
     while(count!=0){
         count/= b;
         level++;
@@ -70,8 +70,8 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
             
             localOptimizer->select(subMtx, s, k);
             
-            cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
-    
+            // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
+            cout << mpi_rank <<", " << level-i << ", " << s.totalGain << endl;
             /* for(Size j : s.selectedRows){
                 cout << j << " ";
             }
@@ -146,6 +146,7 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
         for(Size i:s.selectedRows)
             cout<< rowIdxs[i] << " ";
         cout << "Total Coverage:"<< s.totalGain << endl; */
+        cout << mpi_rank <<", 0, " << s.totalGain << endl;
         
         for(Size j = 0; j<k; j++){
             s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
