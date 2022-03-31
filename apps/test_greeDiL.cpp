@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
   MPI_Init(&argc, &argv); 
   
   int mpi_rank;
-  MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank)
+  MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
   CSR g;
   MaxSetCoverSelection sCover(k);
   LazyGreedy lg;
@@ -42,15 +42,15 @@ int main(int argc, char** argv) {
 
 
   double startTime = MPI_Wtime(); 
+  
   gDl.select(g, sCover, k);
-  CurrentTime(eTime);
  
   double endTime = MPI_Wtime();
   // cout << "Selected Entries by " << mpi_rank << "is:";
   // for(Size i:sCover.selectedRows)
     // cout<< i << " ";
   cout << "Total Coverage by" << mpi_rank << ": " << sCover.totalGain << endl;
-  cout << "Total Time by" << mpi_rank << ": " << eTime-sTime << endl;
+  cout << "Total Time by" << mpi_rank << ": " << endTime-startTime << endl;
   
   //smf:need to call this function to get rid of the memories acquired by mpi_init()
   MPI_Finalize();

@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
     cout << endl;
     
     CSR s;
-    g.getEdgeIncdMtx(s,rowIdxs);
+    g.getEdgeIncdMtx(s);
     
     cout << "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{" << endl;
     cout << "Data (begin)" << endl;
