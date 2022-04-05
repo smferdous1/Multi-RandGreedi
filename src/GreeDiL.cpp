@@ -11,7 +11,7 @@ using namespace std;
 bool GreeDiL::select(const CSR& g, Selection& s,Size k){
     
     int mpi_rank, mpi_size;
-    
+    double startTime = MPI_Wtime();
     MPI_Comm_size(MPI_COMM_WORLD, &mpi_size); 
     MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
     
@@ -71,7 +71,7 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
             localOptimizer->select(subMtx, s, k);
             
             // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
-            cout << mpi_rank <<", " << level-i << ", " << s.totalGain << endl;
+            cout << mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
             /* for(Size j : s.selectedRows){
                 cout << j << " ";
             }
@@ -146,7 +146,7 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
         for(Size i:s.selectedRows)
             cout<< rowIdxs[i] << " ";
         cout << "Total Coverage:"<< s.totalGain << endl; */
-        cout << mpi_rank <<", 0, " << s.totalGain << endl;
+        cout << mpi_rank <<", 1, " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
         
         for(Size j = 0; j<k; j++){
             s.selectedRows[j] = rowIdxs[s.selectedRows[j]];

@@ -79,6 +79,16 @@ bool CSR::readMtx(char* filename){
         
         while(count>0) 
         {     
+            
+            //smf:this should be faster than reading one by one. But don't quote me on that!  
+            if (m1==2)
+            {
+                inf>>i>>j;
+                f =drand48()*1000000;
+            }
+            else 
+                inf>>i>>j>>f;
+            
             /* inf>>i; 
             inf>>j;
 
@@ -89,7 +99,6 @@ bool CSR::readMtx(char* filename){
             else
                 f=drand48()*1000000; */
             
-            inf>>i>>j>>f;
 
             graphCRSIdx[i-1].push_back(j-1); 
             graphCRSVal[i-1].push_back(f);
@@ -112,7 +121,11 @@ bool CSR::readMtx(char* filename){
             verPtr[i]=verPtr[i-1]+offset;
             count=verPtr[i-1];
             //cout<<i-1<<" "<<verPtr[i-1]<<" "<<verPtr[i]<<": ";
-            for(Size j: SortIndexes(graphCRSIdx[i-1]))
+            
+            
+            // Sort indices? for(Size j: SortIndexes(graphCRSIdx[i-1]))
+                
+            for(Size j=0;j<offset;j++)
             {
                 verInd[count].id=graphCRSIdx[i-1][j];
                 verInd[count].weight=graphCRSVal[i-1][j];
