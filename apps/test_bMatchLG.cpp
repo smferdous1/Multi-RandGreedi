@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     return 1;
   }
   
-  /*vector<Size> bMax;
+  vector<Size> bMax;
   Size len;
   
     ifstream inf;
@@ -37,13 +37,12 @@ int main(int argc, char** argv) {
         cout << "b file unopened" << endl;
         return 1;
     }
-  */
+  
   int k= stoi(argv[3]);
   
   CSR g;
-  //BMatchingSelection bMatch(bMax, 0.5, k);
+  BMatchingSelection bMatch(bMax, 0.5, k);
   //MaxSetCoverSelection bMatch(k);
-  KMedoidSelection bMatch(k);
   LazyGreedy lz;
   
   cout << "reading file ..." << endl;
@@ -51,9 +50,8 @@ int main(int argc, char** argv) {
     cout << "file reading error" << endl;
     return 1;
   }
-  cout << "Starting" << endl;
   clock_t time_req;
-  
+
   time_req = clock();
   lz.select(g, bMatch, k);
   time_req = clock()-time_req;
@@ -64,7 +62,7 @@ int main(int argc, char** argv) {
   for(Size i:bMatch.selectedRows)
     cout<< i << " ";
  */  
-  cout << "Total Coverage:"<< bMatch.totalGain << endl;
+  cout << "Total matching weight:"<< bMatch.totalGain << endl;
   cout << "Total Time:"<< (float)time_req/CLOCKS_PER_SEC << endl;
   
 

@@ -238,46 +238,37 @@ bool CSR::getEdgeIncdMtx(CSR& eMtx) const{
 }
 
 bool CSR::getSimilarityMtx(CSR& sMtx) const{
-    
+    // cout << "Generating Similarity" << endl;
     vector<vector<Size> > graphCRSIdx(nRow);
     vector<vector<Val> > graphCRSVal(nRow);
     
     for(Size i=0; i<nRow; i++){
-        for(Size j=i; j < nRow; j++){
-            Size jIdx = verPtr[j];
-            Size jEnd = verPtr[j+1];
-            Val sum = 0;
-            for(Size iIdx=verPtr[i];iIdx<verPtr[i+1] && jIdx<jEnd;iIdx++){
-                while(verInd[jIdx].id< verInd[iIdx].id && jIdx<jEnd){
-                    jIdx++;
-                }
-                if(verInd[jIdx].id==verInd[iIdx].id){
-                    sum+= (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight);
-                }
-            }
-            sum = -pow(sum, 0.5);
+        for(Size j=i+1; j < nRow; j++){
+            
+            Val sum;
+            getSimilarity(sum, i, j);
             graphCRSIdx[i].push_back(j);
             graphCRSVal[i].push_back(sum);
             graphCRSIdx[j].push_back(i);
             graphCRSVal[j].push_back(sum);
         }
     }
-    
+    // cout << "Finished similarity calculation" << endl;
     vector<Size> sVerPtr;
     ResizeVector<Size>(&sVerPtr,nRow+1);
-    vector<Edge> sVerInd;
+    vector<Edge> sVerInd; 
     ResizeVector<Edge>(&sVerInd,nRow*(nRow-1));
     
     Size count=0;
     sVerPtr[0]=0;
     Size max=0,offset; 
     for(Size i=1;i<=nRow;i++){
-        
+        //cout << i << " ";
         offset=graphCRSIdx[i-1].size();
         sVerPtr[i]=sVerPtr[i-1]+offset;
         count=sVerPtr[i-1];
-        //cout<<i-1<<" "<<verPtr[i-1]<<" "<<verPtr[i]<<": ";
-        for(Size j: SortIndexes(graphCRSIdx[i-1])){
+        // cout<<i-1<<" "<<verPtr[i-1]<<" "<<verPtr[i]<<": " << graphCRSIdx[i-1].size() << endl;
+        for(Size j:SortIndexes(graphCRSIdx[i-1])){
             sVerInd[count].id=graphCRSIdx[i-1][j];
             sVerInd[count].weight=graphCRSVal[i-1][j];
             count++;
@@ -290,10 +281,32 @@ bool CSR::getSimilarityMtx(CSR& sMtx) const{
     assert(count==nRow*(nRow-1));
     sMtx.nRow=nRow;
     sMtx.nCol=nRow;
-    sMtx.nNz=nRow*nRow;
+    sMtx.nNz=count;
     sMtx.maxDeg=max;
     sMtx.verPtr.swap(sVerPtr);
     sMtx.verInd.swap(sVerInd);
+    return true;
+}
+
+
+bool CSR::getSimilarity(Val& similarity, Size row1, Size row2) const{
+    Size jIdx = verPtr[row2];
+    Size jEnd = verPtr[row2+1];
+    similarity = 0;
+    Val sum = 0;
+    for(Size iIdx=verPtr[row1];iIdx<verPtr[row1+1];iIdx++){
+        while(verInd[jIdx].id< verInd[iIdx].id && jIdx<jEnd){
+            sum+= verInd[jIdx].weight*verInd[jIdx].weight;
+            jIdx++;
+        }
+        if(verInd[jIdx].id==verInd[iIdx].id){ 
+            sum+= (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight);
+        }
+        else {
+            sum+= verInd[iIdx].weight*verInd[iIdx].weight;
+        }
+    }
+    similarity = -pow(sum, 0.5);
     return true;
 }
 

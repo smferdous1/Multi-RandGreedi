@@ -38,8 +38,8 @@ int main(int argc, char** argv) {
     cout << endl;
     
     CSR s;
-    g.getEdgeIncdMtx(s);
-    
+    g.getSimilarityMtx(s);
+   
     cout << "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{" << endl;
     cout << "Data (begin)" << endl;
     cout << "number of entries: " << s.nRow << endl;

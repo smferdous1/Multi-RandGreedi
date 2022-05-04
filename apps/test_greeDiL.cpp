@@ -26,7 +26,8 @@ int main(int argc, char** argv) {
   int mpi_rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
   CSR g;
-  MaxSetCoverSelection sCover(k);
+  //MaxSetCoverSelection sCover(k);
+  KMedoidSelection sCover(k);
   LazyGreedy lg;
   GreeDiL gDl(&lg,b);
   

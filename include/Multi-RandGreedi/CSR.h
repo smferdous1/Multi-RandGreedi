@@ -29,6 +29,7 @@ class CSR {
     bool getSubmatrix( CSR& subMtx, vector<Size>& rowIdxs) const ;
     bool getEdgeIncdMtx(CSR& eMtx) const;
     bool getSimilarityMtx(CSR& sMtx) const;
+    bool getSimilarity(Val& similarity, Size row1, Size row2) const;
     bool writeBin(char* filename) const;
     bool readBin( char* filename);
     CSR():nRow(0),nCol(0),nNz(0){}

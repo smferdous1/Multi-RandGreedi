@@ -3,8 +3,8 @@
 #include "Utility.h"
 using namespace std;
 bool KMedoidSelection::init(const CSR& g){
-    g.getSimilarityMtx(similarityMtx);
-    ResizeVector<Val>(&bestSimiliarityCol, similarityMtx.nCol);
+    ResizeVector<Val>(&bestSimiliarityCol, g.nRow);
+    std::fill(bestSimiliarityCol.begin(),bestSimiliarityCol.end(),negInfVal);
     initialized = true;
     return true;
 }
@@ -12,21 +12,22 @@ bool KMedoidSelection::init(const CSR& g){
 bool KMedoidSelection::calc_gain(const CSR& g, Val& m_gain, Size row) {
     if(!initialized){ 
         init(g);
-        //cout << "initialized Selection obj" << endl;
+        // cout << "initialized Selection obj" << endl;
     }
-    if(row>=similarityMtx.nRow) return false;
+    if(row>=g.nRow) return false;
     Val marginal_gain = 0;
-    Size col;
     Val wgt;
-    for(Size i = similarityMtx.verPtr[row]; i< similarityMtx.verPtr[row+1]; i++){
-        col = similarityMtx.verInd[i].id;
-        wgt = similarityMtx.verInd[i].weight;
-        //cout << "checking col "<< col << endl;
-        if(bestSimiliarityCol[col]< wgt)
-            marginal_gain+= wgt - bestSimiliarityCol[col];
+    for(Size i = 0; i<g.nRow; i++){
+        
+        if(row==i) continue;
+        
+        g.getSimilarity(wgt,row,i);
+        // cout << "checking col "<< i << " new = " << wgt << " old = " << bestSimiliarityCol[i]<< endl;
+        if(bestSimiliarityCol[i]< wgt)
+            marginal_gain+= wgt - bestSimiliarityCol[i];
     }
     m_gain= marginal_gain;
-    //cout << "gain of row " << row << "is" << m_gain << endl;
+    // cout << "gain of row " << row << "is" << m_gain << endl;
     return true;
 }
 
@@ -35,18 +36,19 @@ bool KMedoidSelection::update_selector(const CSR& g, Size row){
         init(g);
         //cout << "initialized Selection obj" << endl;
     }
-    if(row>=similarityMtx.nRow) return false;
+    if(row>=g.nRow) return false;
     
     Val marginal_gain = 0;
-    Size col;
     Val wgt;
-    for(Size i = similarityMtx.verPtr[row]; i< similarityMtx.verPtr[row+1]; i++){
-        col = similarityMtx.verInd[i].id;
-        wgt = similarityMtx.verInd[i].weight;
-        if(bestSimiliarityCol[col]< wgt){
-            //cout << "updating col "<< col << endl;
-            marginal_gain+= wgt - bestSimiliarityCol[col];
-            bestSimiliarityCol[col] = wgt;
+    for(Size i = 0; i<g.nRow; i++){
+        
+        if(row==i) continue;
+        
+        g.getSimilarity(wgt,row,i);
+        // cout << "checking col "<< i << " new = " << wgt << " old = " << bestSimiliarityCol[i]<< endl;
+        if(bestSimiliarityCol[i]< wgt){
+            marginal_gain+= wgt - bestSimiliarityCol[i];
+            bestSimiliarityCol[i] = wgt;
         }
     }
     //cout << "Finished masking "<< endl;
