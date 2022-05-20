@@ -39,10 +39,10 @@ int main(int argc, char** argv) {
     }
   */
   int k= stoi(argv[3]);
-  
+  // cout << k << " ";
   CSR g;
-  //BMatchingSelection bMatch(bMax, 0.5, k);
-  //MaxSetCoverSelection bMatch(k);
+  // BMatchingSelection bMatch(bMax, 0.5, k);
+  // MaxSetCoverSelection bMatch(k);
   KMedoidSelection bMatch(k);
   LazyGreedy lz;
   
@@ -60,10 +60,10 @@ int main(int argc, char** argv) {
   
 
   
-/*   cout << "Selected Entries:";
-  for(Size i:bMatch.selectedRows)
-    cout<< i << " ";
- */  
+  // cout << "Selected Entries:";
+  // for(Size i:bMatch.selectedRows)
+    // cout<< i << " ";
+  
   cout << "Total Coverage:"<< bMatch.totalGain << endl;
   cout << "Total Time:"<< (float)time_req/CLOCKS_PER_SEC << endl;
   

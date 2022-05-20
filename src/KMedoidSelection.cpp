@@ -4,7 +4,12 @@
 using namespace std;
 bool KMedoidSelection::init(const CSR& g){
     ResizeVector<Val>(&bestSimiliarityCol, g.nRow);
-    std::fill(bestSimiliarityCol.begin(),bestSimiliarityCol.end(),negInfVal);
+    Val sim=0;
+    for(int i =0; i<g.nRow; i++){
+        g.getSimilarity(sim,i,-1);
+        bestSimiliarityCol[i]=sim;
+    }
+    
     initialized = true;
     return true;
 }
@@ -19,12 +24,15 @@ bool KMedoidSelection::calc_gain(const CSR& g, Val& m_gain, Size row) {
     Val wgt;
     for(Size i = 0; i<g.nRow; i++){
         
-        if(row==i) continue;
-        
-        g.getSimilarity(wgt,row,i);
-        // cout << "checking col "<< i << " new = " << wgt << " old = " << bestSimiliarityCol[i]<< endl;
-        if(bestSimiliarityCol[i]< wgt)
-            marginal_gain+= wgt - bestSimiliarityCol[i];
+        if(row==i){ 
+            marginal_gain+= bestSimiliarityCol[i];
+        } 
+        else{
+            g.getSimilarity(wgt,row,i);
+            // cout << "checking col "<< i << " new = " << wgt << " old = " << bestSimiliarityCol[i]<< endl;
+            if(bestSimiliarityCol[i]> wgt)
+                marginal_gain+= bestSimiliarityCol[i] - wgt;
+        }
     }
     m_gain= marginal_gain;
     // cout << "gain of row " << row << "is" << m_gain << endl;
@@ -42,20 +50,24 @@ bool KMedoidSelection::update_selector(const CSR& g, Size row){
     Val wgt;
     for(Size i = 0; i<g.nRow; i++){
         
-        if(row==i) continue;
-        
-        g.getSimilarity(wgt,row,i);
-        // cout << "checking col "<< i << " new = " << wgt << " old = " << bestSimiliarityCol[i]<< endl;
-        if(bestSimiliarityCol[i]< wgt){
-            marginal_gain+= wgt - bestSimiliarityCol[i];
-            bestSimiliarityCol[i] = wgt;
+        if(row==i){ 
+            marginal_gain+= bestSimiliarityCol[i];
+            bestSimiliarityCol[i]=0;
+        } 
+        else{
+            g.getSimilarity(wgt,row,i);
+            // cout << "checking col "<< i << " new = " << wgt << " old = " << bestSimiliarityCol[i]<< endl;
+            if(bestSimiliarityCol[i]> wgt){
+                marginal_gain+= bestSimiliarityCol[i] - wgt;
+                bestSimiliarityCol[i] = wgt;
+            }
         }
     }
     //cout << "Finished masking "<< endl;
     totalGain+=marginal_gain;
     
     selectedRows.push_back(row);
-    //cout << "Pushed into selected rows" << endl;
+    // cout << "Pushed " << row << " into selected rows" << endl;
     
     return true;
 } //adds row to selecton and updates state

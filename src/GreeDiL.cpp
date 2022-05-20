@@ -71,22 +71,21 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
             localOptimizer->select(subMtx, s, k);
             
             // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
-            cout << mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
-            /* for(Size j : s.selectedRows){
-                cout << j << " ";
-            }
-            cout << endl;
-            */
+            // cout <<mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
+            cout << mpi_rank <<": Input size "<< subMtx.nRow << " k= " << k << " selection size = " << s.selectedRows.size() << endl;
             
-            for(Size j = 0; j<k; j++){
+            
+            
+            for(Size j = 0; j<s.selectedRows.size(); j++){
+                // cout << s.selectedRows[j] << ":";
                 s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
-                //cout << s.selectedRows[j] << " ";
+                // cout << s.selectedRows[j] << " ";
             }
             //cout << endl;
             
             
             // Creating communicator for MPI_Gather
-            //cout << "Creating Communicator Group" << endl;
+            // cout << "Creating Communicator Group" << endl;
             vector<int> myGrp;
             int nSiblings;
             ResizeVector<int>(&myGrp, b);
@@ -101,10 +100,11 @@ bool GreeDiL::select(const CSR& g, Selection& s,Size k){
             }
             nSiblings++;
             
-            /* for(int j:myGrp){
-                cout << j << " ";
-            }cout << endl;
-             */
+            // cout << mpi_rank << " Group " << nSiblings << " sib :";
+            // for(int j:myGrp){
+                // cout << j << " ";
+            // }cout << endl;
+            
             
             MPI_Group sibl_group;
             MPI_Group_incl(world_group, nSiblings, &myGrp[0], &sibl_group);

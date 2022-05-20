@@ -290,23 +290,50 @@ bool CSR::getSimilarityMtx(CSR& sMtx) const{
 
 
 bool CSR::getSimilarity(Val& similarity, Size row1, Size row2) const{
-    Size jIdx = verPtr[row2];
-    Size jEnd = verPtr[row2+1];
-    similarity = 0;
+    
     Val sum = 0;
-    for(Size iIdx=verPtr[row1];iIdx<verPtr[row1+1];iIdx++){
-        while(verInd[jIdx].id< verInd[iIdx].id && jIdx<jEnd){
-            sum+= verInd[jIdx].weight*verInd[jIdx].weight;
-            jIdx++;
-        }
-        if(verInd[jIdx].id==verInd[iIdx].id){ 
-            sum+= (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight);
-        }
-        else {
+    
+    if(row2==-1){
+        for(Size iIdx=verPtr[row1];iIdx<verPtr[row1+1];iIdx++){
             sum+= verInd[iIdx].weight*verInd[iIdx].weight;
         }
     }
-    similarity = -pow(sum, 0.5);
+    else if(row1==-1){
+        for(Size iIdx=verPtr[row2];iIdx<verPtr[row2+1];iIdx++){
+            sum+= verInd[iIdx].weight*verInd[iIdx].weight;
+        }
+    }
+    else{
+        Size jIdx = verPtr[row2];
+        Size jEnd = verPtr[row2+1];
+        
+        for(Size iIdx=verPtr[row1];iIdx<verPtr[row1+1];iIdx++){
+            while(verInd[jIdx].id< verInd[iIdx].id && jIdx<jEnd){
+                // cout << verInd[jIdx].weight*verInd[jIdx].weight << "+ ";
+                sum+= verInd[jIdx].weight*verInd[jIdx].weight;
+                jIdx++;
+            }
+            if(verInd[jIdx].id==verInd[iIdx].id){ 
+                // cout  << (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight) << "+ ";
+                sum+= (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight);
+                jIdx++;
+            }
+            else {
+                // cout << verInd[iIdx].weight*verInd[iIdx].weight << "+ ";
+                sum+= verInd[iIdx].weight*verInd[iIdx].weight;
+            }
+        }
+        while(jIdx<jEnd){
+            // cout << verInd[jIdx].weight*verInd[jIdx].weight << "+ ";
+            sum+= verInd[jIdx].weight*verInd[jIdx].weight;
+            jIdx++;
+        }
+        // cout << endl;
+    }
+        
+    //similarity = -pow(sum, 0.5);
+    similarity= sum;
+    // cout << "Similarity of " << row1 << " and " << row2 << " is " << similarity << endl;
     return true;
 }
 
