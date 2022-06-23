@@ -2,6 +2,8 @@
 #include <vector>
 #include <numeric>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 #include<sys/time.h>
 
 #include "Types.h"
@@ -42,4 +44,36 @@ inline void CurrentTime(Val &nowTime){
     nowTime = (Val) tz.tv_sec+(Val) tz.tv_usec/1000000.0;
 }
 
+template <typename T>
+inline void WriteArray(char* filename, const std::vector<T> &v){
+    
+    std::ofstream of;
+    of.open(filename,std::ios::out|std::ios::binary);
+    Size s = v.size();
+    if(of.is_open()){
+        of.write((char*)&s, sizeof(Size));
+        of.write((char*)&v[0], sizeof(T)*s);
+        of.close();
+    }
+    else{
+       std::cout << "unable to open " << filename << std::endl; 
+    }
+}
+
+template <typename T>
+inline void ReadArray(char* filename, std::vector<T> &v){
+    
+    std::ifstream inf;
+    inf.open(filename,std::ios::in|std::ios::binary);
+    Size s;
+    if(inf.is_open()){
+        inf.read((char*)&s, sizeof(Size));
+        ResizeVector<T>(&v, s);
+        inf.read((char*)&v[0], sizeof(T)*s);
+        inf.close();
+    }
+    else{
+       std::cout << "unable to open " << filename << std::endl; 
+    }
+}
 

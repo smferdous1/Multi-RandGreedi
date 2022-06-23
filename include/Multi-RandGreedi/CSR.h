@@ -5,16 +5,6 @@
 
 using namespace std;
 
-struct EdgeE {
-    Size head;
-    Size id;         // Edge tail
-    float weight;  // Edge weight
-};
-struct Edge {
-    Size id;         // Edge tail
-    Val weight;  // Edge weight
-};
-
 class CSR {
     public:
     Size nRow;       // number of rows

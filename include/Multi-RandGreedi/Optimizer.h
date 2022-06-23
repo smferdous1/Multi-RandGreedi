@@ -24,12 +24,28 @@ class GreeDiL: public Optimizer{
         Size branchingFactor;
     bool select(const CSR& g, Selection& s,Size k);
     
-    // If p_branch is tru then the parameter is the branching factor else it is the size of the machine.
     
     GreeDiL(Optimizer* opti, Size brnchFctr):branchingFactor(brnchFctr){ 
         localOptimizer = opti; 
     }
     ~GreeDiL(){ }
+    
+};
+
+
+class GreeDiL2: public Optimizer{
+    public:
+        Optimizer* localOptimizer;
+        Size branchingFactor;
+        char* filename;
+    bool select(const CSR& g, Selection& s,Size k);
+    
+   
+    GreeDiL2(Optimizer* opti, Size brnchFctr, char* file):branchingFactor(brnchFctr){ 
+        localOptimizer = opti; 
+        filename = file;
+    }
+    ~GreeDiL2(){}
     
 };
 

@@ -47,3 +47,18 @@ target_compile_features(testgreeDiL PRIVATE cxx_std_11)
 target_compile_options(testgreeDiL PRIVATE -O3 )
 target_link_libraries(testgreeDiL PRIVATE mrg MPI::MPI_CXX)
 target_include_directories(testgreeDiL PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi")
+
+#executable test_greeDiL2
+add_executable(testgreeDiL2 test_greeDiL2.cpp)
+target_compile_features(testgreeDiL2 PRIVATE cxx_std_11)
+target_compile_options(testgreeDiL2 PRIVATE -O3 )
+target_link_libraries(testgreeDiL2 PRIVATE mrg MPI::MPI_CXX)
+target_include_directories(testgreeDiL2 PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi")
+
+#executable rdmpart
+add_executable(rdmpart rdm_partition_mtx.cpp)
+target_compile_features(rdmpart PRIVATE cxx_std_11)
+target_compile_options(rdmpart PRIVATE -O3 )
+target_link_libraries(rdmpart PRIVATE mrg)
+target_include_directories(rdmpart PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi") 
+

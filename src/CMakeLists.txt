@@ -12,7 +12,8 @@ add_library(mrg
     CSR.cpp
     LazyGreedy.cpp
     GreeDiL.cpp
-
+    GreeDiL2.cpp
+    
     MaxSetCoverSelection.cpp
     KMedoidSelection.cpp
     BMatchingSelection.cpp 

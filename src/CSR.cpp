@@ -368,15 +368,20 @@ bool CSR::writeBin(char* filename) const {
 
 bool CSR::readBin( char* filename){
     
+    cout << "reading file " << filename;
     ifstream inf;
     inf.open(filename,ios::in|ios::binary);
     if(inf.is_open()){
+        // cout << " ->opened ";
         inf.read((char*)&nRow, sizeof(Size));
         inf.read((char*)&nCol, sizeof(Size));
         inf.read((char*)&nNz, sizeof(Size));
         inf.read((char*)&maxDeg, sizeof(Size));
+        
+        ResizeVector<Size>(&verPtr, nRow+1);
         inf.read((char*)&verPtr[0], sizeof(Size) * (nRow+1));
         
+        // cout << "-> read verPtr ";
         vector<Size> verId;
         ResizeVector<Size>(&verId, nNz);
         vector<Val> verWt;
@@ -387,14 +392,16 @@ bool CSR::readBin( char* filename){
         inf.read((char*)&verId[0], sizeof(Size) * nNz);
         inf.read((char*)&verWt[0], sizeof(Val) * nNz);
         inf.close();
+        // cout << "-> read verInd ";
         
         for( Size i=0; i<nNz ;i++){
             verInd[i].id = verId[i];
             verInd[i].weight = verWt[i];
         }
-        
+        // cout << "--> finished" << endl;
         return true;
     }
+    cout << endl;
     return false;
 }
 

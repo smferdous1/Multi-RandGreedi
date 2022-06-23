@@ -43,18 +43,8 @@ int main(int argc, char** argv) {
   MaxSetCoverSelection sCover(k);
   // KMedoidSelection sCover(k);
   LazyGreedy lg;
-  GreeDiL gDl(&lg,b);
+  GreeDiL2 gDl(&lg,b, argv[1]);
   
-  //smf:MPI_Wtime() is recommended for timing in MPI.
-  cout << " reading file ..." << endl;
-  double readTimeS = MPI_Wtime();
-  if (!g.readMtx(argv[1])) {
-    cout << "file reading error" << endl;
-    return 1;
-  }
-  double readTimeE = MPI_Wtime();
-  // cout<<"Reading time by " << mpi_rank << "is: "<<readTimeE-readTimeS << endl; 
-
 
   double startTime = MPI_Wtime(); 
   
