@@ -76,6 +76,6 @@ bool KMedoidSelection::update_selector(const CSR& g, Size row){
 void KMedoidSelection::reset(Size k){
     totalGain = 0;
     nSelection = k;
-    ReserveVector<Size>(&selectedRows,nSelection);
+    ResizeVector<Size>(&selectedRows,nSelection);
     initialized = false;
 }

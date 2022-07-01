@@ -26,7 +26,7 @@ class Selection
     virtual void reset(Size k) = 0; 
     
     Selection(Size k):totalGain(0),nSelection(k){
-        ReserveVector<Size>(&selectedRows,nSelection);
+        ResizeVector<Size>(&selectedRows,nSelection);
     }
     ~Selection(){}
   

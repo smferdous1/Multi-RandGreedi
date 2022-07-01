@@ -368,7 +368,7 @@ bool CSR::writeBin(char* filename) const {
 
 bool CSR::readBin( char* filename){
     
-    cout << "reading file " << filename;
+    // cout << "reading file " << filename << endl;
     ifstream inf;
     inf.open(filename,ios::in|ios::binary);
     if(inf.is_open()){

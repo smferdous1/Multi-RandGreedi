@@ -21,7 +21,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     
     const int nitems=2;
     int blocklengths[2] = {1,1};
-    MPI_Datatype types[2] = {MPI_UNSIGNED_LONG, MPI_DOUBLE};
+    MPI_Datatype types[2] = {mpiSize, mpiVal};
     MPI_Datatype mpiEdge;
 
     MPI_Aint     offsets[2];
@@ -70,19 +70,27 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         firstSib[i]= firstSib[i-1]*b;
         
     
-    cout << "Entering selection Loop" << endl;
+    
     for( int i =0; i<level-1; i++){
         if(mpi_rank % firstSib[i] == 0) {
+            // cout << mpi_rank << ": Entering selection Loop " << i << " " << subMtx.nRow << " " << subMtx.nNz << " " << subMtx.verPtr.size() << " " << subMtx.verInd.size() << endl;
+            
+            // if (i!=0){
+                // for(Size l: subMtx.verPtr) cout << l<< " ";
+                // cout << endl;
+                // for(Edge l: subMtx.verInd) cout << l.id << ", " << l.weight << ") (";
+                // cout << endl;
+            // }
             
             localOptimizer->select(subMtx, s, k);
             
             // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
             cout <<mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
-            cout << mpi_rank <<": Input size "<< subMtx.nRow << " k= " << k << " selection size = " << s.selectedRows.size() << endl;
+            // cout << mpi_rank <<": Input size "<< subMtx.nRow << " k= " << k << " selection size = " << s.selectedRows.size() << endl;
             
             
             // Creating communicator for MPI_Gather
-            // cout << "Creating Communicator Group" << endl;
+            
             vector<int> myGrp;
             int nSiblings;
             ResizeVector<int>(&myGrp, b);
@@ -97,12 +105,6 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             }
             nSiblings++;
             
-            // cout << mpi_rank << " Group " << nSiblings << " sib :";
-            // for(int j:myGrp){
-                // cout << j << " ";
-            // }cout << endl;
-            
-            
             MPI_Group sibl_group;
             MPI_Group_incl(world_group, nSiblings, &myGrp[0], &sibl_group);
             
@@ -114,16 +116,18 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             CSR sendMtx;
             
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
+            // cout << mpi_rank << " " << sendMtx.nRow << " " << sendMtx.nNz << " " << sendMtx.verPtr.size() << " " << sendMtx.verInd.size() << endl;
             
-            
+            // cout << "Selected rows: " 
             for(Size j = 0; j<s.selectedRows.size(); j++){
                 // cout << s.selectedRows[j] << ":";
                 s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
                 // cout << s.selectedRows[j] << " ";
             }
-            //cout << endl;
+            // cout << endl;
             
-            // cout << "starting gather at " << mpi_rank << ":" << endl;
+            // cout << mpi_rank << " starting gather:" << endl;
+            
             if(mpi_rank == myGrp[0]){
                 ResizeVector<Size>(&rowIdxs,k*nSiblings);
                 
@@ -131,21 +135,30 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                 
                 subMtx.nRow = k*nSiblings;
                 
-                ResizeVector<Size>(&subMtx.verPtr,k*nSiblings);
+                ResizeVector<Size>(&subMtx.verPtr,k*nSiblings+1);
+                subMtx.verPtr[0]=0;
             }
             
-            // cout << "Gathering row idx" << mpi_rank << ":" << endl;
             MPI_Gather(&(s.selectedRows[0]), k, mpiSize, &rowIdxs[0],k, mpiSize, 0, sibl_comm);
             
-            // cout << "Gathering nNz" << mpi_rank << ":" << endl;
             MPI_Gather(&(sendMtx.nNz), 1, mpiSize, &nnzRecv[0],1, mpiSize, 0, sibl_comm);
             
             
-            // cout << "Gathering verPtr" << mpi_rank << ":" << endl;
-            MPI_Gather(&(sendMtx.verPtr[1]), k, mpiSize, &subMtx.verPtr[0], k, mpiSize, 0, sibl_comm);
+            MPI_Gather(&(sendMtx.verPtr[1]), k, mpiSize, &subMtx.verPtr[1], k, mpiSize, 0, sibl_comm);
+            
             
             if(mpi_rank==myGrp[0]){
-                cout << "mem for offset and verInd" << mpi_rank << ":" << endl;
+                // cout << "RowIdxs:" ;
+                // for(Size l: rowIdxs) cout << l<< " ";
+                // cout << endl;
+                // cout << "nnzRecv: "; 
+                // for(Size l: nnzRecv) cout << l<< " ";
+                // cout << endl;
+                // cout << "VerPrt: ";
+                // for(Size l: subMtx.verPtr) cout << l<< " ";
+                // cout << endl;
+                
+                // cout << "mem for offset and verInd " << mpi_rank << ":" << endl;
                 ResizeVector<int>(&nnzIntRecv,nSiblings);
                 ResizeVector<int>(&offsetRecv,nSiblings+1);
                 
@@ -156,24 +169,28 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                     }
                     nnzIntRecv[j] = (int)nnzRecv[j];
                     offsetRecv[j+1]=offsetRecv[j]+ nnzIntRecv[j];
-                    cout << offsetRecv[j+1] << " ";
+                    // cout << offsetRecv[j+1] << " ";
                 }
-                cout << endl; 
-                subMtx.nNz = offsetRecv[nSiblings];
+                // cout << endl; 
+                subMtx.nNz = (Size)offsetRecv[nSiblings];
+                subMtx.verPtr[subMtx.nRow]= subMtx.nNz;
+                // for(Size k: subMtx.verPtr) cout << k<< " ";
+                // cout << endl;
                 ResizeVector<Edge>(&subMtx.verInd,offsetRecv[nSiblings]);
             }
             
-            cout << "Gathering verInd" << mpi_rank << ":" << subMtx.verInd.size() << endl;
+            // cout << mpi_rank << " Gathering verInd" << mpi_rank << ":" << subMtx.verInd.size() << endl;
             
-            MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &subMtx.verInd[0], &nnzIntRecv[0], &offsetRecv[0], mpiSize, 0, sibl_comm);
+            MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
-            cout << "finished Gathering verInd"<< endl;
-            /* if(mpi_rank == myGrp[0]){
-                for(Size i : rowIdxs)
-                    cout << i << " ";
-                cout << endl;
-                }
-             */
+            // if(mpi_rank==myGrp[0]){
+                // for(Edge j : subMtx.verInd){
+                    // cout << "(" << j.id << "," << j.weight << ") ";
+                // }
+                // cout << endl;
+            // }
+            
+            // cout << mpi_rank << " finished Gathering verInd"<< endl;
             
         }
     }
@@ -191,7 +208,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         for(Size i:s.selectedRows)
             cout<< rowIdxs[i] << " ";
         cout << "Total Coverage:"<< s.totalGain << endl; */
-        // cout << mpi_rank <<", 1, " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
+        cout << mpi_rank <<", 1, " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
         
         for(Size j = 0; j<k; j++){
             s.selectedRows[j] = rowIdxs[s.selectedRows[j]];

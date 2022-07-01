@@ -12,7 +12,7 @@ bool MaxSetCoverSelection::init(const CSR& g){
 bool MaxSetCoverSelection::calc_gain(const CSR& g, Val& m_gain, Size row){
     if(!initialized){ 
         init(g);
-        //cout << "initialized Selection obj" << endl;
+        cout << "initialized Selection obj" << endl;
     }
     if(row>=g.nRow) return false;
     Val marginal_gain = 0;
@@ -58,6 +58,6 @@ bool MaxSetCoverSelection::update_selector(const CSR& g, Size row){
 void MaxSetCoverSelection::reset(Size k){
     totalGain = 0;
     nSelection = k;
-    ReserveVector<Size>(&selectedRows,nSelection);
+    ResizeVector<Size>(&selectedRows,nSelection);
     initialized = false;
 }
