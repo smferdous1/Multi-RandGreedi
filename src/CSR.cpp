@@ -152,6 +152,8 @@ bool CSR::readMtx(char* filename){
 
 bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
     
+    // cout << " Verifying the input Matrix" << nRow << " " << nNz << endl;
+    verifyCSR();
     Size nrow = 0;
     Size nnz, count = 0;
     Size max = 0;
@@ -183,6 +185,17 @@ bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
         }
         sVerPtr[nrow+1]=count;
         nrow++;
+        
+       
+        if(verPtr[i+1]-verPtr[i]!=sVerPtr[nrow]-sVerPtr[nrow-1]){
+            cout << "mistake" << verPtr[i+1]-verPtr[i] << " " << sVerPtr[nrow]-sVerPtr[nrow-1] << endl;
+        }
+        for(Size j=verPtr[i];j<verPtr[i+1]-1;j++)
+        {
+            if(verInd[j].id > verInd[j+1].id)
+                cout << " ordering mistake";
+        }
+        
     }
     assert(count==nnz);
     assert(nrow==rowIdxs.size());
@@ -193,7 +206,8 @@ bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
     subMtx.maxDeg=max;
     subMtx.verPtr.swap(sVerPtr);
     subMtx.verInd.swap(sVerInd);
-    
+    // cout << "Verifying the output" << endl;
+    // subMtx.verifyCSR();
     return true;
 }
 
@@ -404,4 +418,54 @@ bool CSR::readBin( char* filename){
     cout << endl;
     return false;
 }
+
+
+bool CSR::verifyCSR() const{
+    bool passed=true;
+    if(verPtr.size()!=nRow+1){
+        cout << "Ver Ptr size mismatch"<< verPtr.size() << " " << nRow+1 << endl;
+        passed=false;
+    }
+    if(verPtr[nRow]!=nNz){
+        cout << "Ver Ptr end entry mismatch " << verPtr[nRow] << " " << nNz << endl;
+        passed=false;
+    }
+    if(verPtr[0]!=0){
+        cout << "Ver Ptr start entry mismatch " << verPtr[0] << endl;
+        passed=false;
+    }
+    if(verInd.size()!=nNz){
+        cout << "Ver Ind size mismatch " << verInd.size() << " " << nNz << endl;
+        passed=false;
+    }
+     
+    for(Size i=0; i<nRow; i++){
+        if(verPtr[i]>verPtr[i+1]){
+            cout << "Ver Ptr indexing mismatch "<< nRow << " " << nNz << endl;
+            passed=false;
+            for(Size j:verPtr){
+                cout << j << " ";
+            }cout << endl;
+            return false;
+        }
+    }
+    
+    for(Size i=0; i<nRow; i++){
+        for(Size j=verPtr[i]; j<verPtr[i+1]-1; j++){
+            if(verInd[j].id>verInd[j+1].id){
+                cout << "Ver Ind indexing mismatch " << nRow << " " << nNz << endl;
+                passed=false;
+                // for(Edge k:verInd){
+                    // cout << k.id << " ";
+                // }cout << endl;
+                return false;
+            }
+        }
+    }
+    
+    
+    return passed;
+}
+    
+    
 

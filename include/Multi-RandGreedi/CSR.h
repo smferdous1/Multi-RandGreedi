@@ -22,6 +22,7 @@ class CSR {
     bool getSimilarity(Val& similarity, Size row1, Size row2) const;
     bool writeBin(char* filename) const;
     bool readBin( char* filename);
+    bool verifyCSR() const;
     CSR():nRow(0),nCol(0),nNz(0){}
     ~CSR(){}
 

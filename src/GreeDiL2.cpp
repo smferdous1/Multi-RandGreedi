@@ -48,6 +48,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     
     
     subMtx.readBin(file);
+    // subMtx.verifyCSR();
     // cout << mpi_rank <<": finished reading bin file" << endl;
     // cout << subMtx.nRow << " " << subMtx.nCol <<" " << subMtx.nNz << endl;
     file[len+1] = 'd';
@@ -81,7 +82,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                 // for(Edge l: subMtx.verInd) cout << l.id << ", " << l.weight << ") (";
                 // cout << endl;
             // }
-            
+            // subMtx.verifyCSR();
             localOptimizer->select(subMtx, s, k);
             
             // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
@@ -116,7 +117,12 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             CSR sendMtx;
             
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
+            // sendMtx.verifyCSR();
             // cout << mpi_rank << " " << sendMtx.nRow << " " << sendMtx.nNz << " " << sendMtx.verPtr.size() << " " << sendMtx.verInd.size() << endl;
+            // for(Size l: sendMtx.verPtr) cout << l<< " ";
+                // cout << endl << endl;
+            
+            
             
             // cout << "Selected rows: " 
             for(Size j = 0; j<s.selectedRows.size(); j++){
@@ -151,12 +157,12 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                 // cout << "RowIdxs:" ;
                 // for(Size l: rowIdxs) cout << l<< " ";
                 // cout << endl;
-                // cout << "nnzRecv: "; 
-                // for(Size l: nnzRecv) cout << l<< " ";
-                // cout << endl;
-                // cout << "VerPrt: ";
-                // for(Size l: subMtx.verPtr) cout << l<< " ";
-                // cout << endl;
+                cout << "nnzRecv: "; 
+                for(Size l: nnzRecv) cout << l<< " ";
+                cout << endl;
+                cout << "VerPtr: ";
+                for(Size l: subMtx.verPtr) cout << l<< " ";
+                cout << endl << endl;
                 
                 // cout << "mem for offset and verInd " << mpi_rank << ":" << endl;
                 ResizeVector<int>(&nnzIntRecv,nSiblings);
@@ -164,18 +170,23 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                 
                 offsetRecv[0]=0;
                 for(int j=0; j<nSiblings; j++){
-                    for(int l=0; l<k; l++){
-                        subMtx.verPtr[j*k+l] = subMtx.verPtr[j*k+l] + offsetRecv[j];
+                    // if(subMtx.verPtr[j*k]!=(Size)offsetRecv[j]){
+                        // cout << "VtxPtr mismatch " << subMtx.verPtr[j*k] << " " << offsetRecv[j] << endl;
+                    // }
+                    for(int l=1; l<=k; l++){
+                        subMtx.verPtr[j*k+l] = subMtx.verPtr[j*k+l] + (Size)offsetRecv[j];
                     }
                     nnzIntRecv[j] = (int)nnzRecv[j];
                     offsetRecv[j+1]=offsetRecv[j]+ nnzIntRecv[j];
+                    
                     // cout << offsetRecv[j+1] << " ";
                 }
                 // cout << endl; 
                 subMtx.nNz = (Size)offsetRecv[nSiblings];
-                subMtx.verPtr[subMtx.nRow]= subMtx.nNz;
-                // for(Size k: subMtx.verPtr) cout << k<< " ";
-                // cout << endl;
+                //subMtx.verPtr[subMtx.nRow]= subMtx.nNz;
+                cout << "Gathered Ptr" << endl;
+                for(Size k: subMtx.verPtr) cout << k<< " ";
+                cout << endl;
                 ResizeVector<Edge>(&subMtx.verInd,offsetRecv[nSiblings]);
             }
             
@@ -184,8 +195,15 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
             // if(mpi_rank==myGrp[0]){
-                // for(Edge j : subMtx.verInd){
-                    // cout << "(" << j.id << "," << j.weight << ") ";
+                // subMtx.verifyCSR();
+                // for(Size r=0; r<subMtx.nRow; r++){
+                    // for(Size c=subMtx.verPtr[r]; c<subMtx.verPtr[r+1]-1; c++ ){
+                        // cout << "(" << j.id << "," << j.weight << ") ";
+                        
+                        // cout << subMtx.verInd[c].id << " ";
+                        // if(subMtx.verInd[c].id > subMtx.verInd[c+1].id ) cout << "***" << endl;
+                    // }
+                    // cout << endl;
                 // }
                 // cout << endl;
             // }

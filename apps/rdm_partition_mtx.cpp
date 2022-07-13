@@ -51,6 +51,8 @@ int main(int argc, char** argv) {
     for(Size i =0; i < k ; i++){
         rowIdxs = std::vector<Size>(rowIdxSend.begin() + i* part_size, rowIdxSend.begin() + (i+1)*part_size);
         g.getSubmatrix(subMtx,rowIdxs);
+        subMtx.verifyCSR();
+        cout << "Verified";
         filename[len] = '0'+i;
         filename[len+1] = '\0';
         subMtx.writeBin(filename);
