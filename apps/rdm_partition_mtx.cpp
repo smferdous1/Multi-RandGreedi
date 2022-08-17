@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     cout << "Starting" << endl;
     clock_t time_req;
   
-    
+    g.verifyCSR();
     time_req = clock();
   
     vector<Size> rowIdxSend, rowIdxs;
@@ -41,11 +41,12 @@ int main(int argc, char** argv) {
     
     Size part_size = g.nRow/k;
     Size len = strlen(argv[1]);
-    char* filename = new char[len+3];
+    char* filename = new char[len+4];
     stpcpy(filename, argv[1]);
-    filename[len]='0';
-    filename[len+1] = '\0';
+    filename[len]='a';
+    filename[len+1] = 'a';
     filename[len+2] = '\0';
+    filename[len+3] = '\0';
     
     CSR subMtx;
     for(Size i =0; i < k ; i++){
@@ -53,11 +54,12 @@ int main(int argc, char** argv) {
         g.getSubmatrix(subMtx,rowIdxs);
         subMtx.verifyCSR();
         cout << "Verified";
-        filename[len] = '0'+i;
-        filename[len+1] = '\0';
+        filename[len] = 'a'+(i/26);
+        filename[len+1] = 'a'+(i%26);
+        filename[len+2] = '\0';
         subMtx.writeBin(filename);
         cout << filename << endl;
-        filename[len+1] = 'd';
+        filename[len+2] = 'd';
         WriteArray<Size>(filename,rowIdxs);
     }
     time_req = clock()-time_req;

@@ -19,7 +19,8 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
             cout << "Gain failed for " << i << endl;
             return false;
         }
-        // cout << "Gain for " << i << " is " << gain << endl;
+        // if(i%250==0) cout << "Gain for " << i << " is " << gain << endl;
+        
         priQ[i] = make_pair(gain,i);
     }
     // cout << "PriQ initialized, Size:" << priQ.size() << endl;

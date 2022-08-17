@@ -40,18 +40,19 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     CSR subMtx;
     
     Size len = strlen(filename);
-    char* file = new char[len+3];
+    char* file = new char[len+4];
     stpcpy(file, filename );
-    file[len]='0'+mpi_rank;
-    file[len+1] = '\0';
+    file[len]='a'+(mpi_rank/26);
+    file[len+1] = 'a'+ (mpi_rank%26);
     file[len+2] = '\0';
+    file[len+3] = '\0';
     
     
     subMtx.readBin(file);
     // subMtx.verifyCSR();
     // cout << mpi_rank <<": finished reading bin file" << endl;
     // cout << subMtx.nRow << " " << subMtx.nCol <<" " << subMtx.nNz << endl;
-    file[len+1] = 'd';
+    file[len+2] = 'd';
     ReadArray<Size>(file,rowIdxs);
     // cout << mpi_rank << ": finished reading array" << endl;
     // for( Size i:rowIdxs){ cout << i << " ";}
@@ -157,12 +158,12 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                 // cout << "RowIdxs:" ;
                 // for(Size l: rowIdxs) cout << l<< " ";
                 // cout << endl;
-                cout << "nnzRecv: "; 
-                for(Size l: nnzRecv) cout << l<< " ";
-                cout << endl;
-                cout << "VerPtr: ";
-                for(Size l: subMtx.verPtr) cout << l<< " ";
-                cout << endl << endl;
+                // cout << "nnzRecv: "; 
+                // for(Size l: nnzRecv) cout << l<< " ";
+                // cout << endl;
+                // cout << "VerPtr: ";
+                // for(Size l: subMtx.verPtr) cout << l<< " ";
+                // cout << endl << endl;
                 
                 // cout << "mem for offset and verInd " << mpi_rank << ":" << endl;
                 ResizeVector<int>(&nnzIntRecv,nSiblings);
@@ -184,9 +185,9 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                 // cout << endl; 
                 subMtx.nNz = (Size)offsetRecv[nSiblings];
                 //subMtx.verPtr[subMtx.nRow]= subMtx.nNz;
-                cout << "Gathered Ptr" << endl;
-                for(Size k: subMtx.verPtr) cout << k<< " ";
-                cout << endl;
+                // cout << "Gathered Ptr" << endl;
+                // for(Size k: subMtx.verPtr) cout << k<< " ";
+                // cout << endl;
                 ResizeVector<Edge>(&subMtx.verInd,offsetRecv[nSiblings]);
             }
             

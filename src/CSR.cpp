@@ -123,10 +123,10 @@ bool CSR::readMtx(char* filename){
             //cout<<i-1<<" "<<verPtr[i-1]<<" "<<verPtr[i]<<": ";
             
             
-            // Sort indices? for(Size j: SortIndexes(graphCRSIdx[i-1]))
+            // Sort indices? 
+            for(Size j: SortIndexes(graphCRSIdx[i-1])){
                 
-            for(Size j=0;j<offset;j++)
-            {
+            // for(Size j=0;j<offset;j++){
                 verInd[count].id=graphCRSIdx[i-1][j];
                 verInd[count].weight=graphCRSVal[i-1][j];
                 count++;
@@ -153,7 +153,7 @@ bool CSR::readMtx(char* filename){
 bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
     
     // cout << " Verifying the input Matrix" << nRow << " " << nNz << endl;
-    verifyCSR();
+    // verifyCSR();
     Size nrow = 0;
     Size nnz, count = 0;
     Size max = 0;
@@ -187,14 +187,14 @@ bool CSR::getSubmatrix(CSR& subMtx, vector<Size>& rowIdxs) const {
         nrow++;
         
        
-        if(verPtr[i+1]-verPtr[i]!=sVerPtr[nrow]-sVerPtr[nrow-1]){
-            cout << "mistake" << verPtr[i+1]-verPtr[i] << " " << sVerPtr[nrow]-sVerPtr[nrow-1] << endl;
-        }
-        for(Size j=verPtr[i];j<verPtr[i+1]-1;j++)
-        {
-            if(verInd[j].id > verInd[j+1].id)
-                cout << " ordering mistake";
-        }
+        // if(verPtr[i+1]-verPtr[i]!=sVerPtr[nrow]-sVerPtr[nrow-1]){
+            // cout << "mistake" << verPtr[i+1]-verPtr[i] << " " << sVerPtr[nrow]-sVerPtr[nrow-1] << endl;
+        // }
+        // for(Size j=verPtr[i];j<verPtr[i+1]-1;j++)
+        // {
+            // if(verInd[j].id > verInd[j+1].id)
+                // cout << " ordering mistake" << j << " " <<  verInd[j].id << " " << verInd[j+1].id << endl;
+        // }
         
     }
     assert(count==nnz);
@@ -322,12 +322,14 @@ bool CSR::getSimilarity(Val& similarity, Size row1, Size row2) const{
         Size jEnd = verPtr[row2+1];
         
         for(Size iIdx=verPtr[row1];iIdx<verPtr[row1+1];iIdx++){
-            while(verInd[jIdx].id< verInd[iIdx].id && jIdx<jEnd){
+            
+            while(jIdx<jEnd && verInd[jIdx].id< verInd[iIdx].id ){
                 // cout << verInd[jIdx].weight*verInd[jIdx].weight << "+ ";
                 sum+= verInd[jIdx].weight*verInd[jIdx].weight;
                 jIdx++;
             }
-            if(verInd[jIdx].id==verInd[iIdx].id){ 
+            
+            if(jIdx<jEnd && verInd[jIdx].id==verInd[iIdx].id){ 
                 // cout  << (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight) << "+ ";
                 sum+= (verInd[jIdx].weight-verInd[iIdx].weight)*(verInd[jIdx].weight-verInd[iIdx].weight);
                 jIdx++;
@@ -337,6 +339,8 @@ bool CSR::getSimilarity(Val& similarity, Size row1, Size row2) const{
                 sum+= verInd[iIdx].weight*verInd[iIdx].weight;
             }
         }
+        
+        
         while(jIdx<jEnd){
             // cout << verInd[jIdx].weight*verInd[jIdx].weight << "+ ";
             sum+= verInd[jIdx].weight*verInd[jIdx].weight;
@@ -415,7 +419,7 @@ bool CSR::readBin( char* filename){
         // cout << "--> finished" << endl;
         return true;
     }
-    cout << endl;
+    // cout << endl;
     return false;
 }
 
@@ -458,7 +462,7 @@ bool CSR::verifyCSR() const{
                 // for(Edge k:verInd){
                     // cout << k.id << " ";
                 // }cout << endl;
-                return false;
+                break;
             }
         }
     }

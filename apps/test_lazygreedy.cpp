@@ -46,6 +46,10 @@ int main(int argc, char** argv) {
   KMedoidSelection bMatch(k);
   LazyGreedy lz;
   
+  cout << argv[1] << " " 
+       << argv[2] << " "
+       << argv[3] << endl;
+  
   cout << "reading file ..." << endl;
   if (!g.readMtx(argv[1])) {
     cout << "file reading error" << endl;
