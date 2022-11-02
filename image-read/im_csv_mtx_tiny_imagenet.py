@@ -8,6 +8,9 @@ import scipy.io as sio
 from scipy.sparse import csr_matrix
 import pandas as pd
 
+#Download and extract the data:  http://cs231n.stanford.edu/tiny-imagenet-200.zip
+#You can also do wget http://cs231n.stanford.edu/tiny-imagenet-200.zip
+
 Data_dir = '/scratch/bell/sferdou/tiny-imagenet'
 
 #train images
