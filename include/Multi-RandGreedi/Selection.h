@@ -51,6 +51,24 @@ class MaxSetCoverSelection: public Selection{
     
 };
 
+class MaxWtSetCoverSelection: public Selection{
+    
+    vector<Val> coveredCols;
+    bool initialized;
+    
+    bool init(const CSR& g);
+        
+    public:
+        bool calc_gain(const CSR& g, Val& m_gain, Size row);
+        bool update_selector(const CSR& g, Size row);
+        void reset(Size k);
+        
+        
+        MaxWtSetCoverSelection(Size k):initialized(false),Selection(k){}
+        ~MaxWtSetCoverSelection(){}
+    
+};
+
 class KMedoidSelection: public Selection{
     
     vector<Val> bestSimiliarityCol;
