@@ -47,7 +47,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     file[len+2] = '\0';
     file[len+3] = '\0';
     
-    double startTime = MPI_Wtime(); 
+    startTime = MPI_Wtime(); 
     subMtx.readBin(file);
     // subMtx.verifyCSR();
     double endTime = MPI_Wtime(); 
@@ -74,7 +74,8 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     for( int i = 1; i<=level; i++)
         firstSib[i]= firstSib[i-1]*b;
         
-    
+    MPI_Barrier(MPI_COMM_WORLD);
+    startTime= MPI_Wtime();
     
     for( int i =0; i<level-1; i++){
         if(mpi_rank % firstSib[i] == 0) {
@@ -88,13 +89,15 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             // }
             // subMtx.verifyCSR();
             
-            startTime = endTime;
+            //startTime = endTime;
             localOptimizer->select(subMtx, s, k);
             endTime = MPI_Wtime(); 
-            if(mpi_rank==0) cout << endTime - startTime << ": finished selection" << endl;
+            // if(mpi_rank==0) cout << endTime - startTime << ": finished selection" << endl;
             
             // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
-            cout <<mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
+            if(mpi_rank==0){
+                cout <<mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << endl;
+            }
             // cout << mpi_rank <<": Input size "<< subMtx.nRow << " k= " << k << " selection size = " << s.selectedRows.size() << endl;
             
             
@@ -124,7 +127,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             CSR sendMtx;
             
-            startTime = MPI_Wtime();
+            //startTime = MPI_Wtime();
             
            
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
@@ -143,8 +146,8 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             // cout << mpi_rank << " starting gather:" << endl;
             endTime = MPI_Wtime(); 
-            if(mpi_rank==0) cout << endTime - startTime << ": prep to send to parent" << endl;
-            startTime = endTime;
+            // if(mpi_rank==0) cout << endTime - startTime << ": prep to send to parent" << endl;
+            //startTime = endTime;
             if(mpi_rank == myGrp[0]){
                 ResizeVector<Size>(&rowIdxs,k*nSiblings);
                 
@@ -205,8 +208,8 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
-            endTime = MPI_Wtime(); 
-            if(mpi_rank==0) cout << endTime - startTime << ": Finished gather" << endl;
+            //endTime = MPI_Wtime(); 
+            // if(mpi_rank==0) cout << endTime - startTime << ": Finished gather" << endl;
             
             // if(mpi_rank==myGrp[0]){
                 // subMtx.verifyCSR();
@@ -240,7 +243,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         for(Size i:s.selectedRows)
             cout<< rowIdxs[i] << " ";
         cout << "Total Coverage:"<< s.totalGain << endl; */
-        startTime= MPI_Wtime();
+        
         cout << mpi_rank <<", 1, " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
         
         for(Size j = 0; j<k; j++){

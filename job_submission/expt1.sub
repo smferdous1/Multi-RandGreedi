@@ -1,0 +1,76 @@
+#!/bin/bash
+# FILENAME:  expt1.sub
+##SBATCH  -A highmem
+#SBATCH  -A standby
+#SBATCH  --nodes=8
+#SBATCH  --time=1:30:00
+#SBATCH  --ntasks-per-node=1
+#SBATCH  --mem=10G
+##SBATCH --exclusive
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#file=/scratch/bell/gopals/webdocs/6/webdocs.mtx
+file=/scratch/bell/gopals/com-Friendster/8/com-Friendster.mtx
+#file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+#file=/scratch/bell/gopals/av41092_f.mtx
+#file=../data/lhr01.mtx
+#file=../data/SmallTest.mtx
+#file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
+#file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
+#file=/scratch/bell/gopals/road_usa/32/road_usa.mtx 
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+#file=../data/retail/retail.mtx
+#file=../data/korasak/kosarak.mtx
+#file=/scratch/bell/gopals/road_central/road_central.mtx
+#file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
+
+m=8
+k=1000
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 2
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 4 
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 8 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 16 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 32
+k=2000
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 2
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 4 
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 8 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 16 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 32
+k=4000
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 2
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 4 
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 8 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 16 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 32
+k=8000
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 2
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 4 
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 8 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 16 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 32
+k=16000
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 2
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 4 
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 8 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 16 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 32
+k=32000
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 2
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 4 
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 8 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 16 
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k 32
+
+
+
+#srun --mpi=pmi2 -n $m /usr/bin/time -v ./apps/testgreeDiL2 $file  $k 2
+#srun --mpi=pmi2 -n $m /usr/bin/time -v ./apps/testgreeDiL2 $file  $k 4 
+#srun --mpi=pmi2 -n $m /usr/bin/time -v ./apps/testgreeDiL2 $file  $k 8 
+#srun --mpi=pmi2 -n $m /usr/bin/time -v ./apps/testgreeDiL2 $file  $k 16 
+#srun --mpi=pmi2 -n $m /usr/bin/time -v ./apps/testgreeDiL2 $file  $k 32

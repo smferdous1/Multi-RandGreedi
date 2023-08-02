@@ -71,16 +71,12 @@ int main(int argc, char** argv) {
         rowIdxSend[i] = rand() % g.nRow ;
     }
     
-    Size part_size = g.nRow/k;
-    Size len = strlen(argv[1]);
-    char* filename = new char[len+4];
-    stpcpy(filename, argv[1]);
+    
     filename[len]='A';
     filename[len+1] = 'A';
     filename[len+2] = '\0';
     filename[len+3] = '\0';
     
-    CSR subMtx;
     for(Size i =0; i < k ; i++){
         rowIdxs = std::vector<Size>(rowIdxSend.begin() + i* part_size, rowIdxSend.begin() + (i+1)*part_size);
         g.getSubmatrix(subMtx,rowIdxs);

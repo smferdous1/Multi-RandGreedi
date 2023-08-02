@@ -12,7 +12,7 @@ bool MaxSetCoverSelection::init(const CSR& g){
 bool MaxSetCoverSelection::calc_gain(const CSR& g, Val& m_gain, Size row){
     if(!initialized){ 
         init(g);
-        cout << "initialized Selection obj" << endl;
+        // cout << "initialized Selection obj" << endl;
     }
     if(row>=g.nRow) return false;
     Val marginal_gain = 0;

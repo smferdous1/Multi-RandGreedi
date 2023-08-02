@@ -40,17 +40,20 @@ int main(int argc, char** argv) {
        << pid << endl;
   }
   CSR g;
-  // MaxSetCoverSelection sCover(k);
-  KMedoidSelection sCover(k);
+  MaxSetCoverSelection sCover(k);
+  // KMedoidSelection sCover(k);
+  // MaxWtSetCoverSelection sCover(k);
   LazyGreedy lg;
-  GreeDiL2 gDl(&lg,b, argv[1]);
+  // GreeDiL2 gDl(&lg,b, argv[1]);
   
+  GreeDiL2 gDl2(&lg,b, argv[1]);
 
   double startTime = MPI_Wtime(); 
-  
-  gDl.select(g, sCover, k);
- 
+  gDl2.select(g, sCover, k);
   double endTime = MPI_Wtime();
+  // cout <<  endTime-startTime << endl;
+  
+  
   // cout << "Selected Entries by " << mpi_rank << " is ";
   // for(Size i:sCover.selectedRows)
     // cout<< i << " ";

@@ -1,15 +1,36 @@
 #!/bin/bash
 # FILENAME:  test_lg.sub
-#SBATCH  --time=00:50:00
+#SBATCH  --time=02:50:00
+##SBATCH  -A standby
 #SBATCH  -A highmem
-#SBATCH  --mem=80G
+#SBATCH  --mem=20G
 
 module load gcc
 module load openmpi
 
+#file=/scratch/bell/gopals/webdocs/5/webdocs.mtx
+#file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+#file=/scratch/bell/gopals/av41092_f.mtx
+#file=../data/lhr01.mtx
+#file=../data/SmallTest.mtx
+#file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
+#file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+#file=/scratch/bell/gopals/road_usa/32/road_usa.mtx
+#file=../data/retail/retail.mtx
+file=../data/korasak/kosarak.mtx
+#file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
+#file=/scratch/bell/gopals/road_central/road_central.mtx
 cd $SLURM_SUBMIT_DIR
 
 #mpirun  -n 128 ./mpi_hello
 #mpirun  -n 2 ../build/apps/mpi_hello 
-srun  ./apps/testlg /scratch/bell/gopals/com-Friendster/com-Friendster.mtx . 5000  
 
+
+#srun  ./apps/testlg $file . 1000  
+
+srun  /usr/bin/time -v ./apps/testlg $file . 1000
+srun  /usr/bin/time -v ./apps/testlg $file . 2000
+srun  /usr/bin/time -v ./apps/testlg $file . 4000
+srun  /usr/bin/time -v ./apps/testlg $file . 8000
+srun  /usr/bin/time -v ./apps/testlg $file . 16000
+srun  /usr/bin/time -v ./apps/testlg $file . 32000

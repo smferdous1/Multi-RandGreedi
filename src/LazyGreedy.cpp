@@ -12,6 +12,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
     Val gain;
     Size row;
     bool chk;
+    Size count=0;
     
     for(Size i=0;i<g.nRow;i++){
         chk = s.calc_gain(g, gain, i);
@@ -20,7 +21,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
             return false;
         }
         // if(i%250==0) cout << "Gain for " << i << " is " << gain << endl;
-        
+        count++;
         priQ[i] = make_pair(gain,i);
     }
     // cout << "PriQ initialized, Size:" << priQ.size() << endl;
@@ -46,6 +47,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
             //cout << "Recalculating Gain" << endl;
     
             chk = s.calc_gain(g, gain, row);
+            count++;
             // cout << "gain for " << row << " is " << gain; 
             if(!chk){
                 cout << "Gain failed for " << row << endl;
@@ -61,6 +63,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
             if( gain >= priQ.front().first){
                 // cout << "Found object" << i << " PriQ Size: " << priQ.size() << endl;
                 chk = s.update_selector(g,row);
+                count++;
                 if(!chk){
                     cout << "Update failed for " << row << endl;
                     return false;
@@ -76,6 +79,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
     }  
     
     // cout << "Selected rows: Actual:" << s.selectedRows.size() << " Expected: " << k << endl; 
+    cout << count << endl; 
     if(s.selectedRows.size()==k)
         return true;
     else return false;

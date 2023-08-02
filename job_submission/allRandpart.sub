@@ -1,0 +1,43 @@
+#!/bin/bash
+# FILENAME:  test_lg.sub
+#SBATCH  --time=03:00:00
+##SBATCH  -A standby 
+#SBATCH  -A highmem
+#SBATCH  --mem=150G
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#file=/scratch/bell/gopals/webdocs/5/webdocs.mtx
+#file=/scratch/bell/gopals/tiny_image_train.mtx
+file=/scratch/bell/gopals/com-Friendster/16/com-Friendster.mtx
+#file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
+
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+
+dir=/scratch/bell/gopals/com-Friendster/1/
+file=com-Friendster.mtx
+cd $dir
+mkdir 32
+mkdir 16
+mkdir 8
+
+cd $SLURM_SUBMIT_DIR
+
+b=32
+mv $dir$file $dir$b
+srun  ./apps/rdmpart $dir$b/$file $b
+mv $dir$b/$file $dir
+
+b=16
+mv $dir$file $dir$b
+srun  ./apps/rdmpart $dir$b/$file $b
+mv $dir$b/$file $dir
+
+b=8
+mv $dir$file $dir$b
+srun  ./apps/rdmpart $dir$b/$file $b
+mv $dir$b/$file $dir

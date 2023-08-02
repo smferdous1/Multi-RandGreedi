@@ -3,7 +3,7 @@
 #SBATCH  --time=03:00:00
 ##SBATCH  -A standby 
 #SBATCH  -A highmem
-#SBATCH  --mem=150G
+#SBATCH  --mem=300G
 
 module load gcc
 module load openmpi
@@ -24,6 +24,12 @@ file=/scratch/bell/gopals/com-Friendster/com-Friendster/com-Friendster.mtx
 #mpirun  -n 2 ../build/apps/mpi_hello 
 file=/scratch/bell/gopals/AGATHA_2015/AGATHA_2015.mtx
 
-srun  ./apps/rdmpart $file 4
+#filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
+filep=/scratch/bell/gopals/AGATHA_2015/
+
+#filen=com-Friendster.mtx
+filen=AGATHA_2015.mtx
+
+srun  ./apps/rdmpartb $filep $filen 128
 
 

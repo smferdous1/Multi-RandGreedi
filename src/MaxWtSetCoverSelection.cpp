@@ -2,17 +2,17 @@
 #include "Types.h"
 #include "Utility.h"
 using namespace std;
-bool MaxSetCoverSelection::init(const CSR& g){
+bool MaxWtSetCoverSelection::init(const CSR& g){
     Size col = g.nCol;
     ResizeVector<Val>(&coveredCols, col);
     initialized = true;
     return true;
 }
 
-bool MaxSetCoverSelection::calc_gain(const CSR& g, Val& m_gain, Size row){
+bool MaxWtSetCoverSelection::calc_gain(const CSR& g, Val& m_gain, Size row){
     if(!initialized){ 
         init(g);
-        cout << "initialized Selection obj" << endl;
+        // cout << "initialized Selection obj" << endl;
     }
     if(row>=g.nRow) return false;
     Val marginal_gain = 0;
@@ -28,7 +28,7 @@ bool MaxSetCoverSelection::calc_gain(const CSR& g, Val& m_gain, Size row){
     return true;
 }
 
-bool MaxSetCoverSelection::update_selector(const CSR& g, Size row){
+bool MaxWtSetCoverSelection::update_selector(const CSR& g, Size row){
     if(!initialized){ 
         init(g);
         //cout << "initialized Selection obj" << endl;
@@ -55,7 +55,7 @@ bool MaxSetCoverSelection::update_selector(const CSR& g, Size row){
 } //adds row to selecton and updates state
 
 
-void MaxSetCoverSelection::reset(Size k){
+void MaxWtSetCoverSelection::reset(Size k){
     totalGain = 0;
     nSelection = k;
     ReserveVector<Size>(&selectedRows,nSelection);
