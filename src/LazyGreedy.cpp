@@ -79,7 +79,7 @@ bool LazyGreedy::select(const CSR& g, Selection& s,Size k){
     }  
     
     // cout << "Selected rows: Actual:" << s.selectedRows.size() << " Expected: " << k << endl; 
-    cout << count << endl; 
+    // cout << count << endl; 
     if(s.selectedRows.size()==k)
         return true;
     else return false;

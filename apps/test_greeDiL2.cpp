@@ -32,13 +32,13 @@ int main(int argc, char** argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
   pid_t pid = getpid();
   
-  if(mpi_rank==0){
-  cout << argv[1] << " " 
-       << argv[2] << " "
-       << argv[3] << " " 
-       << mpi_size << " " 
-       << pid << endl;
-  }
+  // if(mpi_rank==0){
+  // cout << argv[1] << " " 
+       // << argv[2] << " "
+       // << argv[3] << " " 
+       // << mpi_size << " " 
+       // << pid << endl;
+  // }
   CSR g;
   MaxSetCoverSelection sCover(k);
   // KMedoidSelection sCover(k);
