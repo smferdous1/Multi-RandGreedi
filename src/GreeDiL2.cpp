@@ -85,37 +85,21 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     
     for( int i =0; i<level-1; i++){
         if(mpi_rank % firstSib[i] == 0) {
-            // cout << mpi_rank << ": Entering selection Loop " << i << " " << subMtx.nRow << " " << subMtx.nNz << " " << subMtx.verPtr.size() << " " << subMtx.verInd.size() << endl;
             
-            // if (i!=0){
-                // for(Size l: subMtx.verPtr) cout << l<< " ";
-                // cout << endl;
-                // for(Edge l: subMtx.verInd) cout << l.id << ", " << l.weight << ") (";
-                // cout << endl;
-            // }
-            // subMtx.verifyCSR();
-            
-            //startTime = endTime;
+            // Greedy selction of local data
             startTmp = MPI_Wtime();
             localOptimizer->select(subMtx, s, k);
             proc_time+= MPI_Wtime() - startTmp;
-            //endTime = MPI_Wtime(); 
-            // if(mpi_rank==0) cout << endTime - startTime << ": finished selection" << endl;
             
-            // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
-            // if(mpi_rank==0){
-                // cout <<mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << endl;
-            // }
-            // cout << mpi_rank <<": Input size "<< subMtx.nRow << " k= " << k << " selection size = " << s.selectedRows.size() << endl;
             
             
             // Creating communicator for MPI_Gather
+            startTmp = MPI_Wtime();
             
             vector<int> myGrp;
             int nSiblings;
             ResizeVector<int>(&myGrp, b);
             
-            startTmp = MPI_Wtime();
             myGrp[0] = (mpi_rank/ firstSib[i+1])* firstSib[i+1]; 
             for(nSiblings = 0; nSiblings < b-1 ; nSiblings++){
                 if(myGrp[nSiblings]+firstSib[i]<mpi_size)
@@ -130,33 +114,21 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             MPI_Comm sibl_comm;
             MPI_Comm_create_group(MPI_COMM_WORLD, sibl_group, 0, &sibl_comm);
-            
+            other_time = MPI_Wtime()- startTmp;
             // Communicator created.
             
-            CSR sendMtx;
-            other_time = MPI_Wtime()- startTmp; 
             
-            //startTime = MPI_Wtime();
+            //Communication Begins
             startTmp= MPI_Wtime();
-           
+            
+            CSR sendMtx;
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
-            // sendMtx.verifyCSR();
-            // cout << mpi_rank << " " << sendMtx.nRow << " " << sendMtx.nNz << " " << sendMtx.verPtr.size() << " " << sendMtx.verInd.size() << endl;
-            // for(Size l: sendMtx.verPtr) cout << l<< " ";
-                // cout << endl << endl;
             
-            // cout << "Selected rows: " 
             for(Size j = 0; j<s.selectedRows.size(); j++){
-                // cout << s.selectedRows[j] << ":";
                 s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
-                // cout << s.selectedRows[j] << " ";
             }
-            // cout << endl;
             
-            // cout << mpi_rank << " starting gather:" << endl;
-            //endTime = MPI_Wtime(); 
-            // if(mpi_rank==0) cout << endTime - startTime << ": prep to send to parent" << endl;
-            //startTime = endTime;
+            
             if(mpi_rank == myGrp[0]){
                 ResizeVector<Size>(&rowIdxs,k*nSiblings);
                 
@@ -177,96 +149,48 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             
             if(mpi_rank==myGrp[0]){
-                // cout << "RowIdxs:" ;
-                // for(Size l: rowIdxs) cout << l<< " ";
-                // cout << endl;
-                // cout << "nnzRecv: "; 
-                // for(Size l: nnzRecv) cout << l<< " ";
-                // cout << endl;
-                // cout << "VerPtr: ";
-                // for(Size l: subMtx.verPtr) cout << l<< " ";
-                // cout << endl << endl;
-                
-                // cout << "mem for offset and verInd " << mpi_rank << ":" << endl;
                 ResizeVector<int>(&nnzIntRecv,nSiblings);
                 ResizeVector<int>(&offsetRecv,nSiblings+1);
                 
                 offsetRecv[0]=0;
                 for(int j=0; j<nSiblings; j++){
-                    // if(subMtx.verPtr[j*k]!=(Size)offsetRecv[j]){
-                        // cout << "VtxPtr mismatch " << subMtx.verPtr[j*k] << " " << offsetRecv[j] << endl;
-                    // }
+                    
                     for(int l=1; l<=k; l++){
                         subMtx.verPtr[j*k+l] = subMtx.verPtr[j*k+l] + (Size)offsetRecv[j];
                     }
                     nnzIntRecv[j] = (int)nnzRecv[j];
                     offsetRecv[j+1]=offsetRecv[j]+ nnzIntRecv[j];
-                    
-                    // cout << offsetRecv[j+1] << " ";
+                   
                 }
-                // cout << endl; 
                 subMtx.nNz = (Size)offsetRecv[nSiblings];
-                //subMtx.verPtr[subMtx.nRow]= subMtx.nNz;
-                // cout << "Gathered Ptr" << endl;
-                // for(Size k: subMtx.verPtr) cout << k<< " ";
-                // cout << endl;
                 ResizeVector<Edge>(&subMtx.verInd,offsetRecv[nSiblings]);
             }
             
-            // cout << mpi_rank << " Gathering verInd" << mpi_rank << ":" << subMtx.verInd.size() << endl;
             
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
             comm_time+= MPI_Wtime() - startTmp;
-            //endTime = MPI_Wtime(); 
-            // if(mpi_rank==0) cout << endTime - startTime << ": Finished gather" << endl;
-            
-            // if(mpi_rank==myGrp[0]){
-                // subMtx.verifyCSR();
-                // for(Size r=0; r<subMtx.nRow; r++){
-                    // for(Size c=subMtx.verPtr[r]; c<subMtx.verPtr[r+1]-1; c++ ){
-                        // cout << "(" << j.id << "," << j.weight << ") ";
-                        
-                        // cout << subMtx.verInd[c].id << " ";
-                        // if(subMtx.verInd[c].id > subMtx.verInd[c+1].id ) cout << "***" << endl;
-                    // }
-                    // cout << endl;
-                // }
-                // cout << endl;
-            // }
-            
-            // cout << mpi_rank << " finished Gathering verInd"<< endl;
+            // Communication ends
             
         }
     }
     
     if(mpi_rank == 0){
-        /* cout << "Finally selecting from";
-        for (Size i : rowIdxs){
-            cout << i << " ";
-        }
-        cout << endl;
-         */
+        
+        // Selection at root
         startTmp = MPI_Wtime();
         localOptimizer->select(subMtx, s, k);
-        proc_time = MPI_Wtime() - startTmp;
+        proc_time+= MPI_Wtime()-startTmp;
       
-        /* cout << "Final Selected Entries:";
-        for(Size i:s.selectedRows)
-            cout<< rowIdxs[i] << " ";
-        cout << "Total Coverage:"<< s.totalGain << endl; */
-        
-        // cout << mpi_rank <<", 1, " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
-        
+        // Getting original indices
+        startTmp = MPI_Wtime();
         for(Size j = 0; j<k; j++){
             s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
-            //cout << s.selectedRows[j] << " ";
         }
-        endTime = MPI_Wtime(); 
-        // cout << endTime - startTime << ": Final selection" << endl;
+        other_time+=MPI_Wtime()-startTmp; 
+        endTime = MPI_Wtime();
         
-        // cout << "Total Communication time: " << comm_time << "  Total Processing time: " << proc_time << endl;
-        cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time << endl;
+        cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time <<  ", " <<other_time << endl;
         
     }
     
