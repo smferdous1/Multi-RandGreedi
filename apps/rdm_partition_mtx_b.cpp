@@ -2,6 +2,9 @@
 #include <cstring>
 #include <vector>
 #include <ctime>
+#include <random>
+#include <chrono> 
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "CSR.h"
@@ -41,6 +44,7 @@ int main(int argc, char** argv) {
     vector<Size> rowIdxSend, rowIdxs;
 
     srand(time(NULL));
+    unsigned seed;
     ResizeVector<Size>(&rowIdxSend,g.nRow);
     
     for( int p=start; p<=end; p+=step){
@@ -62,9 +66,11 @@ int main(int argc, char** argv) {
         cout << fileBase << "\" " << endl;
         
             
+        seed = std::chrono::system_clock::now().time_since_epoch().count();
         for (Size i = 0; i < g.nRow; i++){
-            rowIdxSend[i] = rand() % g.nRow ;
+            rowIdxSend[i] = i ;
         }
+        shuffle (rowIdxSend.begin(), rowIdxSend.end(), std::default_random_engine(seed));
         
         Size part_size = g.nRow/p;
         Size len = strlen(fileBase);

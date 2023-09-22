@@ -2,6 +2,8 @@
 #include <cstring>
 #include <vector>
 #include <ctime>
+#include <random>
+#include <chrono> 
 
 #include "CSR.h"
 #include "Utility.h"
@@ -32,12 +34,15 @@ int main(int argc, char** argv) {
   
     vector<Size> rowIdxSend, rowIdxs;
 
-    srand(time(NULL));
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    
     ResizeVector<Size>(&rowIdxSend,g.nRow);
         
     for (Size i = 0; i < g.nRow; i++){
-        rowIdxSend[i] = rand() % g.nRow ;
+        rowIdxSend[i] = i ;
     }
+    shuffle (rowIdxSend.begin(), rowIdxSend.end(), std::default_random_engine(seed));
+    
     
     Size part_size = g.nRow/k;
     Size len = strlen(argv[1]);
