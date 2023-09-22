@@ -1,5 +1,5 @@
 #include <mpi.h>
-
+#include <cstring>
 
 #include "Optimizer.h"
 #include "Utility.h"
@@ -249,7 +249,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
          */
         startTmp = MPI_Wtime();
         localOptimizer->select(subMtx, s, k);
-        proc_time = MPI_Wtime() - startTmp;
+        proc_time += MPI_Wtime() - startTmp;
       
         /* cout << "Final Selected Entries:";
         for(Size i:s.selectedRows)
