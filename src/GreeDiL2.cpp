@@ -114,7 +114,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             MPI_Comm sibl_comm;
             MPI_Comm_create_group(MPI_COMM_WORLD, sibl_group, 0, &sibl_comm);
-            other_time = MPI_Wtime()- startTmp;
+            other_time+= MPI_Wtime()- startTmp;
             // Communicator created.
             
             
@@ -170,7 +170,6 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
             comm_time+= MPI_Wtime() - startTmp;
-            // Communication ends
             
         }
     }
@@ -190,7 +189,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         other_time+=MPI_Wtime()-startTmp; 
         endTime = MPI_Wtime();
         
-        cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time <<  ", " <<other_time << endl;
+        cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time <<  ", " <<other_time << ", " << s.totalGain << endl;
         
     }
     

@@ -11,12 +11,13 @@
 #include "Optimizer.h"
 
 int main(int argc, char** argv) {
-  if (argc != 4) {
+  if (argc != 5) {
     cout << "usage: "
          << argv[0]
          << " graphFile"
          << " noOfSelections"
          << " branchingFactor"
+         << " outputCSVfile"
          << endl;
     return 1;
   }
@@ -32,13 +33,6 @@ int main(int argc, char** argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
   pid_t pid = getpid();
   
-  // if(mpi_rank==0){
-  // cout << argv[1] << " " 
-       // << argv[2] << " "
-       // << argv[3] << " " 
-       // << mpi_size << " " 
-       // << pid << endl;
-  // }
   CSR g;
   MaxSetCoverSelection sCover(k);
   // KMedoidSelection sCover(k);
@@ -48,17 +42,21 @@ int main(int argc, char** argv) {
   
   GreeDiL2 gDl2(&lg,b, argv[1]);
 
+  
+  // redirecting cout to csv
+  std::ofstream out;
+  out.open(argv[4], std::ios_base::app);
+  std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
+  std::cout.rdbuf(out.rdbuf());
+  
+  
   double startTime = MPI_Wtime(); 
   gDl2.select(g, sCover, k);
   double endTime = MPI_Wtime();
-  // cout <<  endTime-startTime << endl;
   
+  //reset to standard output again
+  std::cout.rdbuf(coutbuf);
   
-  // cout << "Selected Entries by " << mpi_rank << " is ";
-  // for(Size i:sCover.selectedRows)
-    // cout<< i << " ";
-  // cout << "Total Gain by " << mpi_rank << " : " << sCover.totalGain << endl;
-  // cout << "Total Time by " << mpi_rank << " : " << endTime-startTime << endl;
   
   //smf:need to call this function to get rid of the memories acquired by mpi_init()
   MPI_Finalize();

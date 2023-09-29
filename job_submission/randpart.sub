@@ -22,8 +22,10 @@ file=/scratch/bell/gopals/com-Friendster/com-Friendster/com-Friendster.mtx
 #file=/scratch/bell/gopals/road_central/road_central.mtx
 #mpirun  -n 128 ./mpi_hello
 #mpirun  -n 2 ../build/apps/mpi_hello 
-file=/scratch/bell/gopals/AGATHA_2015/AGATHA_2015.mtx
+#file=/scratch/bell/gopals/AGATHA_2015/AGATHA_2015.mtx
 
-srun  ./apps/rdmpart $file 4
+#file=/scratch/bell/gopals/clueweb12/clueweb12.mtx
+
+srun  ./apps/rdmpart $file 8
 
 

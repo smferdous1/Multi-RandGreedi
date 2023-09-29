@@ -13,13 +13,13 @@ module load openmpi
 
 cd $SLURM_SUBMIT_DIR
 
-#filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
-filep=/scratch/bell/gopals/AGATHA_2015/
+filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
+#filep=/scratch/bell/gopals/AGATHA_2015/
 
 
 
-#filen=com-Friendster.mtx
-filen=AGATHA_2015.mtx
+filen=com-Friendster.mtx
+#filen=AGATHA_2015.mtx
 
 
 k=1000

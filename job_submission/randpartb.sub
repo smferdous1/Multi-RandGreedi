@@ -10,26 +10,13 @@ module load openmpi
 
 cd $SLURM_SUBMIT_DIR
 
-#file=/scratch/bell/gopals/road_usa/8/road_usa.mtx
-#file=/scratch/bell/gopals/webdocs/5/webdocs.mtx
-#file=/scratch/bell/gopals/tiny_image_train.mtx
-file=/scratch/bell/gopals/com-Friendster/com-Friendster/com-Friendster.mtx
-#file=/scratch/bell/gopals/av41092_f.mtx
-#file=../data/lhr01.mtx
-#file=../data/SmallSymTest.mtx
-#file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
-#file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
-#file=/scratch/bell/gopals/road_central/road_central.mtx
-#mpirun  -n 128 ./mpi_hello
-#mpirun  -n 2 ../build/apps/mpi_hello 
-file=/scratch/bell/gopals/AGATHA_2015/AGATHA_2015.mtx
 
-#filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
-filep=/scratch/bell/gopals/AGATHA_2015/
+filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
+#filep=/scratch/bell/gopals/AGATHA_2015/
 
-#filen=com-Friendster.mtx
-filen=AGATHA_2015.mtx
+filen=com-Friendster.mtx
+#filen=AGATHA_2015.mtx
 
-srun  ./apps/rdmpartb $filep $filen 128
+srun  ./apps/rdmpartb $filep $filen 128 8 8
 
 

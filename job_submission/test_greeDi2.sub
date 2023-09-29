@@ -2,21 +2,21 @@
 # FILENAME:  test_greeDi2.sub
 ##SBATCH  -A highmem
 #SBATCH  -A standby
-#SBATCH  --nodes=1
+#SBATCH  --nodes=8
 #SBATCH  --time=0:30:00
-#SBATCH  --ntasks-per-node=16
-#SBATCH  --mem=60G
+#SBATCH  --ntasks-per-node=1
+#SBATCH  --mem=12G
 ##SBATCH --exclusive
-
+##SBATCH  --contiguous
 module load gcc
 module load openmpi
 
 cd $SLURM_SUBMIT_DIR
 
-m=16
-
+m=008
+b=2
 #file=/scratch/bell/gopals/webdocs/6/webdocs.mtx
-file=/scratch/bell/gopals/com-Friendster/$m/com-Friendster.mtx
+file=/scratch/bell/gopals/com-Friendster/com-Friendster/$m/com-Friendster.mtx
 #file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
 #file=/scratch/bell/gopals/av41092_f.mtx
 #file=../data/lhr01.mtx
@@ -24,12 +24,22 @@ file=/scratch/bell/gopals/com-Friendster/$m/com-Friendster.mtx
 #file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
 #file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
 #file=/scratch/bell/gopals/road_usa/road_usa.mtx 
-#mpirun  -n 128 ./mpi_hello
-#mpirun  -n 2 ../build/apps/mpi_hello 
+#file=/scratch/bell/gopals/clueweb12/clueweb12.mtx
+
+outputfile=../data/out.csv
 
 
-echo "1 node"
-srun --mpi=pmi2 -n $m /usr/bin/time -v ./apps/testgreeDiL2 $file  1000000 2 
+for value in {1..5}
+do
+	
+	k=100
+	srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file $k $b $outputfile
+	srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file $k $m $outputfile
+	
+	k=160
+	srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file $k $b  $outputfile
+	srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file $k $m  $outputfile
+done
 
 
 #srun --mpi=pmi2 -n 2 valgrind --tool=massif --time-unit=B ./apps/testgreeDiL2 $file 100 2

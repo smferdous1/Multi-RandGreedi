@@ -1,0 +1,27 @@
+#!/bin/bash
+# FILENAME:  test_greeDi.sub
+#SBATCH  --nodes=1
+##SBATCH  --ntasks-per-node=1 
+#SBATCH  --time=04:00:00
+##SBATCH  -A highmem
+#SBATCH  -A standby
+#SBATCH  --mem=200G
+
+module load gcc
+module load matlab
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+
+#path=/scratch/bell/gopals/amazon-2008/amazon-2008
+#path=/scratch/bell/gopals/clueweb12/clueweb12
+#path=/scratch/bell/gopals/uk-2006-07/uk-2006-07
+#path=/scratch/bell/gopals/hollywood-2011/hollywood-2011
+path=/scratch/bell/gopals/gsh-2015-tpd/gsh-2015-tpd
+#path=/scratch/bell/gopals/it-2004/it-2004
+path=/scratch/bell/gopals/gsh-2015-host/gsh-2015-host
+
+matlab -nodisplay -nosplash -nodesktop -r "addpath('~/workspace/Multi-RandGreedi/bvgraph-1.2'); graphToMtx('$path');exit;" 

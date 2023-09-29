@@ -1,0 +1,10 @@
+#!/bin/bash
+
+m=008
+file=/scratch/bell/gopals/AGATHA_2015/$m/AGATHA_2015.mtx
+srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  10000 $m 
+srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  10000 $m 
+srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  10000 $m 
+srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  10000 $m 
+srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  10000 $m 
+srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  10000 $m 
