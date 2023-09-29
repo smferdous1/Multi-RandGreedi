@@ -62,3 +62,9 @@ target_compile_options(rdmpart PRIVATE -O3 )
 target_link_libraries(rdmpart PRIVATE mrg)
 target_include_directories(rdmpart PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi") 
 
+#executable rdmpart
+add_executable(rdmpartb rdm_partition_mtx_b.cpp)
+target_compile_features(rdmpartb PRIVATE cxx_std_11)
+target_compile_options(rdmpartb PRIVATE -O3 )
+target_link_libraries(rdmpartb PRIVATE mrg)
+target_include_directories(rdmpartb PRIVATE "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi") 
