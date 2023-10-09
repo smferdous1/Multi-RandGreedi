@@ -11,13 +11,13 @@ using namespace std;
 bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     
     // cout << "Starting select" << endl;
-    int mpi_rank, mpi_size;
+    int mpi_rank, mpi_size, comm_rank, comm_size;
     double startTime = MPI_Wtime();
     MPI_Comm_size(MPI_COMM_WORLD, &mpi_size); 
     MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
     
-    MPI_Group world_group;
-    MPI_Comm_group(MPI_COMM_WORLD, &world_group);
+    // MPI_Group world_group;
+    // MPI_Comm_group(MPI_COMM_WORLD, &world_group);
     
     const int nitems=2;
     int blocklengths[2] = {1,1};
@@ -88,6 +88,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             // Greedy selction of local data
             startTmp = MPI_Wtime();
+            cout << mpi_rank << ":Selection" << endl;
             localOptimizer->select(subMtx, s, k);
             proc_time+= MPI_Wtime() - startTmp;
             
@@ -95,32 +96,38 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             // Creating communicator for MPI_Gather
             startTmp = MPI_Wtime();
-            
-            vector<int> myGrp;
-            int nSiblings;
-            ResizeVector<int>(&myGrp, b);
-            
-            myGrp[0] = (mpi_rank/ firstSib[i+1])* firstSib[i+1]; 
-            for(nSiblings = 0; nSiblings < b-1 ; nSiblings++){
-                if(myGrp[nSiblings]+firstSib[i]<mpi_size)
-                    myGrp[nSiblings+1] = myGrp[nSiblings]+firstSib[i];
-                else
-                    break;
-            }
-            nSiblings++;
-            
-            MPI_Group sibl_group;
-            MPI_Group_incl(world_group, nSiblings, &myGrp[0], &sibl_group);
-            
             MPI_Comm sibl_comm;
-            MPI_Comm_create_group(MPI_COMM_WORLD, sibl_group, 0, &sibl_comm);
+            cout << mpi_rank << "Comm split begins" << endl;
+            MPI_Comm_split(MPI_COMM_WORLD, mpi_rank/ firstSib[i+1], mpi_rank, &sibl_comm);
+            cout << mpi_rank << "Comm split finished" << endl;
+            MPI_Comm_size(sibl_comm, &comm_size); 
+            MPI_Comm_rank(sibl_comm, &comm_rank);
+            
+            // vector<int> myGrp;
+            int nSiblings = comm_size;
+            // ResizeVector<int>(&myGrp, b);
+            
+            // myGrp[0] = (mpi_rank/ firstSib[i+1])* firstSib[i+1]; 
+            // for(nSiblings = 0; nSiblings < b-1 ; nSiblings++){
+                // if(myGrp[nSiblings]+firstSib[i]<mpi_size)
+                    // myGrp[nSiblings+1] = myGrp[nSiblings]+firstSib[i];
+                // else
+                    // break;
+            // }
+            // nSiblings++;
+            
+            // MPI_Group sibl_group;
+            // MPI_Group_incl(world_group, nSiblings, &myGrp[0], &sibl_group);
+            
+            // MPI_Comm sibl_comm;
+            // MPI_Comm_create_group(MPI_COMM_WORLD, sibl_group, 0, &sibl_comm);
             other_time+= MPI_Wtime()- startTmp;
             // Communicator created.
             
             
             //Communication Begins
             startTmp= MPI_Wtime();
-            
+            cout << mpi_rank << "Communcation begins to "<< nSiblings << " at level "<< i << endl;
             CSR sendMtx;
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
             
@@ -129,7 +136,8 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             }
             
             
-            if(mpi_rank == myGrp[0]){
+            // if(mpi_rank == myGrp[0]){
+            if(comm_rank==0){
                 ResizeVector<Size>(&rowIdxs,k*nSiblings);
                 
                 ResizeVector<Size>(&nnzRecv,nSiblings);
@@ -148,7 +156,8 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             MPI_Gather(&(sendMtx.verPtr[1]), k, mpiSize, &subMtx.verPtr[1], k, mpiSize, 0, sibl_comm);
             
             
-            if(mpi_rank==myGrp[0]){
+            // if(mpi_rank==myGrp[0]){
+            if(comm_rank==0){
                 ResizeVector<int>(&nnzIntRecv,nSiblings);
                 ResizeVector<int>(&offsetRecv,nSiblings+1);
                 
@@ -168,9 +177,17 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
-            
+            MPI_Comm_free(&sibl_comm);
+            cout << mpi_rank << "Communication finished" << endl;
             comm_time+= MPI_Wtime() - startTmp;
             
+        } 
+        else {
+            MPI_Comm sibl_comm;
+            cout << mpi_rank << "Comm split begins" << endl;
+            MPI_Comm_split(MPI_COMM_WORLD, MPI_UNDEFINED, mpi_rank, &sibl_comm);
+            cout << mpi_rank << "Comm split ends" << endl;
+            // MPI_Comm_free(&sibl_comm);
         }
     }
     
