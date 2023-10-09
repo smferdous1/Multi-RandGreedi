@@ -88,7 +88,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             // Greedy selction of local data
             startTmp = MPI_Wtime();
-            cout << mpi_rank << ":Selection" << endl;
+            // cout << mpi_rank << ":Selection" << endl;
             localOptimizer->select(subMtx, s, k);
             proc_time+= MPI_Wtime() - startTmp;
             
@@ -97,12 +97,12 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             // Creating communicator for MPI_Gather
             startTmp = MPI_Wtime();
             MPI_Comm sibl_comm;
-            cout << mpi_rank << "Comm split begins" << endl;
+            // cout << mpi_rank << "Comm split begins" << endl;
             MPI_Comm_split(MPI_COMM_WORLD, mpi_rank/ firstSib[i+1], mpi_rank, &sibl_comm);
-            cout << mpi_rank << "Comm split finished" << endl;
             MPI_Comm_size(sibl_comm, &comm_size); 
             MPI_Comm_rank(sibl_comm, &comm_rank);
             
+            // cout << mpi_rank << "Comm split finished at level " << i << " with " << comm_size << " siblings and rank " << comm_rank << endl;
             // vector<int> myGrp;
             int nSiblings = comm_size;
             // ResizeVector<int>(&myGrp, b);
@@ -127,7 +127,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             //Communication Begins
             startTmp= MPI_Wtime();
-            cout << mpi_rank << "Communcation begins to "<< nSiblings << " at level "<< i << endl;
+            // cout << mpi_rank << "Communcation begins to "<< nSiblings << " at level "<< i << endl;
             CSR sendMtx;
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
             
@@ -178,15 +178,15 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             MPI_Comm_free(&sibl_comm);
-            cout << mpi_rank << "Communication finished" << endl;
+            // cout << mpi_rank << "Communication finished" << endl;
             comm_time+= MPI_Wtime() - startTmp;
             
         } 
         else {
             MPI_Comm sibl_comm;
-            cout << mpi_rank << "Comm split begins" << endl;
+            // cout << mpi_rank << "Comm split begins" << endl;
             MPI_Comm_split(MPI_COMM_WORLD, MPI_UNDEFINED, mpi_rank, &sibl_comm);
-            cout << mpi_rank << "Comm split ends" << endl;
+            // cout << mpi_rank << "Comm split ends at level " << i << endl;
             // MPI_Comm_free(&sibl_comm);
         }
     }
