@@ -16,8 +16,8 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     MPI_Comm_size(MPI_COMM_WORLD, &mpi_size); 
     MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
     
-    // MPI_Group world_group;
-    // MPI_Comm_group(MPI_COMM_WORLD, &world_group);
+    MPI_Group world_group;
+    MPI_Comm_group(MPI_COMM_WORLD, &world_group);
     
     const int nitems=2;
     int blocklengths[2] = {1,1};
@@ -68,24 +68,12 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         level++;
     }
     
-    // cout << mpi_rank << ": Precomputing Communicators ->" ;
-    vector<Size> firstSib(level+1);
-    vector<MPI_Comm> sibl_comm(level);
-    vector<int> comm_size(level);
-    vector<int> comm_rank(level);
-    
+    vector<Size> firstSib;
+    ResizeVector<Size>(&firstSib, level+1);
     firstSib[0]=1;
-    for( int i = 1; i<=level; i++){
+    for( int i = 1; i<=level; i++)
         firstSib[i]= firstSib[i-1]*b;
-        if(mpi_rank % firstSib[i-1] == 0){
-            MPI_Comm_split(MPI_COMM_WORLD, mpi_rank/ firstSib[i], mpi_rank, &sibl_comm[i-1]);
-            MPI_Comm_size(sibl_comm[i-1], &comm_size[i-1]); 
-            MPI_Comm_rank(sibl_comm[i-1], &comm_rank[i-1]);
-        }
-        else 
-            MPI_Comm_split(MPI_COMM_WORLD, MPI_UNDEFINED, mpi_rank, &sibl_comm[i-1]);
-    }
-    // cout << mpi_rank << ":Done" << endl;    
+        
     
     double comm_time=0;
     double other_time=0;
@@ -100,45 +88,41 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             // Greedy selction of local data
             startTmp = MPI_Wtime();
-            // cout << mpi_rank << ":Selection" << endl;
             localOptimizer->select(subMtx, s, k);
-            proc_time+= MPI_Wtime() - startTmp;
-            // cout << "Done" << endl
             
+            // Creating communicator for MPI_Gather
+            
+        }
+        
+        MPI_Barrier(MPI_COMM_WORLD);
+        
+        if(mpi_rank % firstSib[i] == 0) {
+        
+            proc_time+= MPI_Wtime() - startTmp;
             
             // Creating communicator for MPI_Gather
             startTmp = MPI_Wtime();
-            // MPI_Comm sibl_comm;
-            // cout << mpi_rank << "Comm split begins" << endl;
-            // MPI_Comm_split(MPI_COMM_WORLD, mpi_rank/ firstSib[i+1], mpi_rank, &sibl_comm);
             
+            vector<int> myGrp;
+            int nSiblings;
+            ResizeVector<int>(&myGrp, b);
             
-            // cout << mpi_rank << "Comm split finished at level " << i << " with " << comm_size << " siblings and rank " << comm_rank << endl;
-            // vector<int> myGrp;
-            int nSiblings = comm_size[i];
-            // ResizeVector<int>(&myGrp, b);
+            myGrp[0] = (mpi_rank/ firstSib[i+1])* firstSib[i+1]; 
+            for(nSiblings = 0; nSiblings < b-1 ; nSiblings++){
+                if(myGrp[nSiblings]+firstSib[i]<mpi_size)
+                    myGrp[nSiblings+1] = myGrp[nSiblings]+firstSib[i];
+                else
+                    break;
+            }
+            nSiblings++;
             
-            // myGrp[0] = (mpi_rank/ firstSib[i+1])* firstSib[i+1]; 
-            // for(nSiblings = 0; nSiblings < b-1 ; nSiblings++){
-                // if(myGrp[nSiblings]+firstSib[i]<mpi_size)
-                    // myGrp[nSiblings+1] = myGrp[nSiblings]+firstSib[i];
-                // else
-                    // break;
-            // }
-            // nSiblings++;
+            MPI_Group sibl_group;
+            MPI_Group_incl(world_group, nSiblings, &myGrp[0], &sibl_group);
             
-            // MPI_Group sibl_group;
-            // MPI_Group_incl(world_group, nSiblings, &myGrp[0], &sibl_group);
+            MPI_Comm sibl_comm;
+            MPI_Comm_create_group(MPI_COMM_WORLD, sibl_group, 0, &sibl_comm);
+            // Communicator created, Communication Begins
             
-            // MPI_Comm sibl_comm;
-            // MPI_Comm_create_group(MPI_COMM_WORLD, sibl_group, 0, &sibl_comm);
-            other_time+= MPI_Wtime()- startTmp;
-            // Communicator created.
-            
-            
-            //Communication Begins
-            startTmp= MPI_Wtime();
-            // cout << mpi_rank << "Communcation begins to "<< nSiblings << " at level "<< i ;
             CSR sendMtx;
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
             
@@ -147,8 +131,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             }
             
             
-            // if(mpi_rank == myGrp[0]){
-            if(comm_rank[i]==0){
+            if(mpi_rank == myGrp[0]){
                 ResizeVector<Size>(&rowIdxs,k*nSiblings);
                 
                 ResizeVector<Size>(&nnzRecv,nSiblings);
@@ -159,16 +142,15 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
                 subMtx.verPtr[0]=0;
             }
             
-            MPI_Gather(&(s.selectedRows[0]), k, mpiSize, &rowIdxs[0],k, mpiSize, 0, sibl_comm[i]);
+            MPI_Gather(&(s.selectedRows[0]), k, mpiSize, &rowIdxs[0],k, mpiSize, 0, sibl_comm);
             
-            MPI_Gather(&(sendMtx.nNz), 1, mpiSize, &nnzRecv[0],1, mpiSize, 0, sibl_comm[i]);
-            
-            
-            MPI_Gather(&(sendMtx.verPtr[1]), k, mpiSize, &subMtx.verPtr[1], k, mpiSize, 0, sibl_comm[i]);
+            MPI_Gather(&(sendMtx.nNz), 1, mpiSize, &nnzRecv[0],1, mpiSize, 0, sibl_comm);
             
             
-            // if(mpi_rank==myGrp[0]){
-            if(comm_rank[i]==0){
+            MPI_Gather(&(sendMtx.verPtr[1]), k, mpiSize, &subMtx.verPtr[1], k, mpiSize, 0, sibl_comm);
+            
+            
+            if(mpi_rank==myGrp[0]){
                 ResizeVector<int>(&nnzIntRecv,nSiblings);
                 ResizeVector<int>(&offsetRecv,nSiblings+1);
                 
@@ -187,11 +169,15 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             }
             
             
-            MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm[i]);
-            // cout << mpi_rank << "Done" << endl;
-            comm_time+= MPI_Wtime() - startTmp;
+            MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
-        } 
+        }
+        MPI_Barrier(MPI_COMM_WORLD);
+        
+        if(mpi_rank % firstSib[i] == 0) {
+            comm_time+= MPI_Wtime() - startTmp;
+        }
+        
     }
     
     if(mpi_rank == 0){
@@ -199,25 +185,20 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         // Selection at root
         startTmp = MPI_Wtime();
         localOptimizer->select(subMtx, s, k);
-        proc_time+= MPI_Wtime()-startTmp;
+        
       
         // Getting original indices
-        startTmp = MPI_Wtime();
+        
         for(Size j = 0; j<k; j++){
             s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
         }
-        other_time+=MPI_Wtime()-startTmp; 
+        
+        proc_time+= MPI_Wtime()-startTmp; 
         endTime = MPI_Wtime();
         
         cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time <<  ", " <<other_time << ", " << s.totalGain << endl;
         
     }
-    
-    for( int i =1; i<=level; i++){
-        if(mpi_rank % firstSib[i-1] == 0)
-            MPI_Comm_free(&sibl_comm[i-1]);
-    }
-            
     
     return true;
 }
