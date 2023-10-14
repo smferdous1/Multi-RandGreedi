@@ -1,0 +1,59 @@
+#!/bin/bash
+# FILENAME:  test_greeDi2.sub
+#SBATCH  -A gracondyn
+#SBATCH  --nodes=64
+#SBATCH  --time=0:30:00
+#SBATCH  --ntasks-per-node=1
+
+module load gcc/9.1.0
+module load mvapich2/2.3.7
+
+cd ../build
+rm -r *
+cmake ..
+make
+
+cd $SLURM_SUBMIT_DIR
+
+#m=32
+
+#file=/scratch/bell/gopals/webdocs/6/webdocs.mtx
+#file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+#file=/scratch/bell/gopals/av41092_f.mtx
+#file=../data/lhr01.mtx
+#file=../data/SmallTest.mtx
+#file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
+#file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
+#file=/scratch/bell/gopals/road_usa/road_usa.mtx 
+#file=/qfs/projects/gracondyn/Multi-GreedI/com-Friendster/032/com-Friendster.mtx
+#mpirun  -n 128 ./mpi_hello
+#mpirun  -n 2 ../build/apps/mpi_hello 
+
+
+numNodes=(008
+          016
+          024
+          032
+          064
+)
+
+for m in ${numNodes[@]} 
+do
+  #echo "$m node"
+  file=/qfs/projects/gracondyn/Multi-GreedI/com-Friendster/${m}/com-Friendster.mtx
+  #echo $file
+  #echo $((10#$m))
+  srun --mpi=pmi2 -n $((10#$m)) ../build/apps/testgreeDiL2 $file  200 $((10#$m))  
+  srun --mpi=pmi2 -n $((10#$m)) ../build/apps/testgreeDiL2 $file  200 $((10#$m))  
+  srun --mpi=pmi2 -n $((10#$m)) ../build/apps/testgreeDiL2 $file  200 $((10#$m)) 
+  srun --mpi=pmi2 -n $((10#$m)) ../build/apps/testgreeDiL2 $file  200 $((10#$m))
+  srun --mpi=pmi2 -n $((10#$m)) ../build/apps/testgreeDiL2 $file  200 $((10#$m))
+  #srun --mpi=none  -n $m ../build/apps/testgreeDiL2 $file  200 2 
+  #mpiexec -n $m --npernode 1 --bind-to socket ../build/apps/testgreeDiL2 $file  200 2
+  #mpiexec -n $m --npernode 1 --bind-to socket ../build/apps/testgreeDiL2 $file  200 2
+  #mpiexec -n $m --npernode 1 --bind-to socket ../build/apps/testgreeDiL2 $file  200 2
+  #mpiexec -n $m --npernode 1 --bind-to socket ../build/apps/testgreeDiL2 $file  200 2
+  #mpiexec -n $m --npernode 1 --bind-to socket ../build/apps/testgreeDiL2 $file  200 2
+  #wait 
+done
+#srun --mpi=pmi2 -n 2 valgrind --tool=massif --time-unit=B ./apps/testgreeDiL2 $file 100 2
