@@ -171,11 +171,16 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
+            MPI_Group_free(&sibl_group);
+            MPI_Comm_free(&sibl_comm);
+            
+            
         }
         MPI_Barrier(MPI_COMM_WORLD);
         
         if(mpi_rank % firstSib[i] == 0) {
             comm_time+= MPI_Wtime() - startTmp;
+            
         }
         
     }
@@ -199,7 +204,7 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time <<  ", " <<other_time << ", " << s.totalGain << endl;
         
     }
-    
+    MPI_Group_free(&world_group);
     return true;
 }
 
