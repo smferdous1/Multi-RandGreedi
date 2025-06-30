@@ -1,22 +1,14 @@
 #include <mpi.h>
-<<<<<<< Updated upstream
 
-=======
-#include <string.h>
->>>>>>> Stashed changes
 
 #include "Optimizer.h"
 #include "Utility.h"
 #include "MPI_Types.h"
-<<<<<<< Updated upstream
-=======
-#include "MemUsage.h"
->>>>>>> Stashed changes
 
 using namespace std;
 
 
-bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
+bool GreeDiL3::select(const CSR& g, Selection& s,Size k){
     
     // cout << "Starting select" << endl;
     int mpi_rank, mpi_size;
@@ -55,23 +47,14 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
     file[len+2] = '\0';
     file[len+3] = '\0';
     
-<<<<<<< Updated upstream
-=======
-    double startRss, endRss;
-    startRss = getPeakRSS();
     
->>>>>>> Stashed changes
-    startTime = MPI_Wtime(); 
     subMtx.readBin(file);
     // subMtx.verifyCSR();
-    double endTime = MPI_Wtime(); 
-    //if(mpi_rank==0) cout << endTime - startTime <<": finished reading bin file" << endl;
+    // cout << mpi_rank <<": finished reading bin file" << endl;
     // cout << subMtx.nRow << " " << subMtx.nCol <<" " << subMtx.nNz << endl;
     file[len+2] = 'd';
-    startTime = endTime;
     ReadArray<Size>(file,rowIdxs);
-    endTime = MPI_Wtime(); 
-    //if(mpi_rank==0) cout << endTime - startTime << ": finished reading array" << endl;
+    // cout << mpi_rank << ": finished reading array" << endl;
     // for( Size i:rowIdxs){ cout << i << " ";}
     // cout << endl;
     
@@ -89,46 +72,31 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
         firstSib[i]= firstSib[i-1]*b;
         
     
-    double comm_time=0;
-    double other_time=0;
-    double proc_time=0;
-    double startTmp=0;
-    
-    MPI_Barrier(MPI_COMM_WORLD);
-    startTime= MPI_Wtime();
     
     for( int i =0; i<level-1; i++){
-<<<<<<< Updated upstream
-=======
-        // cout << mpi_rank << ":" << i << endl;
->>>>>>> Stashed changes
         if(mpi_rank % firstSib[i] == 0) {
+            // cout << mpi_rank << ": Entering selection Loop " << i << " " << subMtx.nRow << " " << subMtx.nNz << " " << subMtx.verPtr.size() << " " << subMtx.verInd.size() << endl;
             
-            // Greedy selction of local data
-            startTmp = MPI_Wtime();
+            // if (i!=0){
+                // for(Size l: subMtx.verPtr) cout << l<< " ";
+                // cout << endl;
+                // for(Edge l: subMtx.verInd) cout << l.id << ", " << l.weight << ") (";
+                // cout << endl;
+            // }
+            // subMtx.verifyCSR();
             localOptimizer->select(subMtx, s, k);
-<<<<<<< Updated upstream
             
-=======
-            // if(mpi_rank == 0 && level==1)
-            //     cout << i << ":" << s.totalGain << endl;
->>>>>>> Stashed changes
-            // Creating communicator for MPI_Gather
+            // cout << "Total Coverage of "<< mpi_rank <<"at level" << i << ": " << s.totalGain << endl;
+            cout <<mpi_rank <<", " << level-i << ", " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
+            // cout << mpi_rank <<": Input size "<< subMtx.nRow << " k= " << k << " selection size = " << s.selectedRows.size() << endl;
             
-        }
-        
-        MPI_Barrier(MPI_COMM_WORLD);
-        
-        if(mpi_rank % firstSib[i] == 0) {
-        
-            proc_time+= MPI_Wtime() - startTmp;
             
             // Creating communicator for MPI_Gather
-            startTmp = MPI_Wtime();
             
             vector<int> myGrp;
             int nSiblings;
             ResizeVector<int>(&myGrp, b);
+            
             
             myGrp[0] = (mpi_rank/ firstSib[i+1])* firstSib[i+1]; 
             for(nSiblings = 0; nSiblings < b-1 ; nSiblings++){
@@ -144,15 +112,28 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             MPI_Comm sibl_comm;
             MPI_Comm_create_group(MPI_COMM_WORLD, sibl_group, 0, &sibl_comm);
-            // Communicator created, Communication Begins
+            
+            // Communicator created.
             
             CSR sendMtx;
+            
             subMtx.getSubmatrix(sendMtx, s.selectedRows);
+            // sendMtx.verifyCSR();
+            // cout << mpi_rank << " " << sendMtx.nRow << " " << sendMtx.nNz << " " << sendMtx.verPtr.size() << " " << sendMtx.verInd.size() << endl;
+            // for(Size l: sendMtx.verPtr) cout << l<< " ";
+                // cout << endl << endl;
             
+            
+            
+            // cout << "Selected rows: " 
             for(Size j = 0; j<s.selectedRows.size(); j++){
+                // cout << s.selectedRows[j] << ":";
                 s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
+                // cout << s.selectedRows[j] << " ";
             }
+            // cout << endl;
             
+            // cout << mpi_rank << " starting gather:" << endl;
             
             if(mpi_rank == myGrp[0]){
                 ResizeVector<Size>(&rowIdxs,k*nSiblings);
@@ -174,93 +155,86 @@ bool GreeDiL2::select(const CSR& g, Selection& s,Size k){
             
             
             if(mpi_rank==myGrp[0]){
+                // cout << "RowIdxs:" ;
+                // for(Size l: rowIdxs) cout << l<< " ";
+                // cout << endl;
+                // cout << "nnzRecv: "; 
+                // for(Size l: nnzRecv) cout << l<< " ";
+                // cout << endl;
+                // cout << "VerPtr: ";
+                // for(Size l: subMtx.verPtr) cout << l<< " ";
+                // cout << endl << endl;
+                
+                // cout << "mem for offset and verInd " << mpi_rank << ":" << endl;
                 ResizeVector<int>(&nnzIntRecv,nSiblings);
                 ResizeVector<int>(&offsetRecv,nSiblings+1);
                 
                 offsetRecv[0]=0;
                 for(int j=0; j<nSiblings; j++){
-                    
+                    // if(subMtx.verPtr[j*k]!=(Size)offsetRecv[j]){
+                        // cout << "VtxPtr mismatch " << subMtx.verPtr[j*k] << " " << offsetRecv[j] << endl;
+                    // }
                     for(int l=1; l<=k; l++){
                         subMtx.verPtr[j*k+l] = subMtx.verPtr[j*k+l] + (Size)offsetRecv[j];
                     }
                     nnzIntRecv[j] = (int)nnzRecv[j];
                     offsetRecv[j+1]=offsetRecv[j]+ nnzIntRecv[j];
-                   
+                    
+                    // cout << offsetRecv[j+1] << " ";
                 }
+                // cout << endl; 
                 subMtx.nNz = (Size)offsetRecv[nSiblings];
+                //subMtx.verPtr[subMtx.nRow]= subMtx.nNz;
+                // cout << "Gathered Ptr" << endl;
+                // for(Size k: subMtx.verPtr) cout << k<< " ";
+                // cout << endl;
                 ResizeVector<Edge>(&subMtx.verInd,offsetRecv[nSiblings]);
             }
             
+            // cout << mpi_rank << " Gathering verInd" << mpi_rank << ":" << subMtx.verInd.size() << endl;
             
             MPI_Gatherv(&(sendMtx.verInd[0]), sendMtx.nNz, mpiEdge, &(subMtx.verInd[0]), &nnzIntRecv[0], &offsetRecv[0], mpiEdge, 0, sibl_comm);
             
-            MPI_Group_free(&sibl_group);
-            MPI_Comm_free(&sibl_comm);
+            // if(mpi_rank==myGrp[0]){
+                // subMtx.verifyCSR();
+                // for(Size r=0; r<subMtx.nRow; r++){
+                    // for(Size c=subMtx.verPtr[r]; c<subMtx.verPtr[r+1]-1; c++ ){
+                        // cout << "(" << j.id << "," << j.weight << ") ";
+                        
+                        // cout << subMtx.verInd[c].id << " ";
+                        // if(subMtx.verInd[c].id > subMtx.verInd[c+1].id ) cout << "***" << endl;
+                    // }
+                    // cout << endl;
+                // }
+                // cout << endl;
+            // }
             
+            // cout << mpi_rank << " finished Gathering verInd"<< endl;
             
         }
-        MPI_Barrier(MPI_COMM_WORLD);
-        
-        if(mpi_rank % firstSib[i] == 0) {
-            comm_time+= MPI_Wtime() - startTmp;
-            
-        }
-        
     }
     
     if(mpi_rank == 0){
-        
-        // Selection at root
-        startTmp = MPI_Wtime();
+        /* cout << "Finally selecting from";
+        for (Size i : rowIdxs){
+            cout << i << " ";
+        }
+        cout << endl;
+         */
         localOptimizer->select(subMtx, s, k);
-<<<<<<< Updated upstream
-        
       
-        // Getting original indices
+        /* cout << "Final Selected Entries:";
+        for(Size i:s.selectedRows)
+            cout<< rowIdxs[i] << " ";
+        cout << "Total Coverage:"<< s.totalGain << endl; */
+        cout << mpi_rank <<", 1, " << s.totalGain << ", " << MPI_Wtime()-startTime << endl;
         
-=======
-        cout << level - 1 << ":" << s.totalGain << endl;
-        CSR sendMtx;
-        subMtx.getSubmatrix(sendMtx, s.selectedRows);
-        
-        file[len]='_';
-        file[len+1] = 'a' + b;
-        file[len+2] = '\0';
-        file[len+3] = '\0';
-        sendMtx.writeBin(file);
-        // Getting original indices
->>>>>>> Stashed changes
         for(Size j = 0; j<k; j++){
             s.selectedRows[j] = rowIdxs[s.selectedRows[j]];
+            //cout << s.selectedRows[j] << " ";
         }
-        
-<<<<<<< Updated upstream
-        proc_time+= MPI_Wtime()-startTmp; 
-        endTime = MPI_Wtime();
-        
-        cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time <<  ", " <<other_time << ", " << s.totalGain << endl;
-=======
-        // for( Size j=0; j<sendMtx.nRow; j++){
-            // for(Size l=sendMtx.verPtr[j];l<sendMtx.verPtr[j+1];l++){
-                // cout << sendMtx.verInd[l].weight << "  ";
-            // }
-            // cout << endl;
-        // }
-        
-        // for(Size j=0; j<sendMtx.nNz; j++){
-            // cout << sendMtx.verInd[j].weight << " ";
-        // } cout << endl;
-        
-        proc_time+= MPI_Wtime()-startTmp; 
-        endTime = MPI_Wtime();
-        endRss= getPeakRSS();
-        
-        
-        cout << k << ", " << b << ", " << mpi_size << ", " << endTime - startTime << ", " << comm_time << ", " << proc_time << ", " << endRss - startRss << ", " << s.totalGain << endl;
->>>>>>> Stashed changes
-        
     }
-    MPI_Group_free(&world_group);
+    
     return true;
 }
 

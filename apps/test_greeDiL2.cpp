@@ -44,18 +44,46 @@ int main(int argc, char** argv) {
 
   
   // redirecting cout to csv
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+  // std::ofstream out;
+  // out.open(argv[4], std::ios_base::app);
+  // std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
+  // std::cout.rdbuf(out.rdbuf());
+=======
+>>>>>>> Stashed changes
   std::ofstream out;
   out.open(argv[4], std::ios_base::app);
   std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
   std::cout.rdbuf(out.rdbuf());
+<<<<<<< Updated upstream
+=======
+>>>>>>> 91261662e0ce518ff85162ec70960f43a10228dc
+>>>>>>> Stashed changes
   
   
   double startTime = MPI_Wtime(); 
   gDl2.select(g, sCover, k);
   double endTime = MPI_Wtime();
+<<<<<<< Updated upstream
   
   //reset to standard output again
   std::cout.rdbuf(coutbuf);
+=======
+<<<<<<< HEAD
+  // for(int i=0; i < k ; i++){
+  //     cout << sCover.selectedRows[i] << " ";
+  // }
+  // cout << endl;
+  //reset to standard output again
+  // std::cout.rdbuf(coutbuf);
+=======
+  
+  //reset to standard output again
+  std::cout.rdbuf(coutbuf);
+>>>>>>> 91261662e0ce518ff85162ec70960f43a10228dc
+>>>>>>> Stashed changes
   
   
   //smf:need to call this function to get rid of the memories acquired by mpi_init()

@@ -1,6 +1,10 @@
 #!/bin/bash
 # FILENAME:  test_lg.sub
+<<<<<<< Updated upstream
 #SBATCH  --time=03:00:00
+=======
+#SBATCH  --time=23:00:00
+>>>>>>> Stashed changes
 ##SBATCH  -A standby 
 #SBATCH  -A highmem
 #SBATCH  --mem=300G
@@ -11,6 +15,7 @@ module load openmpi
 cd $SLURM_SUBMIT_DIR
 
 
+<<<<<<< Updated upstream
 filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
 #filep=/scratch/bell/gopals/AGATHA_2015/
 
@@ -18,5 +23,22 @@ filen=com-Friendster.mtx
 #filen=AGATHA_2015.mtx
 
 srun  ./apps/rdmpartb $filep $filen 128 8 8
+=======
+# filep=/scratch/bell/gopals/com-Friendster/
+#filep=/scratch/bell/gopals/tiny-imagenet-vectors/train/
+# filep=/scratch/bell/gopals/AGATHA_2015/
+# filep=/scratch/bell/gopals/GAP-urand/
+filep=/scratch/bell/gopals/MOLIERE_2016/
+
+
+
+# filen=com-Friendster.mtx
+#filen=tiny_image_train.mtx 
+# filen=AGATHA_2015.mtx
+# filen=GAP-urand.mtx
+filen=MOLIERE_2016.mtx
+
+srun  ./apps/rdmpartb $filep $filen 32 8 8
+>>>>>>> Stashed changes
 
 

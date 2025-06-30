@@ -2,10 +2,17 @@
 # FILENAME:  expt2.sub
 ##SBATCH  -A highmem
 #SBATCH  -A standby
+<<<<<<< Updated upstream
 #SBATCH  --nodes=16
 #SBATCH  --time=2:00:00
 #SBATCH  --ntasks-per-node=1
 #SBATCH  --mem=30G
+=======
+#SBATCH  --nodes=32
+#SBATCH  --time=2:00:00
+#SBATCH  --ntasks-per-node=1
+#SBATCH  --mem=40G
+>>>>>>> Stashed changes
 ##SBATCH --exclusive
 
 module load gcc
@@ -13,6 +20,7 @@ module load openmpi
 
 cd $SLURM_SUBMIT_DIR
 
+<<<<<<< Updated upstream
 #file=/scratch/bell/gopals/webdocs/6/webdocs.mtx
 #file=/scratch/bell/gopals/com-Friendster/31/com-Friendster.mtx
 #file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
@@ -47,3 +55,41 @@ file=/scratch/bell/gopals/com-Friendster/4/com-Friendster.mtx
 srun --mpi=pmi2 -n $m /usr/bin/time -v ./apps/testgreeDiL2 $file  $k $b 
 
 #srun --mpi=pmi2 -n 2 valgrind --tool=massif --time-unit=B ./apps/testgreeDiL2 $file 100 2
+=======
+
+outputfile=../data/out.csv
+
+
+filep=/scratch/bell/gopals/com-Friendster/
+# filep=/scratch/bell/gopals/tiny-imagenet-vectors/train/
+# filep=/scratch/bell/gopals/AGATHA_2015/
+# filep=/scratch/bell/gopals/GAP-urand/
+filep=/scratch/bell/gopals/MOLIERE_2016/
+
+
+
+filen=com-Friendster.mtx
+# filen=tiny_image_train.mtx 
+# filen=AGATHA_2015.mtx
+# filen=GAP-urand.mtx
+filen=MOLIERE_2016.mtx
+
+
+for i in 1 2 3 4 5
+do
+    k=400000
+    m=032
+    b=2
+    file=$filep$m/$filen
+    echo $file
+    srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k $b $outputfile 
+    m=016
+    b=4
+    file=$filep$m/$filen
+    srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k $b $outputfile
+    m=008
+    b=8
+    file=$filep$m/$filen
+    srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file  $k $b $outputfile 
+done
+>>>>>>> Stashed changes

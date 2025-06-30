@@ -1,0 +1,70 @@
+#!/bin/bash
+# FILENAME:  expt1.sub
+##SBATCH  -A highmem
+#SBATCH  -A standby
+#SBATCH  --nodes=1
+#SBATCH  --time=3:59:00
+#SBATCH  --ntasks-per-node=128
+#SBATCH  --mem=200G
+##SBATCH --exclusive
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
+#filep=/scratch/bell/gopals/tiny-imagenet-vectors/train/
+#filep=/scratch/bell/gopals/AGATHA_2015/
+# filep=/scratch/bell/gopals/GAP-urand/
+filep=/scratch/bell/gopals/MOLIERE_2016/
+echo $filep 
+
+
+#filen=com-Friendster.mtx
+#filen=tiny_image_train.mtx 
+# filen=AGATHA_2015.mtx
+# filen=GAP-urand.mtx
+filen=MOLIERE_2016.mtx
+
+
+#outputfile=../data/outFrnd.csv
+#outputfile=../data/outFrnd100_1.csv
+outputfile=../data/outAgaatha2.csv
+
+
+b=2
+
+folders=(
+024
+032
+040
+048
+056
+064
+072
+080
+088
+096
+104
+112
+120
+128)
+
+
+f=(
+)
+
+#for value in {1..5}
+for m in ${folders[@]};
+do
+	for value in {1..8}
+	#for m in ${folders[@]};
+	do
+		k=50
+		# k=30
+		srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen $k $b $outputfile
+		srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen $k $m $outputfile
+	done
+done
+

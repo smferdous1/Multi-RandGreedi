@@ -1,0 +1,72 @@
+k,b,m,tot_time,com_time,proc_time,other_time, tot_gain
+160, 8, 8, 0.878872, 0.0286556, 0.825391, 0.0246861, 429758
+100, 2, 8, 0.853558, 0.0205863, 0.807981, 0.0237365, 278621
+100, 8, 8, 0.85766, 0.02562, 0.807016, 0.0249182, 278712
+160, 2, 8, 0.884017, 0.0268702, 0.827527, 0.0244923, 429726
+160, 8, 8, 0.883863, 0.0291315, 0.82617, 0.0284375, 429758
+100, 2, 8, 0.857006, 0.0205512, 0.804779, 0.0293347, 278621
+100, 8, 8, 0.859717, 0.0241263, 0.804638, 0.0308481, 278712
+160, 2, 8, 0.886723, 0.0270718, 0.829258, 0.023966, 429726
+160, 8, 8, 0.880839, 0.0282345, 0.82738, 0.025104, 429758
+100, 2, 8, 0.857416, 0.0200631, 0.80427, 0.0303626, 278621
+100, 8, 8, 0.853173, 0.0241367, 0.801221, 0.0277076, 278712
+160, 2, 8, 0.889397, 0.0261133, 0.83041, 0.0295401, 429726
+160, 8, 8, 0.911196, 0.0282787, 0.825892, 0.0569116, 429758
+100, 2, 8, 0.854059, 0.0208317, 0.804044, 0.0263577, 278621
+100, 8, 8, 0.850365, 0.0229472, 0.805019, 0.0222956, 278712
+160, 2, 8, 0.888399, 0.026728, 0.83029, 0.0303971, 429726
+160, 8, 8, 0.881519, 0.0303991, 0.830078, 0.0209256, 429758
+100, 2, 8, 0.852589, 0.0198379, 0.804432, 0.0247133, 278621
+100, 8, 8, 0.853326, 0.0235575, 0.803693, 0.0259483, 278712
+160, 2, 8, 0.90713, 0.0269727, 0.827354, 7.18948e-05, 429726
+160, 8, 8, 0.882034, 0.029316, 0.824304, 0.0282649, 429758
+100, 2, 8, 0.885744, 0.0228489, 0.849122, 6.25972e-05, 278621
+100, 8, 8, 0.876201, 0.0274841, 0.848184, 0.000411113, 278712
+160, 2, 8, 0.889043, 0.0285252, 0.841507, 0.0186156, 429726
+160, 8, 8, 0.948118, 0.0292719, 0.864793, 0.0540096, 429758
+100, 2, 8, 0.869435, 0.022715, 0.84625, 6.4251e-05, 278621
+100, 8, 8, 0.877254, 0.0248706, 0.851731, 0.000515329, 278712
+160, 2, 8, 0.915113, 0.0282629, 0.851351, 6.81081e-05, 429726
+160, 8, 8, 0.88841, 0.03051, 0.857467, 0.000296657, 429758
+100, 2, 8, 0.855912, 0.0204161, 0.811031, 0.00150291, 278621
+100, 8, 8, 0.864558, 0.0259828, 0.838123, 0.00029787, 278712
+160, 2, 8, 0.896893, 0.0310411, 0.865261, 0.000176893, 429726
+160, 8, 8, 0.883598, 0.0286074, 0.832099, 0.0227635, 429758
+100, 2, 8, 0.877499, 0.0204654, 0.824673, 7.8728e-05, 278621
+100, 8, 8, 0.872754, 0.0237598, 0.848556, 0.000290937, 278712
+160, 2, 8, 0.929297, 0.0270801, 0.901829, 7.66639e-05, 429726
+160, 8, 8, 0.965487, 0.0319304, 0.93318, 0.000323358, 429758
+100, 2, 8, 1.002, 0.025597, 0.975904, 7.18648e-05, 278621
+100, 8, 8, 0.867951, 0.024497, 0.843004, 0.000306787, 278712
+160, 2, 8, 0.889054, 0.0264526, 0.85174, 0.0104429, 429726
+160, 8, 8, 0.886914, 0.0313188, 0.855027, 0.000408649, 429758
+100, 8, 8, 1.37201, 0.0283576, 0.839159, 0.50425, 283162
+160, 8, 8, 1.1941, 0.0381016, 0.857309, 0.298432, 437353
+100, 8, 8, 0.972004, 0.0292414, 0.835462, 0.106998, 283162
+160, 8, 8, 1.22959, 0.0372554, 0.858388, 0.333619, 437353
+100, 8, 8, 1.22495, 0.0277405, 0.835526, 0.361491, 283162
+160, 8, 8, 1.36578, 0.0377717, 0.85926, 0.468448, 437353
+100, 8, 8, 1.22135, 0.0314956, 0.838339, 0.351254, 283162
+160, 8, 8, 1.30018, 0.0346177, 0.85765, 0.40767, 437353
+100, 8, 8, 1.39985, 0.0328156, 0.837382, 0.529383, 283162
+160, 8, 8, 2.6473, 0.0417242, 0.864963, 1.74031, 437353
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxahd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxaed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxagd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxabd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/008/com-Friendster.mtxacd

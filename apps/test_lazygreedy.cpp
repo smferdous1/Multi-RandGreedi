@@ -42,8 +42,18 @@ int main(int argc, char** argv) {
   // cout << k << " ";
   CSR g;
   // BMatchingSelection bMatch(bMax, 0.5, k);
+<<<<<<< Updated upstream
   // MaxSetCoverSelection bMatch(k);
   KMedoidSelection bMatch(k);
+=======
+<<<<<<< HEAD
+  MaxSetCoverSelection bMatch(k);
+  // KMedoidSelection bMatch(k);
+=======
+  // MaxSetCoverSelection bMatch(k);
+  KMedoidSelection bMatch(k);
+>>>>>>> 91261662e0ce518ff85162ec70960f43a10228dc
+>>>>>>> Stashed changes
   LazyGreedy lz;
   
   cout << argv[1] << " " 

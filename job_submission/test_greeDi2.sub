@@ -2,10 +2,17 @@
 # FILENAME:  test_greeDi2.sub
 ##SBATCH  -A highmem
 #SBATCH  -A standby
+<<<<<<< Updated upstream
 #SBATCH  --nodes=8
 #SBATCH  --time=0:30:00
 #SBATCH  --ntasks-per-node=1
 #SBATCH  --mem=12G
+=======
+#SBATCH  --nodes=128
+#SBATCH  --time=3:50:00
+#SBATCH  --ntasks-per-node=1
+#SBATCH  --mem=10G
+>>>>>>> Stashed changes
 ##SBATCH --exclusive
 ##SBATCH  --contiguous
 module load gcc
@@ -13,11 +20,20 @@ module load openmpi
 
 cd $SLURM_SUBMIT_DIR
 
+<<<<<<< Updated upstream
 m=008
 b=2
 #file=/scratch/bell/gopals/webdocs/6/webdocs.mtx
 file=/scratch/bell/gopals/com-Friendster/com-Friendster/$m/com-Friendster.mtx
 #file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+=======
+m=128
+#b=2
+#file=/scratch/bell/gopals/webdocs/6/webdocs.mtx
+#file=/scratch/bell/gopals/com-Friendster/com-Friendster/$m/com-Friendster.mtx
+#file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+#file=/scratch/bell/gopals/GAP-urand/GAP-urand.mtx
+>>>>>>> Stashed changes
 #file=/scratch/bell/gopals/av41092_f.mtx
 #file=../data/lhr01.mtx
 #file=../data/SmallTest.mtx
@@ -25,6 +41,7 @@ file=/scratch/bell/gopals/com-Friendster/com-Friendster/$m/com-Friendster.mtx
 #file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
 #file=/scratch/bell/gopals/road_usa/road_usa.mtx 
 #file=/scratch/bell/gopals/clueweb12/clueweb12.mtx
+<<<<<<< Updated upstream
 
 outputfile=../data/out.csv
 
@@ -43,3 +60,29 @@ done
 
 
 #srun --mpi=pmi2 -n 2 valgrind --tool=massif --time-unit=B ./apps/testgreeDiL2 $file 100 2
+=======
+#file=/scratch/bell/gopals/AGATHA_2015/AGATHA_2015.mtx
+
+outputfile=../data/out.csv
+
+f=(
+	# /scratch/bell/gopals/com-Friendster/$m/com-Friendster.mtx
+	# /scratch/bell/gopals/GAP-urand/$m/GAP-urand.mtx
+	# /scratch/bell/g/opals/MOLIERE_2016/$m/MOLIERE_2016.mtx
+)
+echo $f
+
+for b in 2 #4 8 16 32
+do
+	for k in  10 20 30 50 100 200 300 400
+	# for k in 128000 256000 512000 1024000	
+	do 
+		for file in ${f[@]}
+		do
+			srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file $k $b $outputfile
+			srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $file $k $m $outputfile
+		done
+	done
+done
+	
+>>>>>>> Stashed changes

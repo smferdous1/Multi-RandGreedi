@@ -1,0 +1,13 @@
+#!/bin/bash
+# FILENAME:  pyscript.sub
+#SBATCH --nodes=1
+#SBATCH  --time=00:50:00
+##SBATCH  -A standby 
+#SBATCH  -A highmem
+#SBATCH  --mem=50G
+
+module load use.own
+module load conda-env/PIL-py3.7.6
+
+#python im_csv_mtx_tiny_imagenet.py
+python datToMtx.py  

@@ -53,7 +53,11 @@ bool KMedoidSelection::calc_gain(const CSR& g, Val& m_gain, Size row) {
                 marginal_gain+= bestSimiliarityCol[i] - wgt;
         }
     }
+<<<<<<< Updated upstream
     m_gain= marginal_gain;
+=======
+    m_gain= marginal_gain/ g.nRow;
+>>>>>>> Stashed changes
     // cout << "gain of row " << row << "is" << m_gain << endl;
     return true;
 }
@@ -83,7 +87,11 @@ bool KMedoidSelection::update_selector(const CSR& g, Size row){
         }
     }
     //cout << "Finished masking "<< endl;
+<<<<<<< Updated upstream
     totalGain+=marginal_gain;
+=======
+    totalGain+=marginal_gain/g.nRow;
+>>>>>>> Stashed changes
     
     selectedRows.push_back(row);
     // cout << "Pushed " << row << " into selected rows" << endl;

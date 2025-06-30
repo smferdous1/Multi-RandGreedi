@@ -1,0 +1,49 @@
+#!/bin/bash
+# FILENAME:  expt1.sub
+##SBATCH  -A highmem
+#SBATCH  -A standby
+#SBATCH  --nodes=64
+#SBATCH  --time=3:50:00
+#SBATCH  --ntasks-per-node=1
+#SBATCH  --mem=40G
+##SBATCH --exclusive
+
+module load gcc
+module load openmpi
+
+cd $SLURM_SUBMIT_DIR
+
+#filep=/scratch/bell/gopals/com-Friendster/com-Friendster/
+#filep=/scratch/bell/gopals/AGATHA_2015/
+filep=/scratch/bell/gopals/tiny-imagenet-vectors/train/
+
+
+#filen=com-Friendster.mtx
+#filen=AGATHA_2015.mtx
+filen=tiny_image_train.mtx
+
+k=1000
+m=004
+m=008
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m
+m=012
+m=016
+#/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m
+m=020
+m=024
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m
+m=028
+m=032
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m
+m=036
+m=040
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m
+m=044
+m=048
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m
+m=052
+m=056
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m
+m=060
+m=064
+/usr/bin/time -v srun --mpi=pmi2 -n $m ./apps/testgreeDiL2 $filep$m/$filen  $k $m

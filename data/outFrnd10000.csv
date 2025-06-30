@@ -1,0 +1,421 @@
+10000, 80, 80, 6.85484, 1.59066, 5.26417, 0, 7.15712e+06
+10000, 2, 88, 9.3397, 0.896825, 8.44287, 0, 7.157e+06
+10000, 88, 88, 6.91291, 1.73601, 5.1769, 0, 7.15707e+06
+10000, 2, 88, 8.08159, 0.883688, 7.1979, 0, 7.157e+06
+10000, 88, 88, 6.88062, 1.71074, 5.16988, 0, 7.15707e+06
+10000, 2, 88, 8.37138, 0.915689, 7.45568, 0, 7.157e+06
+10000, 88, 88, 6.87841, 1.6816, 5.1968, 0, 7.15707e+06
+10000, 2, 88, 7.99492, 0.845302, 7.14962, 0, 7.157e+06
+10000, 88, 88, 6.83473, 1.71614, 5.11859, 0, 7.15707e+06
+10000, 2, 88, 8.53157, 0.903864, 7.6277, 0, 7.157e+06
+10000, 88, 88, 6.85941, 1.72064, 5.13877, 0, 7.15707e+06
+10000, 2, 96, 8.21923, 0.851948, 7.36728, 0, 7.15708e+06
+10000, 96, 96, 7.09973, 1.81262, 5.28711, 0, 7.15708e+06
+10000, 2, 96, 7.99879, 0.824036, 7.17475, 0, 7.15708e+06
+10000, 96, 96, 7.00701, 1.79934, 5.20767, 0, 7.15708e+06
+10000, 2, 96, 8.47125, 0.874087, 7.59716, 0, 7.15708e+06
+10000, 96, 96, 7.03176, 1.79279, 5.23897, 0, 7.15708e+06
+10000, 2, 96, 7.77534, 0.876682, 6.89866, 0, 7.15708e+06
+10000, 96, 96, 7.06975, 1.80379, 5.26596, 0, 7.15708e+06
+10000, 2, 96, 8.38317, 0.899399, 7.48377, 0, 7.15708e+06
+10000, 96, 96, 7.05387, 1.78674, 5.26712, 0, 7.15708e+06
+10000, 2, 104, 7.76572, 0.855762, 6.90995, 0, 7.15712e+06
+10000, 104, 104, 7.1694, 1.89418, 5.27522, 0, 7.15712e+06
+10000, 2, 104, 8.47707, 0.870735, 7.60633, 0, 7.15712e+06
+10000, 104, 104, 7.17169, 1.9118, 5.2599, 0, 7.15712e+06
+10000, 2, 104, 8.71996, 0.995887, 7.72407, 0, 7.15712e+06
+10000, 104, 104, 7.17128, 1.8934, 5.27788, 0, 7.15712e+06
+10000, 2, 104, 7.54657, 0.818428, 6.72814, 0, 7.15712e+06
+10000, 104, 104, 7.1239, 1.91082, 5.21308, 0, 7.15712e+06
+10000, 2, 104, 8.44568, 0.882593, 7.56308, 0, 7.15712e+06
+10000, 104, 104, 7.17134, 1.90039, 5.27094, 0, 7.15712e+06
+10000, 2, 112, 7.58292, 0.804813, 6.7781, 0, 7.1571e+06
+10000, 112, 112, 7.37469, 1.98152, 5.39316, 0, 7.15713e+06
+10000, 2, 112, 7.76023, 0.838163, 6.92206, 0, 7.1571e+06
+10000, 112, 112, 7.52755, 2.00855, 5.519, 0, 7.15713e+06
+10000, 2, 112, 7.37814, 0.843546, 6.53459, 0, 7.1571e+06
+10000, 112, 112, 7.30411, 2.00098, 5.30312, 0, 7.15713e+06
+10000, 2, 112, 8.01317, 0.852168, 7.161, 0, 7.1571e+06
+10000, 112, 112, 7.26815, 1.97036, 5.29779, 0, 7.15713e+06
+10000, 2, 112, 8.02709, 0.90516, 7.12193, 0, 7.1571e+06
+10000, 112, 112, 7.32467, 1.99261, 5.33206, 0, 7.15713e+06
+10000, 2, 120, 7.28637, 0.804587, 6.48178, 0, 7.15708e+06
+10000, 120, 120, 7.63447, 2.13902, 5.49544, 0, 7.15706e+06
+10000, 2, 120, 7.81753, 0.816614, 7.00091, 0, 7.15708e+06
+10000, 120, 120, 7.57172, 2.07142, 5.5003, 0, 7.15706e+06
+10000, 2, 120, 7.29157, 0.779814, 6.51175, 0, 7.15708e+06
+10000, 120, 120, 7.54774, 2.10171, 5.44603, 0, 7.15706e+06
+10000, 2, 120, 8.06116, 0.899691, 7.16147, 0, 7.15708e+06
+10000, 120, 120, 7.41718, 2.04976, 5.36742, 0, 7.15706e+06
+10000, 2, 120, 7.72938, 0.84712, 6.88226, 0, 7.15708e+06
+10000, 120, 120, 7.44988, 2.06516, 5.38471, 0, 7.15706e+06
+10000, 2, 128, 7.09216, 0.763043, 6.32911, 0, 7.15696e+06
+10000, 128, 128, 7.67196, 2.19317, 5.47879, 0, 7.15716e+06
+10000, 2, 128, 7.55458, 0.802899, 6.75168, 0, 7.15696e+06
+10000, 128, 128, 7.59015, 2.1954, 5.39475, 0, 7.15716e+06
+10000, 2, 128, 7.16719, 0.774645, 6.39254, 0, 7.15696e+06
+10000, 128, 128, 7.65282, 2.22643, 5.42639, 0, 7.15716e+06
+10000, 2, 128, 7.40086, 0.838262, 6.5626, 0, 7.15696e+06
+10000, 128, 128, 7.75363, 2.246, 5.50763, 0, 7.15716e+06
+10000, 2, 128, 7.2736, 0.773472, 6.50013, 0, 7.15696e+06
+10000, 128, 128, 7.63055, 2.17355, 5.457, 0, 7.15716e+06
+10000, 2, 136, 8.94576, 0.950762, 7.995, 0, 7.15688e+06
+10000, 136, 136, 7.77806, 2.24752, 5.53054, 0, 7.15717e+06
+10000, 2, 136, 9.00766, 0.93788, 8.06978, 0, 7.15688e+06
+10000, 136, 136, 7.8133, 2.25575, 5.55754, 0, 7.15717e+06
+10000, 2, 136, 8.72847, 0.939802, 7.78867, 0, 7.15688e+06
+10000, 136, 136, 7.76187, 2.27946, 5.4824, 0, 7.15717e+06
+10000, 2, 136, 8.7632, 1.0107, 7.7525, 0, 7.15688e+06
+10000, 136, 136, 7.7117, 2.23961, 5.47209, 0, 7.15717e+06
+10000, 2, 136, 8.31515, 0.912798, 7.40234, 0, 7.15688e+06
+10000, 136, 136, 7.71672, 2.25362, 5.46311, 0, 7.15717e+06
+10000, 2, 144, 8.82882, 0.957672, 7.87114, 0, 7.15698e+06
+10000, 144, 144, 7.90992, 2.34264, 5.56728, 0, 7.15714e+06
+10000, 2, 144, 8.399, 0.919374, 7.47962, 0, 7.15698e+06
+10000, 144, 144, 8.00857, 2.42334, 5.58523, 0, 7.15714e+06
+10000, 2, 144, 8.47401, 0.93508, 7.53892, 0, 7.15698e+06
+10000, 144, 144, 7.81246, 2.31756, 5.49491, 0, 7.15714e+06
+10000, 2, 144, 8.16372, 0.915697, 7.24802, 0, 7.15698e+06
+10000, 144, 144, 7.84502, 2.33704, 5.50799, 0, 7.15714e+06
+10000, 2, 144, 8.3111, 0.908382, 7.40271, 0, 7.15698e+06
+10000, 144, 144, 7.91508, 2.3669, 5.54818, 0, 7.15714e+06
+10000, 2, 152, 8.17171, 0.898964, 7.27274, 0, 7.15703e+06
+10000, 152, 152, 7.94736, 2.41333, 5.53403, 0, 7.15716e+06
+10000, 2, 152, 7.96194, 0.885102, 7.07683, 0, 7.15703e+06
+10000, 152, 152, 7.95886, 2.40185, 5.55702, 0, 7.15716e+06
+10000, 2, 152, 8.10286, 0.890378, 7.21248, 0, 7.15703e+06
+10000, 152, 152, 7.9467, 2.39264, 5.55405, 0, 7.15716e+06
+10000, 2, 152, 8.2157, 0.907123, 7.30857, 0, 7.15703e+06
+10000, 152, 152, 7.91798, 2.38517, 5.53281, 0, 7.15716e+06
+10000, 2, 152, 8.34535, 0.906814, 7.43853, 0, 7.15703e+06
+10000, 152, 152, 8.05945, 2.41187, 5.64757, 0, 7.15716e+06
+10000, 2, 160, 7.87822, 0.903985, 6.97423, 0, 7.15698e+06
+10000, 160, 160, 8.15635, 2.49125, 5.66509, 0, 7.15704e+06
+10000, 2, 160, 8.11336, 0.902258, 7.2111, 0, 7.15698e+06
+10000, 160, 160, 8.04477, 2.48512, 5.55965, 0, 7.15704e+06
+10000, 2, 160, 7.94234, 0.876962, 7.06537, 0, 7.15698e+06
+10000, 160, 160, 8.02159, 2.46145, 5.56015, 0, 7.15704e+06
+10000, 2, 160, 7.8984, 0.889107, 7.00929, 0, 7.15698e+06
+10000, 160, 160, 8.0816, 2.53423, 5.54737, 0, 7.15704e+06
+10000, 2, 160, 7.96294, 0.889775, 7.07316, 0, 7.15698e+06
+10000, 160, 160, 8.02342, 2.48947, 5.53394, 0, 7.15704e+06
+10000, 2, 168, 8.0326, 0.924131, 7.10846, 0, 7.15698e+06
+10000, 168, 168, 8.17879, 2.57305, 5.60574, 0, 7.15709e+06
+10000, 2, 168, 7.78327, 0.902151, 6.88111, 0, 7.15698e+06
+10000, 168, 168, 8.16306, 2.54486, 5.61821, 0, 7.15709e+06
+10000, 2, 168, 7.78232, 0.872943, 6.90937, 0, 7.15698e+06
+10000, 168, 168, 8.13209, 2.55406, 5.57803, 0, 7.15709e+06
+10000, 2, 168, 8.04634, 0.919399, 7.12694, 0, 7.15698e+06
+10000, 168, 168, 8.18435, 2.55807, 5.62628, 0, 7.15709e+06
+10000, 2, 168, 7.83271, 0.868508, 6.9642, 0, 7.15698e+06
+10000, 168, 168, 8.15391, 2.53781, 5.6161, 0, 7.15709e+06
+10000, 2, 176, 7.62709, 0.850738, 6.77635, 0, 7.15697e+06
+10000, 176, 176, 8.22225, 2.58507, 5.63717, 0, 7.15709e+06
+10000, 2, 176, 7.8469, 0.862983, 6.98392, 0, 7.15697e+06
+10000, 176, 176, 8.27764, 2.63817, 5.63947, 0, 7.15709e+06
+10000, 2, 176, 7.82319, 0.872646, 6.95054, 0, 7.15697e+06
+10000, 176, 176, 8.23913, 2.59877, 5.64036, 0, 7.15709e+06
+10000, 2, 176, 7.80231, 0.868412, 6.9339, 0, 7.15697e+06
+10000, 176, 176, 8.27931, 2.64196, 5.63735, 0, 7.15709e+06
+10000, 2, 176, 7.85697, 0.880286, 6.97668, 0, 7.15697e+06
+10000, 176, 176, 8.33309, 2.6702, 5.66289, 0, 7.15709e+06
+10000, 2, 24, 8.26322, 0.730524, 7.53269, 0, 7.15704e+06
+10000, 24, 24, 5.53191, 0.836813, 4.6951, 0, 7.15719e+06
+10000, 2, 24, 7.56807, 0.72057, 6.8475, 0, 7.15704e+06
+10000, 24, 24, 5.35474, 0.816808, 4.53793, 0, 7.15719e+06
+10000, 2, 24, 8.37131, 0.743507, 7.6278, 0, 7.15704e+06
+10000, 24, 24, 5.48058, 0.83396, 4.64662, 0, 7.15719e+06
+10000, 2, 24, 8.51068, 0.733032, 7.77765, 0, 7.15704e+06
+10000, 24, 24, 5.61339, 0.842342, 4.77104, 0, 7.15719e+06
+10000, 2, 24, 7.62393, 0.729322, 6.8946, 0, 7.15704e+06
+10000, 24, 24, 5.38231, 0.77793, 4.60438, 0, 7.15719e+06
+10000, 2, 32, 7.03753, 0.687997, 6.34954, 0, 7.15701e+06
+10000, 32, 32, 5.72205, 1.01153, 4.71051, 0, 7.15706e+06
+10000, 2, 32, 7.69216, 0.721082, 6.97108, 0, 7.15701e+06
+10000, 32, 32, 5.57993, 0.969165, 4.61077, 0, 7.15706e+06
+10000, 2, 32, 7.4355, 0.725897, 6.7096, 0, 7.15701e+06
+10000, 32, 32, 5.56592, 0.955443, 4.61048, 0, 7.15706e+06
+10000, 2, 32, 7.25936, 0.730279, 6.52908, 0, 7.15701e+06
+10000, 32, 32, 5.82809, 1.02249, 4.8056, 0, 7.15706e+06
+10000, 2, 32, 7.92014, 0.76424, 7.1559, 0, 7.15701e+06
+10000, 32, 32, 5.56453, 0.942581, 4.62195, 0, 7.15706e+06
+10000, 2, 40, 9.78391, 0.847699, 8.93621, 0, 7.15697e+06
+10000, 40, 40, 5.83319, 1.1109, 4.72229, 0, 7.15716e+06
+10000, 2, 40, 10.4508, 0.929021, 9.52174, 0, 7.15697e+06
+10000, 40, 40, 6.30939, 1.10219, 5.2072, 0, 7.15716e+06
+10000, 2, 40, 9.40107, 0.991005, 8.41006, 0, 7.15697e+06
+10000, 40, 40, 5.98833, 1.17729, 4.81105, 0, 7.15716e+06
+10000, 2, 40, 8.18372, 0.854836, 7.32888, 0, 7.15697e+06
+10000, 40, 40, 6.10636, 1.15235, 4.95401, 0, 7.15716e+06
+10000, 2, 40, 8.18292, 0.854118, 7.3288, 0, 7.15697e+06
+10000, 40, 40, 6.03652, 1.15496, 4.88156, 0, 7.15716e+06
+10000, 2, 48, 8.64418, 0.891644, 7.75254, 0, 7.15706e+06
+10000, 48, 48, 6.25908, 1.28483, 4.97425, 0, 7.15712e+06
+10000, 2, 48, 8.35183, 0.897375, 7.45445, 0, 7.15706e+06
+10000, 48, 48, 6.54983, 1.28214, 5.2677, 0, 7.15712e+06
+10000, 2, 48, 7.92935, 0.85232, 7.07702, 0, 7.15706e+06
+10000, 48, 48, 6.35275, 1.27717, 5.07559, 0, 7.15712e+06
+10000, 2, 48, 7.72953, 0.800799, 6.92873, 0, 7.15706e+06
+10000, 48, 48, 6.29106, 1.30576, 4.98529, 0, 7.15712e+06
+10000, 2, 48, 8.22325, 0.850273, 7.37297, 0, 7.15706e+06
+10000, 48, 48, 6.15583, 1.2597, 4.89614, 0, 7.15712e+06
+10000, 2, 56, 7.77799, 0.827003, 6.95098, 0, 7.15698e+06
+10000, 56, 56, 6.50147, 1.43709, 5.06438, 0, 7.15713e+06
+10000, 2, 56, 8.38495, 0.780414, 7.60454, 0, 7.15698e+06
+10000, 56, 56, 6.48238, 1.40547, 5.07691, 0, 7.15713e+06
+10000, 2, 56, 8.55931, 0.958624, 7.60069, 0, 7.15698e+06
+10000, 56, 56, 6.35664, 1.3864, 4.97024, 0, 7.15713e+06
+10000, 2, 56, 7.63944, 0.83241, 6.80703, 0, 7.15698e+06
+10000, 56, 56, 6.48086, 1.427, 5.05386, 0, 7.15713e+06
+10000, 2, 56, 7.57326, 0.822204, 6.75105, 0, 7.15698e+06
+10000, 56, 56, 6.55232, 1.4429, 5.10941, 0, 7.15713e+06
+10000, 2, 64, 7.90061, 0.766311, 7.1343, 0, 7.15709e+06
+10000, 64, 64, 6.80347, 1.50327, 5.3002, 0, 7.15715e+06
+10000, 2, 64, 8.15769, 0.786775, 7.37091, 0, 7.15709e+06
+10000, 64, 64, 6.73959, 1.47482, 5.26477, 0, 7.15715e+06
+10000, 2, 64, 9.04892, 0.762012, 8.28691, 0, 7.15709e+06
+10000, 64, 64, 6.96356, 1.5627, 5.40086, 0, 7.15715e+06
+10000, 2, 64, 7.41449, 0.822128, 6.59236, 0, 7.15709e+06
+10000, 64, 64, 6.88528, 1.5295, 5.35578, 0, 7.15715e+06
+10000, 2, 64, 7.69804, 0.853019, 6.84501, 0, 7.15709e+06
+10000, 64, 64, 6.89462, 1.55218, 5.34244, 0, 7.15715e+06
+10000, 2, 72, 9.27194, 0.994213, 8.27772, 0, 7.1571e+06
+10000, 72, 72, 7.08242, 1.63806, 5.44437, 0, 7.15708e+06
+10000, 2, 72, 8.66605, 0.921714, 7.74433, 0, 7.1571e+06
+10000, 72, 72, 7.07979, 1.65963, 5.42016, 0, 7.15708e+06
+10000, 2, 72, 8.50204, 0.920574, 7.58146, 0, 7.1571e+06
+10000, 72, 72, 7.15592, 1.6134, 5.54252, 0, 7.15708e+06
+10000, 2, 72, 10.6785, 1.00013, 9.67839, 0, 7.1571e+06
+10000, 72, 72, 6.96752, 1.59848, 5.36904, 0, 7.15708e+06
+10000, 2, 72, 8.82751, 0.949126, 7.87838, 0, 7.1571e+06
+10000, 72, 72, 7.07824, 1.6595, 5.41874, 0, 7.15708e+06
+10000, 2, 80, 8.79629, 0.926129, 7.87016, 0, 7.15715e+06
+10000, 80, 80, 7.29149, 1.75948, 5.53201, 0, 7.15712e+06
+10000, 2, 80, 8.56491, 0.883204, 7.6817, 0, 7.15715e+06
+10000, 80, 80, 7.11958, 1.6905, 5.42908, 0, 7.15712e+06
+10000, 2, 80, 10.0714, 0.941003, 9.13042, 0, 7.15715e+06
+10000, 80, 80, 7.15838, 1.70572, 5.45266, 0, 7.15712e+06
+10000, 2, 80, 8.7628, 1.01203, 7.75076, 0, 7.15715e+06
+10000, 80, 80, 7.31263, 1.78577, 5.52687, 0, 7.15712e+06
+10000, 2, 80, 8.38386, 0.913041, 7.47082, 0, 7.15715e+06
+10000, 80, 80, 7.33428, 1.78103, 5.55325, 0, 7.15712e+06
+10000, 2, 88, 8.73443, 0.906956, 7.82747, 0, 7.157e+06
+10000, 88, 88, 7.44251, 1.88187, 5.56064, 0, 7.15707e+06
+10000, 2, 88, 8.12751, 0.896278, 7.23123, 0, 7.157e+06
+10000, 88, 88, 7.45969, 1.87934, 5.58035, 0, 7.15707e+06
+10000, 2, 88, 8.11715, 0.894616, 7.22253, 0, 7.157e+06
+10000, 88, 88, 7.5473, 1.87071, 5.6766, 0, 7.15707e+06
+10000, 2, 88, 9.84586, 0.997421, 8.84844, 0, 7.157e+06
+10000, 88, 88, 7.37765, 1.8518, 5.52585, 0, 7.15707e+06
+10000, 2, 88, 8.22031, 0.923693, 7.29661, 0, 7.157e+06
+10000, 88, 88, 7.47896, 1.85876, 5.6202, 0, 7.15707e+06
+10000, 2, 96, 8.18802, 0.858546, 7.32947, 0, 7.15708e+06
+10000, 96, 96, 7.56611, 1.91416, 5.65195, 0, 7.15708e+06
+10000, 2, 96, 8.26457, 0.888278, 7.37628, 0, 7.15708e+06
+10000, 96, 96, 7.56147, 1.9657, 5.59577, 0, 7.15708e+06
+10000, 2, 96, 8.63431, 0.910166, 7.72414, 0, 7.15708e+06
+10000, 96, 96, 7.52386, 1.96658, 5.55728, 0, 7.15708e+06
+10000, 2, 96, 8.54061, 0.978459, 7.56215, 0, 7.15708e+06
+10000, 96, 96, 7.64212, 1.98173, 5.66039, 0, 7.15708e+06
+10000, 2, 96, 9.53487, 0.943785, 8.59108, 0, 7.15708e+06
+10000, 96, 96, 7.50106, 1.8998, 5.60125, 0, 7.15708e+06
+10000, 2, 104, 7.99015, 0.883716, 7.10643, 0, 7.15712e+06
+10000, 104, 104, 7.81307, 2.08557, 5.7275, 0, 7.15712e+06
+10000, 2, 104, 7.87043, 0.900553, 6.96987, 0, 7.15712e+06
+10000, 104, 104, 7.75957, 2.06068, 5.69889, 0, 7.15712e+06
+10000, 2, 104, 8.22212, 0.914828, 7.30729, 0, 7.15712e+06
+10000, 104, 104, 7.52285, 1.92576, 5.59709, 0, 7.15712e+06
+10000, 2, 104, 7.77002, 0.889465, 6.88055, 0, 7.15712e+06
+10000, 104, 104, 7.7609, 2.06146, 5.69944, 0, 7.15712e+06
+10000, 2, 104, 7.90074, 0.918959, 6.98178, 0, 7.15712e+06
+10000, 104, 104, 7.77445, 2.0578, 5.71665, 0, 7.15712e+06
+10000, 2, 112, 7.90528, 0.857765, 7.04751, 0, 7.1571e+06
+10000, 112, 112, 7.73632, 2.08105, 5.65527, 0, 7.15713e+06
+10000, 2, 112, 7.54093, 0.837457, 6.70347, 0, 7.1571e+06
+10000, 112, 112, 7.97789, 2.17895, 5.79894, 0, 7.15713e+06
+10000, 2, 112, 7.57082, 0.844204, 6.72661, 0, 7.1571e+06
+10000, 112, 112, 7.93527, 2.18642, 5.74886, 0, 7.15713e+06
+10000, 2, 112, 7.90664, 0.938123, 6.96851, 0, 7.1571e+06
+10000, 112, 112, 7.96679, 2.19365, 5.77314, 0, 7.15713e+06
+10000, 2, 112, 9.33613, 0.891844, 8.44428, 0, 7.1571e+06
+10000, 112, 112, 8.83953, 2.23592, 6.60361, 0, 7.15713e+06
+10000, 2, 120, 7.37416, 0.827759, 6.5464, 0, 7.15708e+06
+10000, 120, 120, 7.91905, 2.2626, 5.65645, 0, 7.15706e+06
+10000, 2, 120, 7.78732, 0.909401, 6.87791, 0, 7.15708e+06
+10000, 120, 120, 8.07328, 2.26568, 5.80761, 0, 7.15706e+06
+10000, 2, 120, 7.68104, 0.919732, 6.76131, 0, 7.15708e+06
+10000, 120, 120, 8.07549, 2.24198, 5.83352, 0, 7.15706e+06
+10000, 2, 120, 7.39446, 0.862314, 6.53214, 0, 7.15708e+06
+10000, 120, 120, 7.96983, 2.17634, 5.79349, 0, 7.15706e+06
+10000, 2, 120, 8.54611, 0.918967, 7.62714, 0, 7.15708e+06
+10000, 120, 120, 8.06877, 2.24082, 5.82794, 0, 7.15706e+06
+10000, 2, 128, 7.44103, 0.905231, 6.5358, 0, 7.15696e+06
+10000, 128, 128, 8.27225, 2.36999, 5.90225, 0, 7.15716e+06
+10000, 2, 128, 7.33348, 0.85204, 6.48144, 0, 7.15696e+06
+10000, 128, 128, 8.2453, 2.35976, 5.88553, 0, 7.15716e+06
+10000, 2, 128, 7.38286, 0.867712, 6.51514, 0, 7.15696e+06
+10000, 128, 128, 8.18388, 2.39879, 5.78508, 0, 7.15716e+06
+10000, 2, 128, 7.24753, 0.833487, 6.41404, 0, 7.15696e+06
+10000, 128, 128, 8.06349, 2.28407, 5.77942, 0, 7.15716e+06
+10000, 2, 128, 7.32175, 0.855465, 6.46628, 0, 7.15696e+06
+10000, 128, 128, 8.18674, 2.31768, 5.86906, 0, 7.15716e+06
+10000, 2, 136, 10.1705, 1.08838, 9.08215, 0, 7.15688e+06
+10000, 136, 136, 8.35028, 2.43732, 5.91296, 0, 7.15717e+06
+10000, 2, 136, 8.91399, 1.02894, 7.88505, 0, 7.15688e+06
+10000, 136, 136, 8.41324, 2.49135, 5.92189, 0, 7.15717e+06
+10000, 2, 136, 8.71154, 1.00592, 7.70562, 0, 7.15688e+06
+10000, 136, 136, 8.38917, 2.41984, 5.96933, 0, 7.15717e+06
+10000, 2, 136, 8.7972, 1.01796, 7.77924, 0, 7.15688e+06
+10000, 136, 136, 8.44958, 2.4669, 5.98269, 0, 7.15717e+06
+10000, 2, 136, 8.77789, 1.04515, 7.73273, 0, 7.15688e+06
+10000, 136, 136, 8.4126, 2.43671, 5.97589, 0, 7.15717e+06
+10000, 2, 144, 8.67867, 1.01961, 7.65905, 0, 7.15698e+06
+10000, 144, 144, 8.48802, 2.52809, 5.95993, 0, 7.15714e+06
+10000, 2, 144, 8.63716, 1.02741, 7.60975, 0, 7.15698e+06
+10000, 144, 144, 8.48703, 2.52185, 5.96519, 0, 7.15714e+06
+10000, 2, 144, 8.55499, 1.00373, 7.55126, 0, 7.15698e+06
+10000, 144, 144, 8.28775, 2.42828, 5.85947, 0, 7.15714e+06
+10000, 2, 144, 8.77443, 1.03502, 7.7394, 0, 7.15698e+06
+10000, 144, 144, 8.39988, 2.45882, 5.94105, 0, 7.15714e+06
+10000, 2, 144, 8.72417, 1.05193, 7.67223, 0, 7.15698e+06
+10000, 144, 144, 8.30513, 2.51816, 5.78697, 0, 7.15714e+06
+10000, 2, 152, 10.0011, 1.04585, 8.95528, 0, 7.15703e+06
+10000, 152, 152, 8.60782, 2.60033, 6.00749, 0, 7.15716e+06
+10000, 2, 152, 9.67285, 1.14913, 8.52371, 0, 7.15703e+06
+10000, 152, 152, 8.59984, 2.5967, 6.00314, 0, 7.15716e+06
+10000, 2, 152, 8.63566, 1.02317, 7.61249, 0, 7.15703e+06
+10000, 152, 152, 8.59584, 2.6261, 5.96974, 0, 7.15716e+06
+10000, 2, 152, 8.5659, 1.01454, 7.55135, 0, 7.15703e+06
+10000, 152, 152, 8.63965, 2.58972, 6.04992, 0, 7.15716e+06
+10000, 2, 152, 8.6801, 1.02616, 7.65394, 0, 7.15703e+06
+10000, 152, 152, 8.63144, 2.62797, 6.00347, 0, 7.15716e+06
+10000, 2, 160, 9.85922, 1.04866, 8.81056, 0, 7.15698e+06
+10000, 160, 160, 8.73457, 2.68228, 6.05228, 0, 7.15704e+06
+10000, 2, 160, 8.78988, 1.06805, 7.72183, 0, 7.15698e+06
+10000, 160, 160, 8.72023, 2.70407, 6.01616, 0, 7.15704e+06
+10000, 2, 160, 8.4696, 1.00328, 7.46632, 0, 7.15698e+06
+10000, 160, 160, 8.79177, 2.71011, 6.08166, 0, 7.15704e+06
+10000, 2, 160, 8.35529, 0.950489, 7.4048, 0, 7.15698e+06
+10000, 160, 160, 8.81092, 2.7294, 6.08152, 0, 7.15704e+06
+10000, 2, 160, 8.43, 0.979717, 7.45028, 0, 7.15698e+06
+10000, 160, 160, 8.78124, 2.71799, 6.06325, 0, 7.15704e+06
+10000, 2, 168, 8.60679, 1.04737, 7.55941, 0, 7.15698e+06
+10000, 168, 168, 8.59656, 2.68757, 5.90899, 0, 7.15709e+06
+10000, 2, 168, 8.30305, 0.991722, 7.31132, 0, 7.15698e+06
+10000, 168, 168, 8.84541, 2.76101, 6.0844, 0, 7.15709e+06
+10000, 2, 168, 8.28705, 0.978411, 7.30863, 0, 7.15698e+06
+10000, 168, 168, 8.87679, 2.79842, 6.07836, 0, 7.15709e+06
+10000, 2, 168, 8.5327, 1.00299, 7.5297, 0, 7.15698e+06
+10000, 168, 168, 8.84289, 2.76784, 6.07504, 0, 7.15709e+06
+10000, 2, 168, 8.38251, 0.991281, 7.39122, 0, 7.15698e+06
+10000, 168, 168, 8.91112, 2.76516, 6.14596, 0, 7.15709e+06
+10000, 2, 176, 8.19076, 0.992013, 7.19875, 0, 7.15697e+06
+10000, 176, 176, 8.80039, 2.80165, 5.99874, 0, 7.15709e+06
+10000, 2, 176, 8.1257, 0.95162, 7.17407, 0, 7.15697e+06
+10000, 176, 176, 8.65748, 2.72045, 5.93703, 0, 7.15709e+06
+10000, 2, 176, 8.2081, 0.975715, 7.23238, 0, 7.15697e+06
+10000, 176, 176, 8.96618, 2.84335, 6.12282, 0, 7.15709e+06
+10000, 2, 176, 8.20897, 0.96305, 7.24592, 0, 7.15697e+06
+10000, 176, 176, 8.97017, 2.86249, 6.10768, 0, 7.15709e+06
+10000, 2, 176, 8.19252, 0.985236, 7.20728, 0, 7.15697e+06
+10000, 176, 176, 8.85908, 2.75109, 6.108, 0, 7.15709e+06
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxbfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxdnd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxfed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxacd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxbhd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxeqd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/184/com-Friendster.mtxcld
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxdzd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxeyd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxfcd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxbgd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxdzd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxczd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxbhd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/192/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxdnd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxbed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxddd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxcfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxcfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxapd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxdld
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/200/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxccd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxeyd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxcad
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxerd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxbfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxehd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/208/com-Friendster.mtxgcd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxbgd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxbrd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxhnd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxbrd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxekd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxbed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxand
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/216/com-Friendster.mtxfcd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxfed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxerd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxgwd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxfad
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxfod
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxdnd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxeid
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/224/com-Friendster.mtxhad
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxfld
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxfmd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxhyd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxfhd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxiid
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxgcd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxgzd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/232/com-Friendster.mtxfed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxbgd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxcfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxdnd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxczd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxcfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxdpd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxard
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxeod
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/240/com-Friendster.mtxdmd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxbhd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxaud
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxfod
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxcfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxcid
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxdnd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxczd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxjfd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxfwd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/248/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxhtd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxfed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxbed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxbmd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxcjd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxbrd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxhkd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxafd
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxbed
+unable to open /scratch/bell/gopals/com-Friendster/com-Friendster/256/com-Friendster.mtxfod

@@ -3,17 +3,30 @@
 #SBATCH  --time=03:00:00
 ##SBATCH  -A standby 
 #SBATCH  -A highmem
+<<<<<<< Updated upstream
 #SBATCH  --mem=150G
+=======
+#SBATCH  --mem=300G
+>>>>>>> Stashed changes
 
 module load gcc
 module load openmpi
 
 cd $SLURM_SUBMIT_DIR
 
+<<<<<<< Updated upstream
 #file=/scratch/bell/gopals/road_usa/8/road_usa.mtx
 #file=/scratch/bell/gopals/webdocs/5/webdocs.mtx
 #file=/scratch/bell/gopals/tiny_image_train.mtx
 file=/scratch/bell/gopals/com-Friendster/com-Friendster/com-Friendster.mtx
+=======
+#file=/scratch/bell/gopals/road_usa/road_usa.mtx
+#file=/scratch/bell/gopals/webdocs/5/webdocs.mtx
+#file=/scratch/bell/gopals/tiny_image_train.mtx
+#file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+#file=/scratch/bell/gopals/GAP-urand/GAP-urand.mtx
+file=/scratch/bell/gopals/MOLIERE_2016/MOLIERE_2016.mtx
+>>>>>>> Stashed changes
 #file=/scratch/bell/gopals/av41092_f.mtx
 #file=../data/lhr01.mtx
 #file=../data/SmallSymTest.mtx
@@ -26,6 +39,10 @@ file=/scratch/bell/gopals/com-Friendster/com-Friendster/com-Friendster.mtx
 
 #file=/scratch/bell/gopals/clueweb12/clueweb12.mtx
 
+<<<<<<< Updated upstream
 srun  ./apps/rdmpart $file 8
+=======
+srun  ./apps/rdmpart $file 32
+>>>>>>> Stashed changes
 
 

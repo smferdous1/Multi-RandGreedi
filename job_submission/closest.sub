@@ -2,18 +2,11 @@
 # FILENAME:  test_greeDi2.sub
 #SBATCH  -A highmem
 ##SBATCH  -A standby
-<<<<<<< Updated upstream
-#SBATCH  --nodes=1
-#SBATCH  --time=10:50:00
-#SBATCH  --ntasks-per-node=32
-##SBATCH  --mem=300G
-=======
 ##SBATCH  -A csit
 #SBATCH  --nodes=1
 #SBATCH  --time=08:50:00
 #SBATCH  --ntasks-per-node=32
-#SBATCH  --mem=180G
->>>>>>> Stashed changes
+#SBATCH  --mem=500G
 ##SBATCH --exclusive
 
 module load gcc
@@ -28,11 +21,7 @@ cd $SLURM_SUBMIT_DIR
 file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
 #mpirun  -n 128 ./mpi_hello
 #mpirun  -n 2 ../build/apps/mpi_hello 
-
-<<<<<<< Updated upstream
-srun --mpi=pmi2 -n 32 /usr/bin/time -v ./apps/testgreeDiL2Medoid $file 500 16 
-=======
-srun --mpi=pmi2 -n 32 /usr/bin/time -v ./apps/testgreeDiL2 $file 200 32 tinyCSV.csv
->>>>>>> Stashed changes
+file2=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx_c
+srun --mpi=pmi2 -n 32 /usr/bin/time -v ./apps/clo $file $file2 5
 
 #srun --mpi=pmi2 -n 2 valgrind --tool=massif --time-unit=B ./apps/testgreeDiL2 $file 100 2

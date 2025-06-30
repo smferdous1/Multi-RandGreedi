@@ -3,7 +3,11 @@
 #SBATCH  --time=02:50:00
 ##SBATCH  -A standby
 #SBATCH  -A highmem
+<<<<<<< Updated upstream
 #SBATCH  --mem=20G
+=======
+#SBATCH  --mem=500G
+>>>>>>> Stashed changes
 
 module load gcc
 module load openmpi
@@ -14,10 +18,17 @@ module load openmpi
 #file=../data/lhr01.mtx
 #file=../data/SmallTest.mtx
 #file=/scratch/bell/gopals/tiny-imagenet-vectors/train/tiny_image_train.mtx
+<<<<<<< Updated upstream
 #file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
 #file=/scratch/bell/gopals/road_usa/32/road_usa.mtx
 #file=../data/retail/retail.mtx
 file=../data/korasak/kosarak.mtx
+=======
+# file=/scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+#file=/scratch/bell/gopals/road_usa/road_usa.mtx
+#file=../data/retail/retail.mtx
+#file=../data/korasak/kosarak.mtx
+>>>>>>> Stashed changes
 #file=/scratch/bell/gopals/belgium_osm/belgium_osm.mtx
 #file=/scratch/bell/gopals/road_central/road_central.mtx
 cd $SLURM_SUBMIT_DIR
@@ -26,6 +37,7 @@ cd $SLURM_SUBMIT_DIR
 #mpirun  -n 2 ../build/apps/mpi_hello 
 
 
+<<<<<<< Updated upstream
 #srun  ./apps/testlg $file . 1000  
 
 srun  /usr/bin/time -v ./apps/testlg $file . 1000
@@ -34,3 +46,27 @@ srun  /usr/bin/time -v ./apps/testlg $file . 4000
 srun  /usr/bin/time -v ./apps/testlg $file . 8000
 srun  /usr/bin/time -v ./apps/testlg $file . 16000
 srun  /usr/bin/time -v ./apps/testlg $file . 32000
+=======
+f=(
+	# /scratch/bell/gopals/AGATHA_2015/AGATHA_2015.mtx
+	# /scratch/bell/gopals/com-Friendster/com-Friendster.mtx
+	/scratch/bell/gopals/MOLIERE_2016/MOLIERE_2016.mtx
+)
+echo $f
+
+
+#srun  ./apps/testlg $file . 1000  
+
+# srun  /usr/bin/time -v ./apps/testlg $file . 1000
+# srun  /usr/bin/time -v ./apps/testlg $file . 2000
+# srun  /usr/bin/time -v ./apps/testlg $file . 4000
+# srun  /usr/bin/time -v ./apps/testlg $file . 8000
+# srun  /usr/bin/time -v ./apps/testlg $file . 16000
+# srun  /usr/bin/time -v ./apps/testlg $file . 32000
+
+for file in ${f[@]}
+do
+	srun ./apps/testlg $file . 500000
+done 
+
+>>>>>>> Stashed changes

@@ -6,6 +6,10 @@ set(HEADER_LIST
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Types.h"
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/Utility.h"
     "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/MPI_Types.h"
+<<<<<<< Updated upstream
+=======
+    "${PROJECT_SOURCE_DIR}/include/Multi-RandGreedi/MemUsage.h"
+>>>>>>> Stashed changes
     )
 
 add_library(mrg
